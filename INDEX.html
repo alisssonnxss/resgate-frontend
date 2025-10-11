@@ -10,14 +10,16 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            /* Fundo elegante azul escuro */
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             color: #333;
-            perspective: 1000px; /* Para a animação 3D */
+            perspective: 1000px; /* Para a animação de transição */
         }
+        /* Importa a fonte para um visual mais moderno */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         /* --- CONTÊINER PRINCIPAL E TELAS --- */
@@ -25,7 +27,8 @@
             width: 100%;
             max-width: 400px;
             position: relative;
-            height: 500px; /* Altura fixa para evitar pulos */
+            /* Altura ajustada para caber ambas as views */
+            min-height: 350px; 
         }
         .view-section {
             background-color: #ffffff;
@@ -40,12 +43,13 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s ease-out, transform 0.6s ease-out;
-            transform: rotateY(90deg);
+            transform: rotateY(90deg); /* Começa invisível e girado */
+            min-height: 350px; 
         }
         .view-section.active {
             opacity: 1;
             visibility: visible;
-            transform: rotateY(0deg);
+            transform: rotateY(0deg); /* Gira para mostrar */
         }
 
         h2, h1 {
@@ -89,11 +93,11 @@
             text-align: center;
         }
 
-        /* Botão Principal Login */
+        /* Botão Principal Login (Verde) */
         .access-btn {
             background-color: #4CAF50;
             color: white;
-            box-shadow: 0 4px #388e3c;
+            box-shadow: 0 4px #388e3c; /* Sombra 3D */
         }
         .access-btn:hover {
             background-color: #43a047;
@@ -114,18 +118,14 @@
             color: white;
             box-shadow: 0 4px #128c7e;
         }
-        .btn-support:hover {
-            background-color: #128c7e;
-        }
+        .btn-support:hover { background-color: #128c7e; }
 
         .btn-history {
             background-color: #f0ad4e; /* Histórico */
             color: #333;
             box-shadow: 0 4px #d89635;
         }
-        .btn-history:hover {
-            background-color: #ec971f;
-        }
+        .btn-history:hover { background-color: #ec971f; }
         
         /* Mensagens de Status */
         .message {
@@ -139,7 +139,7 @@
         .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
-        /* --- BOTÕES FLUTUANTES --- */
+        /* --- BOTÕES FLUTUANTES (LOGIN) --- */
         .floating-btn {
             position: absolute;
             top: 15px;
@@ -157,10 +157,7 @@
             color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        #support-float:hover {
-            background-color: #128c7e;
-            transform: scale(1.05);
-        }
+        #support-float:hover { background-color: #128c7e; transform: scale(1.05); }
 
         #history-float {
             right: 15px;
@@ -169,10 +166,10 @@
             border-radius: 8px;
             font-size: 14px;
             padding: 10px 15px;
+            border: none;
+            cursor: pointer;
         }
-        #history-float:hover {
-            background-color: #ccc;
-        }
+        #history-float:hover { background-color: #ccc; }
 
         /* --- MODAL GERAL (Pop-up) --- */
         .modal {
@@ -215,16 +212,12 @@
         .close-btn:hover { color: #333; }
         
         /* Estilos específicos da Tela Interna */
-        .system-container {
-            color: #1e3c72;
-            text-align: center;
-        }
-        .system-container p {
+        .system-content h1 { color: #1e3c72; }
+        .system-content p {
             font-size: 1.1em;
             margin-bottom: 40px;
             color: #555;
         }
-
     </style>
 </head>
 <body>
@@ -249,7 +242,7 @@
     </div>
 
     <div id="system-view" class="view-section">
-        <div class="system-container">
+        <div class="system-content">
             <h1>BEM-VINDO(A) AO SISTEMA!</h1>
             <p>Seu acesso foi validado com sucesso. Use as opções abaixo.</p>
             
@@ -325,6 +318,7 @@
         }, 50);
     }
 
+    // Função para fechar o modal e MUDAR para a tela do sistema
     function hideModalAndShowSystem(modalId) {
         closeModal(modalId);
         // Troca para a Tela do Sistema
@@ -335,20 +329,29 @@
 
     function showMessage(msg, type) {
         const messageElement = document.getElementById('message');
-        messageElement.textContent = msg;
-        messageElement.className = `message ${type}`;
-        messageElement.style.display = 'block';
+        // Este elemento só existe na #login-view, então pegamos ele de lá
+        const currentMessageElement = document.querySelector('#login-view #message');
+        
+        currentMessageElement.textContent = msg;
+        currentMessageElement.className = `message ${type}`;
+        currentMessageElement.style.display = 'block';
     }
 
     // --- FUNÇÃO PRINCIPAL DE LOGIN ---
 
     async function handleLogin() {
         const code = document.getElementById('code-input').value.trim();
+        // Opcional: Adicionar a funcionalidade "trava" do botão
+        const accessBtn = document.querySelector('.access-btn');
 
         if (!code) {
             showMessage('O código não pode estar vazio.', 'error');
             return;
         }
+
+        // Trava o botão
+        accessBtn.disabled = true;
+        accessBtn.textContent = 'Aguarde...';
 
         showMessage('Processando...', 'success');
 
@@ -369,7 +372,7 @@
                 successModal.style.display = 'flex';
                 setTimeout(() => { successModal.classList.add('is-visible'); }, 50);
 
-                // 2. Troca a view após 3 segundos
+                // 2. Troca a view automaticamente após 3 segundos
                 setTimeout(() => { 
                     hideModalAndShowSystem('success-modal');
                 }, 3000); 
@@ -381,11 +384,16 @@
         } catch (error) {
             console.error('Erro na conexão com a API:', error);
             showMessage('Erro de conexão. Verifique o servidor.', 'error');
+        } finally {
+            // Reativa o botão
+            accessBtn.disabled = false;
+            accessBtn.textContent = 'ACESSAR SISTEMA';
         }
     }
     
     // Inicia a animação inicial mostrando a tela de login
     document.addEventListener('DOMContentLoaded', () => {
+        // Garantir que apenas a tela de login esteja visível inicialmente
         switchView('login-view');
     });
 
