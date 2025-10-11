@@ -30,10 +30,6 @@
             position: relative;
             opacity: 0;
             transform: translateY(20px);
-        }
-
-        /* ANIMAÇÃO (0.3s) */
-        .modal, .main-box {
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
@@ -75,9 +71,16 @@
             width: 100%;
         }
 
-        .access-btn:hover {
+        .access-btn:hover:not(:disabled) {
             background-color: #0056b3;
             transform: translateY(-1px);
+        }
+        
+        /* Estado Desativado do Botão (Correção do Trava) */
+        .access-btn:disabled {
+            background-color: #999; 
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* Mensagens de Status */
@@ -102,7 +105,7 @@
             border: 1px solid #f5c6cb;
         }
 
-        /* --- ESTILOS DE HISTÓRICO E SUPORTE (NOVO) --- */
+        /* --- BOTÕES EXTRAS (SUPORTE E HISTÓRICO) --- */
         
         /* Botão de Suporte (WhatsApp) */
         .support-btn {
@@ -142,7 +145,7 @@
             color: #1a1a1a;
         }
 
-        /* --- MODAL GERAL (Janela Pop-up) --- */
+        /* --- MODAL GERAL (Pop-up) --- */
 
         .modal {
             display: none;
@@ -157,6 +160,7 @@
             justify-content: center;
             align-items: center;
             opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .modal-content {
@@ -272,7 +276,7 @@
             
             setTimeout(() => {
                 modal.style.display = 'none';
-            }, 300); // 300ms = tempo da transição
+            }, 300); 
         }
 
         // Função para mostrar a mensagem de status
@@ -283,13 +287,22 @@
             messageElement.style.display = 'block';
         }
 
-        // Função principal de login
+        // Função principal de login (Corrigida para não travar)
         async function handleLogin() {
             const code = document.getElementById('code-input').value.trim();
+            const accessBtn = document.querySelector('.access-btn'); 
+
             showMessage('Processando...', 'success');
+            
+            // 1. TRAVA O BOTÃO
+            accessBtn.disabled = true; 
+            accessBtn.textContent = 'Aguarde...'; 
 
             if (!code) {
                 showMessage('O código não pode estar vazio.', 'error');
+                // REATIVA O BOTÃO
+                accessBtn.disabled = false;
+                accessBtn.textContent = 'ACESSAR SISTEMA';
                 return;
             }
 
@@ -306,6 +319,7 @@
 
                 if (response.ok) {
                     showMessage(data.message, 'success');
+                    
                     // Exibir modal de sucesso
                     const successModal = document.getElementById('success-modal');
                     successModal.style.display = 'flex';
@@ -316,9 +330,14 @@
                 } else {
                     showMessage(data.message, 'error');
                 }
+
             } catch (error) {
                 console.error('Erro na conexão com a API:', error);
                 showMessage('Erro de conexão. Verifique o servidor.', 'error');
+            } finally {
+                // 2. REATIVA O BOTÃO SEMPRE
+                accessBtn.disabled = false;
+                accessBtn.textContent = 'ACESSAR SISTEMA';
             }
         }
         
@@ -336,7 +355,7 @@
             historyList.innerHTML = '<li>Carregando histórico do servidor...</li>';
 
             try {
-                // Chama a rota de histórico que você precisa ter no seu server.js
+                // Chama a rota de histórico no seu servidor
                 const response = await fetch(`${BACKEND_URL}/api/history`);
                 const data = await response.json();
 
