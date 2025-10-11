@@ -24,6 +24,7 @@
             --cor-btn-principal: var(--cor-primaria);
             --cor-btn-reabrir: var(--cor-verde);
             --cor-btn-deletar: #D50000;
+            --cor-btn-testar: #FFA500; /* Laranja para Teste */
             
             --border-radius-main: 12px;
             --border-radius-small: 6px;
@@ -31,6 +32,7 @@
             /* Cores de Status para Histórico */
             --status-pendente-cor: var(--cor-amarelo-pendente);
             --status-concluido-cor: var(--cor-verde);
+            --status-antigo-cor: var(--cor-primaria); /* Novo status: Resgate Antigo */
             
             /* Nova Cor para Botão de Suporte/WhatsApp */
             --cor-btn-whatsapp: #25D366; 
@@ -53,10 +55,12 @@
             --cor-hover-item: #F5F5F5;
             
             --cor-btn-deletar: #D32F2F;
+            --cor-btn-testar: #FF8C00; 
 
             /* Cores de Status para Histórico Light */
             --status-pendente-cor: #FFB300;
             --status-concluido-cor: #4CAF50;
+            --status-antigo-cor: var(--cor-primaria);
             
             /* Nova Cor para Botão de Suporte/WhatsApp Light */
             --cor-btn-whatsapp: #4CAF50; 
@@ -134,7 +138,7 @@
         }
 
         /* ----------------------------------- */
-        /* BOTÕES DE TOPO (SAIR E SUPORTE) */
+        /* BOTÕES DE TOPO (SUPORTE) */
         /* ----------------------------------- */
         .top-button {
             position: fixed;
@@ -156,36 +160,17 @@
             background-color: var(--cor-btn-whatsapp);
             color: white;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
-            text-decoration: none; /* Para manter o link */
+            text-decoration: none; 
         }
         .top-support-btn:hover {
             background-color: #128C7E;
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
             transform: translateY(-2px);
         }
-        
-        .top-logout-btn {
-            right: 180px; /* Ajuste a posição para não bater no botão de Suporte */
-            background-color: var(--cor-card-fundo);
-            color: var(--cor-aviso-erro);
-            border: 1px solid var(--cor-aviso-erro);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            font-size: 1.1em;
-            padding: 8px 12px;
-        }
-        .top-logout-btn:hover {
-            background-color: rgba(255, 82, 82, 0.1);
-            color: #FF1744;
-            border-color: #FF1744;
-            transform: translateY(-2px);
-        }
 
         /* Oculta na tela de login, aparece após o login */
         body:not(.logged-in) .top-button {
             display: none; 
-        }
-        .sidebar-open + .top-support-btn, .sidebar-open + .top-logout-btn {
-            z-index: 997; 
         }
 
         #msgLogin {
@@ -206,7 +191,7 @@
             visibility: visible;
         }
 
-        /* --- SIDEBAR E OUTROS ESTILOS (MANTIDOS) --- */
+        /* --- SIDEBAR --- */
         #menu-toggle-btn {
             position: fixed;
             top: 20px;
@@ -245,13 +230,12 @@
             padding-top: 60px;
             box-shadow: 4px 0 20px rgba(0,0,0,0.6);
             border-right: 3px solid var(--cor-primaria);
-            display: flex; /* Para centralizar os itens de baixo */
+            display: flex; 
             flex-direction: column;
         }
         
-        /* Contêiner para os itens principais do menu */
         .sidebar-nav-main {
-            flex-grow: 1; /* Ocupa o espaço restante */
+            flex-grow: 1; 
         }
         
         .sidebar-item {
@@ -296,7 +280,6 @@
         .sidebar-item-theme {
             font-weight: bold;
             color: var(--status-pendente-cor); 
-            /* Para manter o botão de tema no final */
             border-top: 1px solid var(--cor-hr);
             border-bottom: none;
             margin-bottom: 10px;
@@ -393,12 +376,81 @@
             box-shadow: 0 6px 18px rgba(0, 230, 118, 0.4);
             transform: translateY(-2px);
         }
+
+        .test-button { 
+            background-color: var(--cor-btn-testar) !important;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+        }
+        .test-button:hover {
+            background-color: #FF8C00 !important;
+            box-shadow: 0 6px 18px rgba(255, 165, 0, 0.4);
+        }
         
-        /* --- ESTILOS DE HISTÓRICO (MANTIDOS) --- */
+        /* --- GUIA DE ERROS (MANTIDOS) --- */
+        .guide-container {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--cor-hr);
+        }
+        .guide-container h3 {
+             font-size: 1.1em;
+             color: var(--cor-primaria);
+             margin-bottom: 15px;
+        }
+
+        .guide-step {
+            background-color: var(--cor-input-fundo);
+            padding: 15px;
+            border-radius: var(--border-radius-small);
+            border: 1px solid var(--cor-borda);
+            margin-bottom: 15px;
+        }
+
+        .guide-step p {
+            font-weight: bold;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+        
+        .guide-step .error-status {
+            font-size: 0.9em;
+            font-weight: 700;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: var(--border-radius-small);
+            margin-top: 8px;
+        }
+
+        .guide-step .error-message {
+            background-color: var(--cor-card-fundo);
+            border: 1px dashed var(--cor-texto-secundario);
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-top: 10px;
+            color: var(--cor-texto-secundario);
+        }
+
+        .status-funcionando {
+            color: var(--cor-verde);
+            border: 1px solid var(--cor-verde);
+            background-color: rgba(0, 230, 118, 0.1);
+        }
+        
+        .status-vencido {
+            color: var(--cor-aviso-erro);
+            border: 1px solid var(--cor-aviso-erro);
+            background-color: rgba(255, 82, 82, 0.1);
+        }
+        
+        /* --- ESTILOS DE HISTÓRICO (REATIVADOS) --- */
         .historico-lista {
             list-style: none;
             padding: 0;
             margin: 15px 0 30px 0;
+            min-height: 50px; /* Para mostrar a mensagem de lista vazia */
         }
         .historico-titulo {
             border-bottom: 2px solid var(--cor-hr);
@@ -407,7 +459,6 @@
             color: var(--cor-texto-principal);
             font-size: 1.2em;
         }
-
         .historico-item-wrapper {
             display: flex;
             align-items: center;
@@ -418,23 +469,28 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             position: relative;
             transition: all 0.2s;
+            cursor: pointer;
         }
         .historico-item-wrapper:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .historico-item-wrapper[data-status="PENDING"] {
+        /* Cores de borda baseadas no tipo de resgate */
+        .historico-item-wrapper[data-type="GERAR"] {
+            border-left: 4px solid var(--status-concluido-cor);
+        }
+        .historico-item-wrapper[data-type="ANTECIPAR"] {
             border-left: 4px solid var(--status-pendente-cor);
         }
-        .historico-item-wrapper[data-status="COMPLETED"] {
-            border-left: 4px solid var(--status-concluido-cor);
+        .historico-item-wrapper[data-type="ANTIGO"] {
+            border-left: 4px solid var(--status-antigo-cor);
         }
 
         .historico-item {
             flex-grow: 1;
             padding: 5px;
-            cursor: pointer;
+            /* cursor: pointer; */ /* O cursor vai para o wrapper */
             background-color: transparent;
         }
 
@@ -464,23 +520,26 @@
             font-weight: 500;
         }
         
-        .status-button {
-            display: block;
-            width: 100%;
-            padding: 6px 10px;
-            margin-top: 8px;
-            font-size: 0.8em;
-            border: none;
-            border-radius: var(--border-radius-small);
-            cursor: pointer;
+        .status-tag {
+            font-size: 0.75em;
             font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 4px;
             color: var(--cor-texto-principal);
-            background-color: var(--cor-card-fundo); 
-            transition: background-color 0.15s, transform 0.1s;
+            margin-left: 10px;
+            background-color: var(--cor-borda);
         }
-        .status-button:hover {
-            background-color: var(--cor-hover-item);
-            transform: translateY(-1px);
+        .historico-item-wrapper[data-type="GERAR"] .status-tag {
+            background-color: var(--cor-verde);
+            color: #121212;
+        }
+        .historico-item-wrapper[data-type="ANTECIPAR"] .status-tag {
+            background-color: var(--cor-amarelo-pendente);
+            color: #121212;
+        }
+        .historico-item-wrapper[data-type="ANTIGO"] .status-tag {
+            background-color: var(--cor-primaria);
+            color: #121212;
         }
         
         .delete-button {
@@ -502,16 +561,13 @@
             color: #FF1744; 
             transform: scale(1.1);
         }
+
     </style>
 </head>
 <body>
     
     <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="top-button top-support-btn" title="Fale com nosso Suporte">
         💬 Suporte
-    </a>
-    
-    <a onclick="fazerLogout()" class="top-button top-logout-btn" title="Sair do Sistema">
-        <span style="font-size: 0.8em; font-weight: 900;">&#x2716;</span> Sair
     </a>
 
     <div id="loginOverlay" class="login-overlay">
@@ -538,6 +594,7 @@
             <a class="sidebar-item" id="nav-gerar" onclick="changeTab('gerar')">🚀 Iniciar Novo Resgate</a>
             <a class="sidebar-item" id="nav-antecipar" onclick="changeTab('antecipar')">💾 Salvar Link Pendente</a>
             <a class="sidebar-item" id="nav-resgateAntigo" onclick="changeTab('resgateAntigo')">🔑 Resgate Acesso Antigo</a>
+            <a class="sidebar-item" id="nav-testar" onclick="changeTab('testar')">🛠️ Testar Código</a> 
             <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
         </div>
         
@@ -593,40 +650,62 @@
             </p>
         </div>
         
+        <div id="testar" class="tab-content">
+            <h3 class="historico-titulo" style="margin-top: 0; border-bottom: 1px solid var(--cor-hr);">Verificação Rápida de Código</h3>
+            
+            <label for="linkTesteInput">Cole o Access Token ou URL para Testar:</label>
+            <textarea id="linkTesteInput" placeholder="Cole o access token ou URL completa aqui (Ex: access_token=...)"></textarea>
+
+            <button class="test-button" onclick="testarCodigo()">
+                🔍 TESTAR CÓDIGO
+            </button>
+            
+            <p class="aviso" id="avisoErroTeste" style="display:none; color: var(--cor-aviso-erro); margin-top: 10px;">
+                🚨 Cole o token no campo de texto para fazer o teste.
+            </p>
+            
+            <div class="guide-container">
+                <h3>📚 Guia Rápido: Como o Código está?</h3>
+                
+                <div class="guide-step">
+                    <p>STATUS:</p>
+                    <span class="error-status status-funcionando">🟢 CÓDIGO FUNCIONANDO</span>
+                    
+                    <p style="margin-top: 10px; font-weight: normal; color: var(--cor-texto-principal);">
+                        Quando o código **está funcionando** (válido, mas em região errada), a tela de resgate exibirá:
+                    </p>
+                    <div class="error-message">
+                        ERROR
+Failed to redeem
+The code can't be used in your region. Please check again or contact the customer service.
+                    </div>
+                </div>
+                
+                <div class="guide-step">
+                    <p>STATUS:</p>
+                    <span class="error-status status-vencido">🔴 CÓDIGO VENCIDO OU EXPIRADO</span>
+                    
+                    <p style="margin-top: 10px; font-weight: normal; color: var(--cor-texto-principal);">
+                        Quando o código **está vencido/resgatado**, a tela de resgate exibirá:
+                    </p>
+                    <div class="error-message">
+                        ERROR
+Failed to redeem
+Failed to redeem. This code is invalid or redeemed.
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
         <div id="historico" class="tab-content">
             <label for="searchHistorico">Pesquisar no Histórico (Em Breve):</label>
             <input type="search" id="searchHistorico" placeholder="Digite um nome ou data para buscar..." disabled>
             
             <h3 class="historico-titulo">Histórico de Resgates</h3>
 
-            <p style="color: var(--cor-texto-secundario); text-align: center; margin-top: 30px;">
-                **Função de Histórico em Desenvolvimento.** Aguarde as próximas atualizações!
-            </p>
-            
             <ul id="historicoLista" class="historico-lista">
-                <li class="historico-item-wrapper" data-status="COMPLETED">
-                    <div class="historico-item">
-                        <div class="item-header">
-                            <span class="item-nome">Resgate #123456</span>
-                            <span class="item-data">25/Out/2025</span>
-                        </div>
-                        <div class="item-info">
-                            <span>Status: Concluído</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="historico-item-wrapper" data-status="PENDING">
-                    <div class="historico-item">
-                        <div class="item-header">
-                            <span class="item-nome">Link Pendente de Resgate</span>
-                            <span class="item-data">26/Out/2025</span>
-                        </div>
-                        <div class="item-info">
-                            <span>Status: Pendente</span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                </ul>
         </div>
         
     </div>
@@ -645,6 +724,9 @@
         const LINK_BASE_NOVO = "https://reward.ff.garena.com/en?";
         const LINK_BASE_ANTIGO = "https://reward.ff.garena.com/";
         
+        // Link de Teste de Código Fixo
+        const LINK_TESTE_FIXO = "https://reward.ff.garena.com/en?access_token=96156fe920a2edda35b7b3e80503b81c19af947d632ef3e498ddf8622bfb8586&game=FF&lang=en&region=EUROPE&account_id=11264235286&nickname=teste80c";
+
         const STORAGE_KEY = 'resgateHistory';
         const THEME_KEY = 'siteTheme';
         const TOKEN_KEY = 'sessionTokenUnique'; 
@@ -654,10 +736,15 @@
         function liberarAcessoTotal() {
             document.body.classList.add('logged-in');
             document.getElementById('loginOverlay').style.display = 'none';
-            // Atualiza os links do WhatsApp com o número correto
+            
+            // Configura o link do WhatsApp
             document.querySelectorAll('.top-support-btn').forEach(a => {
                 a.href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá!%20Preciso%20de%20suporte%20com%20o%20sistema%20de%20resgate.`;
             });
+
+            // Carrega e renderiza o histórico ao logar
+            loadHistory();
+            
             changeTab('gerar'); 
         }
 
@@ -700,11 +787,10 @@
             }
         }
         
-        function fazerLogout() {
-            localStorage.removeItem(TOKEN_KEY);
-            document.body.classList.remove('logged-in');
-            document.getElementById('loginOverlay').style.display = 'flex';
-        }
+        /* * O BOTÃO DE LOGOUT FOI REMOVIDO CONFORME SOLICITADO
+        * As funções de login/logout no JavaScript não são mais necessárias, 
+        * mas manteremos a estrutura para o futuro.
+        */
         
         function checkLoginStatus() {
             const token = localStorage.getItem(TOKEN_KEY);
@@ -741,6 +827,11 @@
             
             document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
             document.getElementById(`nav-${tabName}`).classList.add('active');
+
+            // Renderiza o histórico ao entrar na aba
+            if (tabName === 'historico') {
+                renderHistory();
+            }
         }
         
         // --- FUNÇÕES DE TEMA ---
@@ -767,7 +858,82 @@
             applyTheme(savedTheme === 'light');
         }
         
+        // --- FUNÇÕES DE HISTÓRICO (REATIVADAS) ---
+        function getHistory() {
+            const historyJson = localStorage.getItem(STORAGE_KEY);
+            return historyJson ? JSON.parse(historyJson) : [];
+        }
+
+        function saveHistory(item) {
+            const history = getHistory();
+            history.unshift(item); // Adiciona no início
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+            renderHistory();
+        }
+
+        function deleteHistoryItem(index) {
+            if (confirm("Tem certeza que deseja apagar este item do histórico?")) {
+                const history = getHistory();
+                history.splice(index, 1);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+                renderHistory();
+            }
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historicoLista');
+            const history = getHistory();
+            list.innerHTML = ''; // Limpa a lista
+            
+            if (history.length === 0) {
+                list.innerHTML = `<p style="color: var(--cor-texto-secundario); text-align: center; margin-top: 30px;">
+                    Nenhum resgate salvo ainda.
+                </p>`;
+                return;
+            }
+
+            history.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'historico-item-wrapper';
+                li.setAttribute('data-type', item.type);
+                li.onclick = () => {
+                    // Abre o link do histórico ao clicar no item (exceto no botão de delete)
+                    window.open(item.link, '_blank');
+                };
+
+                const typeText = item.type === 'GERAR' ? 'Gerado' : (item.type === 'ANTECIPAR' ? 'Pendente' : 'Antigo');
+
+                li.innerHTML = `
+                    <div class="historico-item">
+                        <div class="item-header">
+                            <span class="item-nome" title="${item.link}">${item.link.substring(0, 40)}...</span>
+                            <span class="status-tag">${typeText}</span>
+                        </div>
+                        <div class="item-info">
+                            <span>Data: ${item.date}</span>
+                        </div>
+                    </div>
+                    <button class="delete-button" title="Apagar Item" onclick="event.stopPropagation(); deleteHistoryItem(${index})">
+                        &times;
+                    </button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function loadHistory() {
+             // Chamado apenas para garantir que a função está disponível
+             console.log("Histórico reativado e pronto para uso.");
+        }
+        
         // --- GERAÇÃO E OUTROS ---
+        
+        function getCurrentDateTime() {
+            const now = new Date();
+            const date = now.toLocaleDateString('pt-BR');
+            const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            return `${date} - ${time}`;
+        }
         
         function validarLink(link, avisoId, deveConter = '?') {
             const avisoErro = document.getElementById(avisoId);
@@ -798,6 +964,13 @@
             linkResultadoInput.value = novoLink;
             btnReabrir.disabled = false;
 
+            // Salva no histórico
+            saveHistory({
+                link: novoLink,
+                date: getCurrentDateTime(),
+                type: 'GERAR'
+            });
+
             window.open(novoLink, '_blank');
         }
         
@@ -806,7 +979,14 @@
             
             if (!validarLink(linkAntecipar, 'avisoErroAntecipar', '?')) return;
             
-            alert("Link salvo com sucesso (localmente)! Você pode copiá-lo quando precisar.");
+            // Salva no histórico
+            saveHistory({
+                link: linkAntecipar,
+                date: getCurrentDateTime(),
+                type: 'ANTECIPAR'
+            });
+            
+            alert("Link salvo como Pendente no Histórico!");
             
             document.getElementById('linkAntecipar').value = ''; 
         }
@@ -836,12 +1016,36 @@
 
             const novoLink = LINK_BASE_ANTIGO + stringDeConsulta;
             
+            // Salva no histórico
+            saveHistory({
+                link: novoLink,
+                date: getCurrentDateTime(),
+                type: 'ANTIGO'
+            });
+
             window.open(novoLink, '_blank');
         }
+        
+        // Função para Testar Código
+        function testarCodigo() {
+            const linkTesteInput = document.getElementById('linkTesteInput').value.trim();
+            
+            if (!linkTesteInput) {
+                document.getElementById('avisoErroTeste').innerText = "🚨 Cole o token no campo de texto para fazer o teste.";
+                document.getElementById('avisoErroTeste').style.display = 'block';
+                return;
+            }
+            
+            window.open(LINK_TESTE_FIXO, '_blank');
+            
+            document.getElementById('avisoErroTeste').style.display = 'none';
+        }
+
 
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             checkLoginStatus(); 
+            // Não chamo renderHistory aqui, pois ela é chamada dentro de liberarAcessoTotal
         });
 
     </script>
