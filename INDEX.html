@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Resgate de Códigos - Acesso</title>
     <style>
-        /* --- ESTILOS GERAIS --- */
+        /* FUNDO MODERNO E LIMPO */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
+            /* Fundo gradiente suave */
             background: linear-gradient(135deg, #f0f0f5 0%, #e0e0e8 100%);
             display: flex;
             justify-content: center;
@@ -22,14 +23,18 @@
         .main-box {
             background-color: #ffffff;
             padding: 40px;
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+            border-radius: 16px; /* Bordas mais suaves */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra mais destacada */
             width: 100%;
             max-width: 420px;
             text-align: center;
             position: relative;
             opacity: 0;
             transform: translateY(20px);
+        }
+
+        /* ANIMAÇÃO (Definida para 0.3s) */
+        .modal, .main-box {
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
@@ -39,27 +44,27 @@
             font-weight: 600;
         }
 
-        /* INPUTS */
+        /* INPUTS (Campos de Texto) */
         input[type="text"] {
             width: 100%;
             padding: 14px;
             margin-bottom: 20px;
             border: 2px solid #ddd;
-            border-radius: 8px; 
+            border-radius: 8px; /* Bordas arredondadas */
             box-sizing: border-box;
             font-size: 16px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         input[type="text"]:focus {
-            border-color: #007bff; 
+            border-color: #007bff; /* Azul vibrante ao focar */
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
             outline: none;
         }
 
         /* BOTÃO PRINCIPAL (ACESSAR) */
         .access-btn {
-            background-color: #007bff; 
+            background-color: #007bff; /* Azul primário */
             color: white;
             padding: 15px 20px;
             border: none;
@@ -71,19 +76,31 @@
             width: 100%;
         }
 
-        .access-btn:hover:not(:disabled) {
+        .access-btn:hover {
             background-color: #0056b3;
             transform: translateY(-1px);
         }
-        
-        /* Estado Desativado do Botão (Correção do Trava) */
-        .access-btn:disabled {
-            background-color: #999; 
-            cursor: not-allowed;
-            transform: none;
+
+        /* BOTÃO SECUNDÁRIO (HISTÓRICO) */
+        .history-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f0f0f0;
+            color: #555;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Mensagens de Status */
+        .history-btn:hover {
+            background-color: #e0e0e0;
+            color: #1a1a1a;
+        }
+
         .message {
             margin-top: 25px;
             padding: 12px;
@@ -105,48 +122,7 @@
             border: 1px solid #f5c6cb;
         }
 
-        /* --- BOTÕES EXTRAS (SUPORTE E HISTÓRICO) --- */
-        
-        /* Botão de Suporte (WhatsApp) */
-        .support-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #4CAF50;
-            color: white;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            transition: background-color 0.3s;
-        }
-
-        .support-btn:hover {
-            background-color: #45a049;
-        }
-
-        /* Botão Secundário (Histórico) */
-        .history-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #f0f0f0;
-            color: #555;
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .history-btn:hover {
-            background-color: #e0e0e0;
-            color: #1a1a1a;
-        }
-
-        /* --- MODAL GERAL (Pop-up) --- */
-
+        /* MODAL GERAL (Janela Pop-up) */
         .modal {
             display: none;
             position: fixed;
@@ -156,11 +132,10 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.5); /* Fundo mais suave */
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
         }
 
         .modal-content {
@@ -196,7 +171,7 @@
             color: #333;
         }
 
-        /* Estilo da Lista do Histórico no Modal */
+        /* Estilo do Histórico */
         #history-list {
             list-style: none;
             padding: 0;
@@ -223,14 +198,12 @@
             margin-top: 15px;
             padding: 5px;
             border-top: 1px solid #eee;
-            text-align: center;
         }
     </style>
 </head>
 <body>
 
     <div class="main-box" id="login-form">
-        <a href="https://wa.me/553196373580" target="_blank" class="support-btn">Entrar em Contato</a>
         <button class="history-btn" onclick="showHistoryModal()">Ver Histórico</button>
 
         <h2>ACESSAR SISTEMA</h2>
@@ -244,10 +217,10 @@
 
     <div id="success-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="redirectToSystem()">&times;</span>
+            <span class="close-btn" onclick="closeModal('success-modal')">&times;</span>
             <h3>ACESSO LIBERADO!</h3>
             <p>Seu código foi validado com sucesso.</p>
-            <p>Você será **redirecionado(a) em breve**.</p>
+            <p>Aguarde o processamento da sua recompensa.</p>
         </div>
     </div>
 
@@ -258,23 +231,17 @@
             <ul id="history-list">
                 <li>Carregando...</li>
             </ul>
-            <p class="history-note">⚠️ Este histórico é apagado quando o servidor é reiniciado.</p>
+            <p class="history-note">⚠️ O histórico completo só é salvo permanentemente com Banco de Dados.</p>
         </div>
     </div>
 
 
     <script>
         // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI!
+        // EXEMPLO:
         const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
-
-        // 🟢 URL DO SISTEMA FINAL: SEU PRÓPRIO SITE NO NETLIFY
-        const SYSTEM_FINAL_URL = "https://resgatecodigostokem.netlify.app/"; 
-
-
-        // Função que faz o redirecionamento
-        function redirectToSystem() {
-            window.location.href = SYSTEM_FINAL_URL;
-        }
+        
+        // Se a sua URL for diferente, use ela.
 
         // Função Genérica para fechar qualquer modal
         function closeModal(modalId) {
@@ -285,7 +252,7 @@
             
             setTimeout(() => {
                 modal.style.display = 'none';
-            }, 300); 
+            }, 300); // 300ms = tempo da transição
         }
 
         // Função para mostrar a mensagem de status
@@ -296,21 +263,13 @@
             messageElement.style.display = 'block';
         }
 
-        // Função principal de login (Corrigida para não travar e redirecionar)
+        // Função principal de login
         async function handleLogin() {
             const code = document.getElementById('code-input').value.trim();
-            const accessBtn = document.querySelector('.access-btn'); 
-
-            showMessage('Processando...', 'success');
-            
-            // 1. TRAVA O BOTÃO
-            accessBtn.disabled = true; 
-            accessBtn.textContent = 'Aguarde...'; 
+            showMessage('Processando...', 'success'); // Usa success temporariamente enquanto processa
 
             if (!code) {
                 showMessage('O código não pode estar vazio.', 'error');
-                accessBtn.disabled = false;
-                accessBtn.textContent = 'ACESSAR SISTEMA';
                 return;
             }
 
@@ -327,32 +286,24 @@
 
                 if (response.ok) {
                     showMessage(data.message, 'success');
-                    
                     // Exibir modal de sucesso
                     const successModal = document.getElementById('success-modal');
                     successModal.style.display = 'flex';
+                    // Pequeno atraso para o modal iniciar a transição
                     setTimeout(() => {
                         successModal.classList.add('is-visible');
                     }, 50);
 
-                    // ⚠️ REDIRECIONA AUTOMATICAMENTE APÓS 3 SEGUNDOS
-                    setTimeout(redirectToSystem, 3000); 
-
                 } else {
                     showMessage(data.message, 'error');
                 }
-
             } catch (error) {
                 console.error('Erro na conexão com a API:', error);
                 showMessage('Erro de conexão. Verifique o servidor.', 'error');
-            } finally {
-                // 2. REATIVA O BOTÃO SEMPRE
-                accessBtn.disabled = false;
-                accessBtn.textContent = 'ACESSAR SISTEMA';
             }
         }
         
-        // Função para buscar e mostrar o histórico no Modal
+        // NOVO: Função para buscar e mostrar o histórico
         async function showHistoryModal() {
             const historyModal = document.getElementById('history-modal');
             const historyList = document.getElementById('history-list');
@@ -366,7 +317,7 @@
             historyList.innerHTML = '<li>Carregando histórico do servidor...</li>';
 
             try {
-                // Chama a rota de histórico no seu servidor
+                // Chama a nova rota de histórico que você precisa criar no seu server.js (Backend)
                 const response = await fetch(`${BACKEND_URL}/api/history`);
                 const data = await response.json();
 
@@ -375,11 +326,12 @@
                 if (response.ok && data.history && data.history.length > 0) {
                     data.history.forEach(item => {
                         const li = document.createElement('li');
+                        // Exibe apenas o código usado (que é o que o server.js retorna no momento)
                         li.textContent = `Código: ${item.code} (Status: Usado)`; 
                         historyList.appendChild(li);
                     });
                 } else {
-                    historyList.innerHTML = '<li>Nenhum código encontrado no histórico.</li>';
+                    historyList.innerHTML = '<li>Nenhum código encontrado no histórico (servidor pode ter reiniciado).</li>';
                 }
 
             } catch (error) {
