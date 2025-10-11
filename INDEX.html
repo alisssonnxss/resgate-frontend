@@ -3,77 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Resgate de Códigos - Acesso</title>
+    <title>Sistema de Acesso Integrado</title>
     <style>
         /* --- ESTILOS GERAIS --- */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #f0f0f5 0%, #e0e0e8 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             color: #333;
+            perspective: 1000px; /* Para a animação 3D */
         }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        /* CAIXA PRINCIPAL (Card) */
-        .main-box {
+        /* --- CONTÊINER PRINCIPAL E TELAS --- */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            height: 500px; /* Altura fixa para evitar pulos */
+        }
+        .view-section {
             background-color: #ffffff;
             padding: 40px;
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 420px;
-            text-align: center;
-            position: relative;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            visibility: hidden;
+            transition: opacity 0.5s ease-out, transform 0.6s ease-out;
+            transform: rotateY(90deg);
+        }
+        .view-section.active {
+            opacity: 1;
+            visibility: visible;
+            transform: rotateY(0deg);
         }
 
-        h2 {
-            color: #1a1a1a;
+        h2, h1 {
+            color: #1e3c72;
             margin-bottom: 25px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: center;
         }
 
-        /* INPUTS */
+        /* --- ESTILOS DE INPUT E BOTÕES --- */
+
         input[type="text"] {
             width: 100%;
             padding: 14px;
             margin-bottom: 20px;
-            border: 2px solid #ddd;
-            border-radius: 8px; 
+            border: 1px solid #ccc;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #f8f8f8;
+            transition: border-color 0.3s;
         }
-
         input[type="text"]:focus {
-            border-color: #007bff; 
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+            border-color: #2a5298;
+            box-shadow: 0 0 8px rgba(42, 82, 152, 0.4);
             outline: none;
         }
 
-        /* BOTÃO PRINCIPAL (ACESSAR) */
-        .access-btn {
-            background-color: #007bff; 
-            color: white;
+        .access-btn, .btn-action {
             padding: 15px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 17px;
-            font-weight: bold;
+            font-weight: 600;
             transition: background-color 0.3s, transform 0.1s;
             width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
+        /* Botão Principal Login */
+        .access-btn {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px #388e3c;
+        }
         .access-btn:hover {
-            background-color: #0056b3;
+            background-color: #43a047;
             transform: translateY(-1px);
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Botões da Tela Interna */
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-support {
+            background-color: #25d366; /* WhatsApp */
+            color: white;
+            box-shadow: 0 4px #128c7e;
+        }
+        .btn-support:hover {
+            background-color: #128c7e;
+        }
+
+        .btn-history {
+            background-color: #f0ad4e; /* Histórico */
+            color: #333;
+            box-shadow: 0 4px #d89635;
+        }
+        .btn-history:hover {
+            background-color: #ec971f;
         }
         
         /* Mensagens de Status */
@@ -85,63 +136,45 @@
             display: none;
             text-align: left;
         }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* --- BOTÕES EXTRAS (SUPORTE E HISTÓRICO) --- */
-        
-        /* Botão de Suporte (WhatsApp) */
-        .support-btn {
+        /* --- BOTÕES FLUTUANTES --- */
+        .floating-btn {
             position: absolute;
             top: 15px;
-            left: 15px;
-            background: #4CAF50;
-            color: white;
             text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            transition: background-color 0.3s;
-            z-index: 10;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+            line-height: 1;
         }
 
-        .support-btn:hover {
-            background-color: #45a049;
+        #support-float {
+            left: 15px;
+            background: #25d366;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #support-float:hover {
+            background-color: #128c7e;
+            transform: scale(1.05);
         }
 
-        /* Botão Secundário (Histórico) */
-        .history-btn {
-            position: absolute;
-            top: 15px;
+        #history-float {
             right: 15px;
-            background: #f0f0f0;
+            background: #e0e0e0;
             color: #555;
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: background-color 0.3s, color 0.3s;
-            z-index: 10;
+            border-radius: 8px;
+            font-size: 14px;
+            padding: 10px 15px;
         }
-
-        .history-btn:hover {
-            background-color: #e0e0e0;
-            color: #1a1a1a;
+        #history-float:hover {
+            background-color: #ccc;
         }
 
         /* --- MODAL GERAL (Pop-up) --- */
-
         .modal {
             display: none;
             position: fixed;
@@ -150,36 +183,26 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.6);
             justify-content: center;
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
-
         .modal-content {
             background-color: #ffffff;
-            margin: auto;
             padding: 30px;
             border-radius: 10px;
             width: 85%;
-            max-width: 400px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            max-width: 350px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             position: relative;
             transform: scale(0.95);
             transition: transform 0.3s ease-out;
             text-align: center;
         }
-        
-        .modal.is-visible {
-            opacity: 1;
-        }
-
-        .modal.is-visible .modal-content {
-            transform: scale(1);
-        }
-
+        .modal.is-visible { opacity: 1; }
+        .modal.is-visible .modal-content { transform: scale(1); }
         .close-btn {
             color: #aaa;
             position: absolute;
@@ -189,20 +212,34 @@
             font-weight: normal;
             cursor: pointer;
         }
-
-        .close-btn:hover {
-            color: #333;
+        .close-btn:hover { color: #333; }
+        
+        /* Estilos específicos da Tela Interna */
+        .system-container {
+            color: #1e3c72;
+            text-align: center;
         }
+        .system-container p {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="main-box" id="login-form">
-        <a href="https://wa.me/553196373580" target="_blank" class="support-btn">Entrar em Contato</a>
-        
-        <button class="history-btn" onclick="showHistoryComingSoon()">Ver Histórico</button>
+<div class="container">
 
-        <h2>ACESSAR SISTEMA</h2>
+    <div id="login-view" class="view-section active">
+        
+        <a href="https://wa.me/553196373580" target="_blank" class="floating-btn" id="support-float" title="Fale Conosco">
+            &#x1F4AC; 
+        </a>
+        
+        <button class="floating-btn" id="history-float" onclick="showComingSoonModal('coming-soon-modal-login')">Histórico</button>
+
+        <h2>VALIDAÇÃO DE CÓDIGO</h2>
 
         <input type="text" id="code-input" placeholder="Insira o código de acesso" maxlength="15">
         
@@ -211,110 +248,147 @@
         <div id="message" class="message"></div>
     </div>
 
-    <div id="success-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('success-modal')">&times;</span>
-            <h3>ACESSO LIBERADO!</h3>
-            <p>Seu código foi validado com sucesso.</p>
-            <p>Aguarde o processamento da sua recompensa.</p>
-        </div>
-    </div>
-
-    <div id="coming-soon-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('coming-soon-modal')">&times;</span>
-            <h3>EM BREVE!</h3>
-            <p>A funcionalidade de histórico está em desenvolvimento e estará **disponível em breve**.</p>
-        </div>
-    </div>
-
-
-    <script>
-        // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI!
-        const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
-
-        // Função Genérica para fechar qualquer modal
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            const content = modal.querySelector('.modal-content');
-
-            // Animação de saída
-            modal.classList.remove('is-visible');
-            content.style.transform = 'scale(0.95)';
+    <div id="system-view" class="view-section">
+        <div class="system-container">
+            <h1>BEM-VINDO(A) AO SISTEMA!</h1>
+            <p>Seu acesso foi validado com sucesso. Use as opções abaixo.</p>
             
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300); 
-        }
+            <div class="action-buttons">
+                <a href="https://wa.me/553196373580" target="_blank" class="btn-action btn-support">
+                    Suporte WhatsApp
+                </a>
 
-        // Função para mostrar a mensagem de status
-        function showMessage(msg, type) {
-            const messageElement = document.getElementById('message');
-            messageElement.textContent = msg;
-            messageElement.className = `message ${type}`;
-            messageElement.style.display = 'block';
-        }
+                <button class="btn-action btn-history" onclick="showComingSoonModal('coming-soon-modal-system')">
+                    Histórico
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</div>
 
-        // Função para exibir o modal de "Em Breve"
-        function showHistoryComingSoon() {
-            const modal = document.getElementById('coming-soon-modal');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('is-visible');
-            }, 50);
-        }
+<div id="success-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="hideModalAndShowSystem('success-modal')">&times;</span>
+        <h3>ACESSO LIBERADO!</h3>
+        <p>Seu código foi validado com sucesso.</p>
+        <p>Aguarde o acesso ao sistema...</p>
+    </div>
+</div>
 
-        // Função principal de login (Versão Original - sem trava/redirect)
-        async function handleLogin() {
-            const code = document.getElementById('code-input').value.trim();
+<div id="coming-soon-modal-login" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('coming-soon-modal-login')">&times;</span>
+        <h3>EM BREVE</h3>
+        <p>A função Histórico está em desenvolvimento e estará **disponível em breve**.</p>
+    </div>
+</div>
 
-            if (!code) {
-                showMessage('O código não pode estar vazio.', 'error');
-                return;
-            }
+<div id="coming-soon-modal-system" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('coming-soon-modal-system')">&times;</span>
+        <h3>EM BREVE</h3>
+        <p>A função Histórico está em desenvolvimento e estará **disponível em breve**.</p>
+    </div>
+</div>
 
-            showMessage('Processando...', 'success');
 
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ code: code })
-                });
+<script>
+    // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI!
+    const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
 
-                const data = await response.json();
+    // --- FUNÇÕES DE CONTROLE DE VIEW (Tela) ---
 
-                if (response.ok) {
-                    showMessage(data.message, 'success');
-                    
-                    // Exibir modal de sucesso
-                    const successModal = document.getElementById('success-modal');
-                    successModal.style.display = 'flex';
-                    setTimeout(() => {
-                        successModal.classList.add('is-visible');
-                    }, 50);
-
-                } else {
-                    showMessage(data.message, 'error');
-                }
-
-            } catch (error) {
-                console.error('Erro na conexão com a API:', error);
-                showMessage('Erro de conexão. Verifique o servidor.', 'error');
-            }
-        }
-
-        // Inicia a animação da caixa principal
-        document.addEventListener('DOMContentLoaded', () => {
-            const mainBox = document.getElementById('login-form');
-            setTimeout(() => {
-                mainBox.style.opacity = 1;
-                mainBox.style.transform = 'translateY(0)';
-            }, 100);
+    function switchView(viewId) {
+        const views = document.querySelectorAll('.view-section');
+        views.forEach(view => {
+            view.classList.remove('active');
         });
+        document.getElementById(viewId).classList.add('active');
+    }
 
-    </script>
+    // --- FUNÇÕES DE CONTROLE DE MODAL ---
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('is-visible');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); 
+    }
+    
+    function showComingSoonModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modal.classList.add('is-visible');
+        }, 50);
+    }
+
+    function hideModalAndShowSystem(modalId) {
+        closeModal(modalId);
+        // Troca para a Tela do Sistema
+        switchView('system-view'); 
+    }
+
+    // --- FUNÇÃO DE MENSAGEM ---
+
+    function showMessage(msg, type) {
+        const messageElement = document.getElementById('message');
+        messageElement.textContent = msg;
+        messageElement.className = `message ${type}`;
+        messageElement.style.display = 'block';
+    }
+
+    // --- FUNÇÃO PRINCIPAL DE LOGIN ---
+
+    async function handleLogin() {
+        const code = document.getElementById('code-input').value.trim();
+
+        if (!code) {
+            showMessage('O código não pode estar vazio.', 'error');
+            return;
+        }
+
+        showMessage('Processando...', 'success');
+
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showMessage(data.message, 'success');
+                
+                // 1. Exibir modal de sucesso
+                const successModal = document.getElementById('success-modal');
+                successModal.style.display = 'flex';
+                setTimeout(() => { successModal.classList.add('is-visible'); }, 50);
+
+                // 2. Troca a view após 3 segundos
+                setTimeout(() => { 
+                    hideModalAndShowSystem('success-modal');
+                }, 3000); 
+
+            } else {
+                showMessage(data.message, 'error');
+            }
+
+        } catch (error) {
+            console.error('Erro na conexão com a API:', error);
+            showMessage('Erro de conexão. Verifique o servidor.', 'error');
+        }
+    }
+    
+    // Inicia a animação inicial mostrando a tela de login
+    document.addEventListener('DOMContentLoaded', () => {
+        switchView('login-view');
+    });
+
+</script>
 </body>
 </html>
