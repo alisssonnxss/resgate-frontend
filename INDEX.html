@@ -3,423 +3,837 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Resgate de Códigos - Acesso</title>
+    <title>SISTEMA DE RESGATE DE CÓDIGO ÚNICO</title>
     <style>
-        /* --- ESTILOS GERAIS --- */
+        :root {
+            /* Cores Dark Mode (Padrão) */
+            --cor-primaria: #00BFFF; /* Azul Claro Vibrante */
+            --cor-secundaria: #008DBC; /* Azul Mais Escuro */
+            --cor-fundo: #121212; /* Fundo Escuro Sólido */
+            --cor-card-fundo: #1E1E1E; /* Card Escuro */
+            --cor-texto-principal: #F0F0F0;
+            --cor-texto-secundario: #A0A0A0;
+            --cor-aviso-erro: #FF5252;
+            --cor-verde: #00E676;
+            --cor-amarelo-pendente: #FFD700;
+            --cor-borda: #333333;
+            --cor-input-fundo: #2A2A2A; 
+            --cor-hr: #3A3A3A;
+            --cor-hover-item: #252525;
+            
+            --cor-btn-principal: var(--cor-primaria);
+            --cor-btn-reabrir: var(--cor-verde);
+            --cor-btn-deletar: #D50000;
+            
+            --border-radius-main: 12px;
+            --border-radius-small: 6px;
+
+            /* Cores de Status para Histórico */
+            --status-pendente-cor: var(--cor-amarelo-pendente);
+            --status-concluido-cor: var(--cor-verde);
+            
+            /* Nova Cor para Botão de Suporte/WhatsApp */
+            --cor-btn-whatsapp: #25D366; 
+        }
+
+        body.light-mode {
+            /* Cores Light Mode */
+            --cor-primaria: #1E90FF;
+            --cor-secundaria: #1C86EE;
+            --cor-fundo: #F0F2F5; 
+            --cor-card-fundo: #FFFFFF; 
+            --cor-texto-principal: #333333; 
+            --cor-texto-secundario: #666666;
+            --cor-aviso-erro: #D32F2F; 
+            --cor-verde: #388E3C; 
+            --cor-amarelo-pendente: #FFC107;
+            --cor-borda: #DDDDDD;
+            --cor-input-fundo: #F8F8F8; 
+            --cor-hr: #EEEEEE;
+            --cor-hover-item: #F5F5F5;
+            
+            --cor-btn-deletar: #D32F2F;
+
+            /* Cores de Status para Histórico Light */
+            --status-pendente-cor: #FFB300;
+            --status-concluido-cor: #4CAF50;
+            
+            /* Nova Cor para Botão de Suporte/WhatsApp Light */
+            --cor-btn-whatsapp: #4CAF50; 
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            /* Fundo moderno */
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--cor-fundo);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
-            color: #333;
-        }
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-        /* --- CONTÊINER PRINCIPAL E TELAS --- */
-        .container {
-            width: 100%;
-            max-width: 400px;
-            position: relative;
-            min-height: 400px; /* Altura mínima para as views */
-        }
-        .view-section {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            box-sizing: border-box;
-            position: absolute;
-            top: 0;
-            left: 0;
-            min-height: 380px;
-            /* Transição para a troca de tela */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-            transform: translateY(20px);
-        }
-        .view-section.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+            margin: 0;
+            padding: 20px 10px;
+            color: var(--cor-texto-principal);
+            transition: background-color 0.2s, color 0.2s;
+            overflow-x: hidden;
         }
 
-        /* --- TÍTULOS --- */
-        h2 {
-            color: #1e3c72;
-            margin-bottom: 25px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
-        
-        /* --- INPUTS --- */
-        input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-            background-color: #f8f8f8;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus {
-            border-color: #2a5298;
-            box-shadow: 0 0 8px rgba(42, 82, 152, 0.4);
-            outline: none;
-        }
-
-        /* --- BOTÃO PRINCIPAL (ACESSAR) --- */
-        .access-btn {
-            background-color: #4CAF50; /* Verde */
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 17px;
-            font-weight: 600;
-            transition: background-color 0.3s, transform 0.1s;
-            width: 100%;
-            box-shadow: 0 4px #388e3c;
-        }
-        .access-btn:hover:not(:disabled) {
-            background-color: #43a047;
-            transform: translateY(-1px);
-            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-        }
-        .access-btn:disabled {
-            background-color: #999; 
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        
-        /* Mensagens de Status */
-        .message {
-            margin-top: 25px;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 500;
-            display: none;
-            text-align: left;
-        }
-        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-
-        /* --- BOTÕES FLUTUANTES NO TOPO (LOGIN) --- */
-        
-        /* Botão de Contato com o Suporte (Novo) */
-        .support-top-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #25d366; /* WhatsApp */
-            color: white;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background-color 0.3s;
-            z-index: 10;
-        }
-        .support-top-btn:hover {
-            background-color: #128c7e;
-        }
-
-        /* Botão Histórico (Login) */
-        .history-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #e0e0e0;
-            color: #555;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-            z-index: 10;
-        }
-        .history-btn:hover {
-            background-color: #ccc;
-        }
-
-        /* --- ESTILOS TELA INTERNA (SYSTEM VIEW) --- */
-        .system-content {
-            text-align: center;
-        }
-        .system-content h1 {
-            color: #1e3c72;
-            margin-bottom: 10px;
-        }
-        .system-content p {
-            font-size: 1.1em;
-            margin-bottom: 40px;
-            color: #555;
-        }
-        .action-buttons {
-            display: flex;
-            flex-direction: column; /* Coloca os botões um abaixo do outro */
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        /* Botões internos do sistema */
-        .btn-action {
-            padding: 15px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 17px;
-            font-weight: 600;
-            transition: background-color 0.3s, transform 0.1s;
-            text-decoration: none;
-            display: block; /* Garante que o link ocupe a largura total */
-            box-shadow: 0 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-support-system {
-            background-color: #25d366; 
-            color: white;
-        }
-        .btn-support-system:hover {
-            background-color: #128c7e;
-            transform: translateY(-1px);
-        }
-
-        .btn-history-system {
-            background-color: #f0ad4e; 
-            color: #333;
-        }
-        .btn-history-system:hover {
-            background-color: #ec971f;
-            transform: translateY(-1px);
-        }
-        
-        /* --- MODAL GERAL (Pop-up) --- */
-        .modal {
-            display: none;
+        /* ----------------------------------- */
+        /* TELA DE LOGIN (OVERLAY) */
+        /* ----------------------------------- */
+        .login-overlay {
             position: fixed;
-            z-index: 100;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.6);
+            background-color: var(--cor-fundo); 
+            z-index: 10000; 
+            display: flex;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            flex-direction: column;
+            transition: opacity 0.5s, visibility 0.5s;
         }
-        .modal-content {
-            background-color: #ffffff;
+        .login-box {
+            background-color: var(--cor-card-fundo);
             padding: 30px;
-            border-radius: 10px;
-            width: 85%;
+            border-radius: var(--border-radius-main);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             max-width: 350px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.3s ease-out;
+            width: 90%;
             text-align: center;
+            border: 1px solid var(--cor-borda);
         }
-        .modal.is-visible { opacity: 1; }
-        .modal.is-visible .modal-content { transform: scale(1); }
-        .close-btn {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 30px;
-            font-weight: normal;
+        .login-box h2 {
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        .login-box input {
+            margin-bottom: 15px;
+        }
+        
+        /* NOVO ESTILO: BOTÃO DE LOGIN MAIS BONITO */
+        .login-box button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius-small);
             cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            color: white;
+            background-color: var(--cor-primaria); 
+            box-shadow: 0 5px 20px rgba(0, 191, 255, 0.5); 
         }
-        .close-btn:hover { color: #333; }
+        .login-box button:hover {
+            background-color: var(--cor-secundaria);
+            box-shadow: 0 8px 25px rgba(0, 191, 255, 0.7);
+            transform: translateY(-3px); 
+        }
+
+        /* ----------------------------------- */
+        /* BOTÃO DE SUPORTE NO TOPO (NOVO) */
+        /* ----------------------------------- */
+        .top-support-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--cor-btn-whatsapp);
+            color: white;
+            padding: 10px 15px;
+            border-radius: var(--border-radius-main);
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            transition: all 0.2s;
+        }
+        .top-support-btn:hover {
+            background-color: #128C7E;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        /* Oculta na tela de login, aparece após o login */
+        body:not(.logged-in) .top-support-btn {
+            display: none; 
+        }
+        /* Mantém o botão visível mesmo quando o menu lateral está aberto */
+        .sidebar-open + .top-support-btn {
+            z-index: 997; /* Abaixo do overlay */
+        }
+
+        #msgLogin {
+            color: var(--cor-aviso-erro);
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .content-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s;
+        }
+        
+        body.logged-in .content-hidden {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- SIDEBAR E OUTROS ESTILOS (MANTIDOS) --- */
+        #menu-toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            font-size: 24px;
+            color: var(--cor-texto-principal);
+            background: var(--cor-card-fundo);
+            border: 1px solid var(--cor-borda);
+            padding: 5px 10px;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #menu-toggle-btn:hover {
+             color: var(--cor-primaria);
+             border-color: var(--cor-primaria);
+             transform: scale(1.05);
+        }
+
+        body:not(.logged-in) #menu-toggle-btn {
+             display: none;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0; 
+            position: fixed;
+            z-index: 9999; /* Z-index maior para cobrir o botão de suporte */
+            top: 0;
+            left: 0;
+            background-color: var(--cor-card-fundo);
+            overflow-x: hidden;
+            transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            padding-top: 60px;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.6);
+            border-right: 3px solid var(--cor-primaria);
+        }
+        
+        .sidebar-item {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.1em;
+            color: var(--cor-texto-principal);
+            display: flex; 
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s background-color, 0.2s color, 0.2s padding-left;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 1px solid var(--cor-hr);
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--cor-hover-item);
+            color: var(--cor-primaria);
+            padding-left: 30px; 
+        }
+        .sidebar-item.active {
+             background-color: var(--cor-hover-item);
+             color: var(--cor-primaria);
+             border-left: 5px solid var(--cor-primaria);
+        }
+        
+        /* Estilo para item de Suporte */
+        .sidebar-item-support {
+            background-color: var(--cor-btn-whatsapp);
+            color: white !important;
+            margin-top: 20px;
+            border-bottom: none;
+            border-radius: var(--border-radius-small);
+            margin: 20px 10px 10px 10px;
+            text-align: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: all 0.2s;
+        }
+        .sidebar-item-support:hover {
+             background-color: #128C7E;
+             padding-left: 25px; /* Não move para o lado */
+        }
+        
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            text-decoration: none;
+            color: var(--cor-texto-secundario);
+            transition: color 0.15s;
+        }
+        .sidebar .closebtn:hover {
+             color: var(--cor-aviso-erro);
+        }
+        
+        .sidebar-item-theme {
+            font-weight: bold;
+            color: var(--status-pendente-cor); 
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            display: none;
+        }
+
+        .container {
+            background-color: var(--cor-card-fundo); 
+            padding: 25px;
+            border-radius: var(--border-radius-main);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid var(--cor-borda);
+            position: relative;
+            margin-bottom: 30px; 
+            transition: background-color 0.2s, box-shadow 0.2s;
+            margin-top: 50px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--cor-primaria);
+        }
+
+        h1 {
+            color: var(--cor-texto-principal);
+            text-align: center;
+            margin: 0;
+            font-size: 1.6em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        
+        .tab-content { display: none; padding-top: 10px; }
+        .tab-content.active { display: block; }
+
+        textarea, input[type="text"], input[type="search"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--cor-borda);
+            background-color: var(--cor-input-fundo);
+            color: var(--cor-texto-principal);
+            border-radius: var(--border-radius-small);
+            box-sizing: border-box;
+            font-size: 0.95em;
+            transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .container button:not(.delete-button, .status-button) {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            color: white;
+            background-color: var(--cor-btn-principal);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+        }
+        
+        .container button:hover:not(.delete-button, .status-button) {
+            background-color: var(--cor-secundaria);
+            box-shadow: 0 6px 18px rgba(0, 191, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .reopen-button {
+            background-color: var(--cor-btn-reabrir) !important;
+            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+        .reopen-button:hover {
+            background-color: #00CC66 !important;
+            box-shadow: 0 6px 18px rgba(0, 230, 118, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* --- ESTILOS DE HISTÓRICO (MANTIDOS) --- */
+        .historico-lista {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 30px 0;
+        }
+        .historico-titulo {
+            border-bottom: 2px solid var(--cor-hr);
+            padding-bottom: 8px;
+            margin-top: 20px;
+            color: var(--cor-texto-principal);
+            font-size: 1.2em;
+        }
+
+        .historico-item-wrapper {
+            display: flex;
+            align-items: center;
+            background-color: var(--cor-input-fundo); 
+            border-radius: var(--border-radius-small);
+            margin-bottom: 10px;
+            padding: 8px 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.2s;
+        }
+        .historico-item-wrapper:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .historico-item-wrapper[data-status="PENDING"] {
+            border-left: 4px solid var(--status-pendente-cor);
+        }
+        .historico-item-wrapper[data-status="COMPLETED"] {
+            border-left: 4px solid var(--status-concluido-cor);
+        }
+
+        .historico-item {
+            flex-grow: 1;
+            padding: 5px;
+            cursor: pointer;
+            background-color: transparent;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .item-nome {
+            font-weight: 700;
+            color: var(--cor-texto-principal);
+            font-size: 1em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 60%;
+        }
+        .item-data {
+            font-size: 0.75em;
+            color: var(--cor-texto-secundario);
+            font-style: italic;
+        }
+        .item-info span {
+            font-size: 0.85em;
+            color: var(--cor-texto-secundario);
+            font-weight: 500;
+        }
+        
+        .status-button {
+            display: block;
+            width: 100%;
+            padding: 6px 10px;
+            margin-top: 8px;
+            font-size: 0.8em;
+            border: none;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--cor-texto-principal);
+            background-color: var(--cor-card-fundo); 
+            transition: background-color 0.15s, transform 0.1s;
+        }
+        .status-button:hover {
+            background-color: var(--cor-hover-item);
+            transform: translateY(-1px);
+        }
+        
+        .delete-button {
+            background-color: transparent;
+            color: var(--cor-btn-deletar);
+            border: none;
+            width: 30px;
+            height: 30px;
+            line-height: 1;
+            font-size: 1.2em; 
+            font-weight: bold;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.15s; 
+            border-radius: 50%;
+        }
+        .delete-button:hover {
+            background-color: rgba(213, 0, 0, 0.1); 
+            color: #FF1744; 
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
+    
+    <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="top-support-btn" title="Fale com nosso Suporte">
+        💬 Contato com o Suporte
+    </a>
 
-<div class="container">
-
-    <div id="login-view" class="view-section active">
-        
-        <a href="https://wa.me/553196373580" target="_blank" class="support-top-btn" title="Fale Conosco">
-            Contato com o Suporte
-        </a>
-        
-        <button class="history-btn" onclick="showComingSoonModal('coming-soon-modal-login')">Ver Histórico</button>
-
-        <h2>ACESSAR SISTEMA</h2>
-
-        <input type="text" id="code-input" placeholder="Insira o código de acesso" maxlength="15">
-        
-        <button class="access-btn" onclick="handleLogin()">ACESSAR SISTEMA</button>
-
-        <div id="message" class="message"></div>
-    </div>
-
-    <div id="system-view" class="view-section">
-        <div class="system-content">
-            <h1>ACESSO LIBERADO!</h1>
-            <p>Seu código foi validado. Escolha uma opção abaixo.</p>
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>ACESSO AO SISTEMA DE RESGATE</h2>
+            <p style="color: var(--cor-texto-secundario); margin-bottom: 20px;">Insira o código de acesso único.</p>
             
-            <div class="action-buttons">
-                
-                <a href="https://wa.me/553196373580" target="_blank" class="btn-action btn-support-system">
-                    Entrar em Contato com Suporte
-                </a>
+            <input type="text" id="inputCodigoUnico" placeholder="Digite seu código aqui..." autocomplete="off" maxlength="15">
 
-                <button class="btn-action btn-history-system" onclick="showComingSoonModal('coming-soon-modal-system')">
-                    Histórico (Disponível em Breve)
-                </button>
-            </div>
-            
+            <button onclick="fazerLogin()">ACESSAR SISTEMA</button>
+
+            <p id="msgLogin">Código inválido, já usado ou expirado.</p>
         </div>
     </div>
-</div>
 
-<div id="success-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="hideModalAndShowSystem('success-modal')">&times;</span>
-        <h3>ACESSO CONCEDIDO!</h3>
-        <p>Aguarde o processamento e o acesso ao sistema...</p>
-    </div>
-</div>
+    <button id="menu-toggle-btn" class="content-hidden" onclick="openSidebar()">☰</button>
 
-<div id="coming-soon-modal-login" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('coming-soon-modal-login')">&times;</span>
-        <h3>EM BREVE</h3>
-        <p>A função Histórico está em desenvolvimento e estará **disponível em breve**.</p>
-    </div>
-</div>
+    <div class="overlay" onclick="closeSidebar()"></div>
 
-<div id="coming-soon-modal-system" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('coming-soon-modal-system')">&times;</span>
-        <h3>EM BREVE</h3>
-        <p>A função Histórico está em desenvolvimento e estará **disponível em breve**.</p>
-    </div>
-</div>
-
-
-<script>
-    // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI!
-    const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
-
-    // --- FUNÇÕES DE CONTROLE DE VIEW (Tela) ---
-
-    function switchView(viewId) {
-        const views = document.querySelectorAll('.view-section');
-        views.forEach(view => {
-            view.classList.remove('active');
-        });
-        document.getElementById(viewId).classList.add('active');
-    }
-
-    // --- FUNÇÕES DE CONTROLE DE MODAL ---
-
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.classList.remove('is-visible');
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300); 
-    }
-    
-    function showComingSoonModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.style.display = 'flex';
-        setTimeout(() => {
-            modal.classList.add('is-visible');
-        }, 50);
-    }
-
-    // Função para fechar o modal e MUDAR para a tela do sistema
-    function hideModalAndShowSystem(modalId) {
-        closeModal(modalId);
-        // Troca para a Tela do Sistema
-        switchView('system-view'); 
-    }
-
-    // --- FUNÇÃO DE MENSAGEM ---
-
-    function showMessage(msg, type) {
-        const messageElement = document.querySelector('#login-view #message');
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
         
-        messageElement.textContent = msg;
-        messageElement.className = `message ${type}`;
-        messageElement.style.display = 'block';
-    }
+        <a class="sidebar-item" id="nav-gerar" onclick="changeTab('gerar')">🆕 Novo Resgate</a>
+        <a class="sidebar-item" id="nav-antecipar" onclick="changeTab('antecipar')">⭐ Salvar Pendente</a>
+        <a class="sidebar-item" id="nav-resgateAntigo" onclick="changeTab('resgateAntigo')">🗝️ Resgate Antigo</a>
+        
+        <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📜 Histórico de Resgates</a>
+        
+        <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="sidebar-item sidebar-item-support" onclick="closeSidebar()">
+            📞 Suporte (WhatsApp)
+        </a>
 
-    // --- FUNÇÃO PRINCIPAL DE LOGIN ---
+        <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme(); closeSidebar();">
+            <span id="sidebar-theme-text">☀️ Mudar Tema</span>
+        </a>
 
-    async function handleLogin() {
-        const code = document.getElementById('code-input').value.trim();
-        const accessBtn = document.querySelector('.access-btn');
+        <a class="sidebar-item" onclick="fazerLogout();">🚪 Sair (Usar Outro Código)</a>
+    </div>
 
-        if (!code) {
-            showMessage('O código não pode estar vazio.', 'error');
-            return;
+    <div class="container content-hidden">
+        <div class="header-content">
+            <h1>SISTEMA DE RESGATE DE CÓDIGO ÚNICO</h1>
+        </div>
+
+        <div id="gerar" class="tab-content active">
+            <label for="linkOriginal">Cole o Link de Origem (Ex: help.garena.com?ref=...)</label>
+            <textarea id="linkOriginal" placeholder="Cole o link de origem completo aqui..."></textarea>
+
+            <button onclick="gerarLink()">Gerar e Abrir Link</button>
+
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid var(--cor-hr);">
+
+            <label for="linkResultado">Link de Resgate Gerado:</label>
+            <input type="text" id="linkResultado" value="Aguardando..." readonly>
+
+            <button class="reopen-button" onclick="reabrirLink()" id="btnReabrir" disabled style="margin-top: 10px;">
+                ➡️ Reabrir Link Atual
+            </button>
+            
+            <p class="aviso" id="avisoErroGerar" style="display:none; color: var(--cor-aviso-erro); margin-top: 10px;">
+                🚨 Por favor, cole um link válido que contenha '?' (ponto de interrogação).
+            </p>
+        </div>
+        
+        <div id="antecipar" class="tab-content">
+            <label for="linkAntecipar">Cole o Link para Salvar como Pendente:</label>
+            <textarea id="linkAntecipar" placeholder="Cole o link completo aqui. Ele será salvo para resgatar depois."></textarea>
+
+            <button onclick="salvarAntecipar()">Salvar como Pendente</button>
+
+            <p class="aviso" id="avisoErroAntecipar" style="display:none; color: var(--cor-aviso-erro); margin-top: 10px;">
+                🚨 Por favor, cole um link válido que contenha '?' (ponto de interrogação).
+            </p>
+        </div>
+
+        <div id="resgateAntigo" class="tab-content">
+            <label for="linkAccessAntigo">Cole o Access Token/URL Inteira (Ex: access_token=...) </label>
+            <textarea id="linkAccessAntigo" placeholder="Cole o access token completo ou a URL inteira aqui..."></textarea>
+
+            <button onclick="resgateAntigo()">Resgatar com Método Antigo</button>
+
+            <p class="aviso" id="avisoErroAntigo" style="display:none; color: var(--cor-aviso-erro); margin-top: 10px;">
+                🚨 Por favor, cole um token válido que contenha 'access_token=' ou '?'.
+            </p>
+        </div>
+        
+        <div id="historico" class="tab-content">
+            <label for="searchHistorico">Pesquisar no Histórico (Em Breve):</label>
+            <input type="search" id="searchHistorico" placeholder="Digite um nome ou data para buscar..." disabled>
+            
+            <h3 class="historico-titulo">Histórico de Resgates</h3>
+
+            <p style="color: var(--cor-texto-secundario); text-align: center; margin-top: 30px;">
+                **Função de Histórico em Desenvolvimento.** Aguarde as próximas atualizações!
+            </p>
+            
+            <ul id="historicoLista" class="historico-lista">
+                <li class="historico-item-wrapper" data-status="COMPLETED">
+                    <div class="historico-item">
+                        <div class="item-header">
+                            <span class="item-nome">Resgate #123456</span>
+                            <span class="item-data">25/Out/2025</span>
+                        </div>
+                        <div class="item-info">
+                            <span>Status: Concluído</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="historico-item-wrapper" data-status="PENDING">
+                    <div class="historico-item">
+                        <div class="item-header">
+                            <span class="item-nome">Link Pendente de Resgate</span>
+                            <span class="item-data">26/Out/2025</span>
+                        </div>
+                        <div class="item-info">
+                            <span>Status: Pendente</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <div class="footer content-hidden">
+        Sistema de Resgate de Código Único
+    </div>
+
+    <script>
+        // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI APÓS O DEPLOY NO RENDER!
+        const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
+
+        // ⚠️ IMPORTANTE: SUBSTITUA ESTE NÚMERO PELO SEU TELEFONE DE SUPORTE NO WHATSAPP (COM CÓDIGO DO PAÍS E DDD)
+        const WHATSAPP_NUMBER = "553196373580"; 
+
+        const LINK_BASE_NOVO = "https://reward.ff.garena.com/en?";
+        const LINK_BASE_ANTIGO = "https://reward.ff.garena.com/";
+        
+        const STORAGE_KEY = 'resgateHistory';
+        const THEME_KEY = 'siteTheme';
+        const TOKEN_KEY = 'sessionTokenUnique'; 
+
+        // --- FUNÇÕES DE LOGIN (INTEGRAÇÃO COM O BACKEND) ---
+        
+        function liberarAcessoTotal() {
+            document.body.classList.add('logged-in');
+            document.getElementById('loginOverlay').style.display = 'none';
+            // Atualiza os links do WhatsApp com o número correto
+            document.querySelectorAll('.top-support-btn, .sidebar-item-support').forEach(a => {
+                a.href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá!%20Preciso%20de%20suporte%20com%20o%20sistema%20de%20resgate.`;
+            });
+            changeTab('gerar'); 
         }
 
-        // Trava o botão
-        accessBtn.disabled = true;
-        accessBtn.textContent = 'Aguarde...';
+        async function fazerLogin() {
+            const input = document.getElementById('inputCodigoUnico');
+            const msg = document.getElementById('msgLogin');
+            const codigoDigitado = input.value.trim();
+            
+            msg.style.display = 'none';
 
-        showMessage('Processando...', 'success');
-
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code: code })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                showMessage(data.message, 'success');
-                
-                // 1. Exibir modal de sucesso
-                const successModal = document.getElementById('success-modal');
-                successModal.style.display = 'flex';
-                setTimeout(() => { successModal.classList.add('is-visible'); }, 50);
-
-                // 2. Troca a view automaticamente após 3 segundos
-                setTimeout(() => { 
-                    hideModalAndShowSystem('success-modal');
-                }, 3000); 
-
-            } else {
-                showMessage(data.message, 'error');
+            if (!codigoDigitado) {
+                msg.innerText = "❌ Digite o código de acesso.";
+                msg.style.display = 'block';
+                return;
             }
 
-        } catch (error) {
-            console.error('Erro na conexão com a API:', error);
-            showMessage('Erro de conexão. Verifique o servidor.', 'error');
-        } finally {
-            // Reativa o botão
-            accessBtn.disabled = false;
-            accessBtn.textContent = 'ACESSAR SISTEMA';
-        }
-    }
-    
-    // Inicia a animação inicial mostrando a tela de login
-    document.addEventListener('DOMContentLoaded', () => {
-        switchView('login-view');
-    });
+            try {
+                // Envia o código para o Backend (Render)
+                const response = await fetch(`${BACKEND_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: codigoDigitado })
+                });
 
-</script>
+                const data = await response.json();
+
+                if (response.ok) {
+                    // SUCESSO! O Backend invalidou o código e retornou um token.
+                    localStorage.setItem(TOKEN_KEY, data.sessionToken); 
+                    liberarAcessoTotal();
+                } else {
+                    // FALHA: Código inválido, já usado ou erro do servidor.
+                    msg.innerText = data.message || 'Erro de login. Tente novamente.';
+                    msg.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Erro de conexão com o Backend:', error);
+                msg.innerText = '❌ Erro de conexão. Servidor indisponível ou URL errada.';
+                msg.style.display = 'block';
+            }
+        }
+        
+        function fazerLogout() {
+            localStorage.removeItem(TOKEN_KEY);
+            document.body.classList.remove('logged-in');
+            document.getElementById('loginOverlay').style.display = 'flex';
+        }
+        
+        function checkLoginStatus() {
+            const token = localStorage.getItem(TOKEN_KEY);
+            
+            if (token) {
+                liberarAcessoTotal();
+            } else {
+                document.getElementById('loginOverlay').style.display = 'flex';
+            }
+        }
+
+        // --- FUNÇÕES DE SIDEBAR E NAVEGAÇÃO ---
+        function openSidebar() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.querySelector(".overlay").style.display = "block";
+            document.body.classList.add('sidebar-open'); // Adiciona classe ao body
+        }
+
+        function closeSidebar() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.querySelector(".overlay").style.display = "none";
+            document.body.classList.remove('sidebar-open'); // Remove classe do body
+        }
+        
+        function changeTab(tabName) {
+            closeSidebar(); 
+            
+            let tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(`nav-${tabName}`).classList.add('active');
+        }
+        
+        // --- FUNÇÕES DE TEMA ---
+        function applyTheme(isLight) {
+            const body = document.body;
+            const toggleSidebar = document.getElementById('sidebar-theme-text');
+            
+            if (isLight) {
+                body.classList.add('light-mode');
+                toggleSidebar.innerHTML = '🌙 Mudar para Modo Escuro';
+                localStorage.setItem(THEME_KEY, 'light');
+            } else {
+                body.classList.remove('light-mode');
+                toggleSidebar.innerHTML = '☀️ Mudar para Modo Claro';
+                localStorage.setItem(THEME_KEY, 'dark');
+            }
+        }
+        function toggleTheme() {
+            const isLight = document.body.classList.contains('light-mode');
+            applyTheme(!isLight);
+        }
+        function loadTheme() {
+            const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+            applyTheme(savedTheme === 'light');
+        }
+        
+        // --- GERAÇÃO E OUTROS ---
+        
+        function validarLink(link, avisoId, deveConter = '?') {
+            const avisoErro = document.getElementById(avisoId);
+            const isValid = link.includes(deveConter);
+            
+            if (!isValid) {
+                avisoErro.style.display = 'block';
+                return false; 
+            }
+
+            avisoErro.style.display = 'none';
+            return true;
+        }
+
+        function gerarLink() {
+            const linkOriginal = document.getElementById('linkOriginal').value.trim();
+            const linkResultadoInput = document.getElementById('linkResultado');
+            const btnReabrir = document.getElementById('btnReabrir');
+            
+            btnReabrir.disabled = true;
+            linkResultadoInput.value = "Aguardando...";
+
+            if (!validarLink(linkOriginal, 'avisoErroGerar', '?')) return;
+
+            const stringDeConsulta = linkOriginal.substring(linkOriginal.indexOf('?') + 1);
+            const novoLink = LINK_BASE_NOVO + stringDeConsulta;
+            
+            linkResultadoInput.value = novoLink;
+            btnReabrir.disabled = false;
+
+            window.open(novoLink, '_blank');
+        }
+        
+        function salvarAntecipar() {
+            const linkAntecipar = document.getElementById('linkAntecipar').value.trim();
+            
+            if (!validarLink(linkAntecipar, 'avisoErroAntecipar', '?')) return;
+            
+            alert("Link salvo com sucesso (localmente)! Você pode copiá-lo quando precisar.");
+            
+            document.getElementById('linkAntecipar').value = ''; 
+        }
+        
+        function reabrirLink() {
+            const linkResultado = document.getElementById('linkResultado').value;
+            
+            if (linkResultado && (linkResultado.startsWith(LINK_BASE_NOVO) || linkResultado.startsWith(LINK_BASE_ANTIGO))) {
+                 window.open(linkResultado, '_blank');
+            }
+        }
+        
+        function resgateAntigo() {
+            const linkAccessAntigo = document.getElementById('linkAccessAntigo').value.trim();
+            
+            if (!validarLink(linkAccessAntigo, 'avisoErroAntigo', 'access_token=')) return;
+            
+            let stringDeConsulta;
+            if (linkAccessAntigo.includes('?')) {
+                stringDeConsulta = linkAccessAntigo.substring(linkAccessAntigo.indexOf('?') + 1);
+            } else if (linkAccessAntigo.startsWith('access_token=')) {
+                stringDeConsulta = linkAccessAntigo;
+            } else {
+                document.getElementById('avisoErroAntigo').style.display = 'block';
+                return;
+            }
+
+            const novoLink = LINK_BASE_ANTIGO + stringDeConsulta;
+            
+            window.open(novoLink, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            checkLoginStatus(); 
+        });
+
+    </script>
 </body>
 </html>
