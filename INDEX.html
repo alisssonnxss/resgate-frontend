@@ -291,7 +291,7 @@
         .sidebar-item-theme {
             font-weight: bold;
             color: var(--status-pendente-cor); 
-            border-top: 1px solid var(--cor-hr);
+            border-top: 1px solid var(--cor-hr); /* Separador visual */
             border-bottom: none;
             margin-bottom: 10px;
         }
@@ -519,7 +519,7 @@
         .historico-item-wrapper[data-type="ANTIGO"] {
             border-left: 4px solid var(--status-antigo-cor);
         }
-        .historico-item-wrapper[data-type="GERAR"] { /* Mantido para retrocompatibilidade, mas será ENVIADO */
+        .historico-item-wrapper[data-type="GERAR"] { 
             border-left: 4px solid var(--status-enviado-cor);
         }
 
@@ -691,11 +691,12 @@
             <a class="sidebar-item" id="nav-resgateAntigo" onclick="changeTab('resgateAntigo')">🔑 Resgate Acesso Antigo</a>
             <a class="sidebar-item" id="nav-testar" onclick="changeTab('testar')">🛠️ Testar Código</a> 
             <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
+            
+            <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme();">
+                <span id="sidebar-theme-text">🌙 Mudar para Modo Escuro</span>
+            </a>
         </div>
         
-        <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme();">
-            <span id="sidebar-theme-text">☀️ Mudar para Modo Claro</span>
-        </a>
     </div>
 
     <div class="container content-hidden">
