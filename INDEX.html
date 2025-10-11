@@ -510,7 +510,7 @@
         }
         
         /* Cores de borda baseadas no tipo de resgate */
-        .historico-item-wrapper[data-type="ENVIADO"] { /* Novo status */
+        .historico-item-wrapper[data-type="ENVIADO"] { 
             border-left: 4px solid var(--status-enviado-cor);
         }
         .historico-item-wrapper[data-type="ANTECIPAR"] {
@@ -527,46 +527,51 @@
             flex-grow: 1;
             padding: 5px;
             background-color: transparent;
-            cursor: pointer; /* Mantém o cursor para abrir o link */
+            cursor: pointer; 
         }
         
-        /* Coluna de ações (Delete e Marcar como Enviado) */
+        /* NOVO ESTILO: Botões de Ação para harmonia em qualquer tela */
         .item-actions {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            /* Usa row-reverse para o botão de deletar (pequeno) ficar na ponta direita */
+            flex-direction: row-reverse; 
+            align-items: center;
+            justify-content: flex-end; /* Alinha tudo à direita */
             margin-left: 10px;
             flex-shrink: 0;
-            gap: 5px;
-            width: 100%; /* Ocupa a linha inteira em telas pequenas */
-            margin-top: 8px;
-            border-top: 1px dashed var(--cor-hr);
-            padding-top: 8px;
-        }
-        
-        /* Ajuste para telas maiores, onde o botão pode ficar ao lado */
-        @media (min-width: 400px) {
-            .item-actions {
-                width: auto;
-                margin-top: 0;
-                border-top: none;
-                padding-top: 0;
-                flex-direction: row;
-                align-items: center;
-            }
-            .historico-item {
-                 padding-right: 15px; /* Espaçamento entre info e ações */
-            }
-            .historico-item-wrapper {
-                 flex-wrap: nowrap;
-            }
-        }
-        
-        /* Ajuste fino dos botões de ação */
-        .delete-button, .mark-sent-button-compact {
-             flex-shrink: 0;
+            gap: 8px;
+            
+            /* Em telas pequenas, garante que os botões fiquem alinhados horizontalmente */
+            width: auto; 
+            margin-top: 0;
+            border-top: none; 
+            padding-top: 0;
         }
 
+        @media (max-width: 400px) {
+             /* Em telas muito pequenas, o botão "Marcar como Enviado" deve ter 100% para não quebrar o layout */
+             .item-actions {
+                 width: 100%; 
+                 flex-direction: column-reverse; /* Força o botão maior para cima */
+                 align-items: stretch; /* Estica os botões para largura total */
+                 gap: 5px;
+                 margin-top: 8px;
+                 border-top: 1px dashed var(--cor-hr);
+                 padding-top: 8px;
+             }
+             .mark-sent-button-compact {
+                 width: 100%;
+                 margin-right: 0 !important;
+             }
+             .delete-button {
+                 /* Em tela pequena, deixa o delete mais discreto ou remove a largura forçada */
+                 align-self: flex-end;
+                 width: auto;
+                 height: auto;
+                 padding: 5px;
+             }
+        }
+        
         .item-header {
             display: flex;
             justify-content: space-between;
@@ -604,26 +609,27 @@
             font-weight: 600;
             padding: 3px 6px;
             border-radius: 4px;
-            color: #121212; /* Cor de texto padrão para tags */
+            color: #121212; 
             margin-left: 10px;
             background-color: var(--cor-borda);
         }
-        /* Nova cor para status */
         .historico-item-wrapper[data-type="ENVIADO"] .status-tag {
             background-color: var(--status-enviado-cor);
+            color: white; /* Fica melhor em fundo verde */
         }
         .historico-item-wrapper[data-type="ANTECIPAR"] .status-tag {
             background-color: var(--status-pendente-cor);
         }
         .historico-item-wrapper[data-type="ANTIGO"] .status-tag {
             background-color: var(--status-antigo-cor);
+            color: white;
         }
         
         .delete-button {
             background-color: transparent;
             color: var(--cor-btn-deletar);
             border: none;
-            width: 30px;
+            width: 30px; /* Mantém o tamanho do hit area */
             height: 30px;
             line-height: 1;
             font-size: 1.2em; 
@@ -643,18 +649,26 @@
         .historico-item-wrapper[data-type="ENVIADO"] .mark-sent-button-compact {
             display: none;
         }
+        
+        /* ESTILO NOVO E HARMONIZADO PARA O BOTÃO COMPACTO */
         .mark-sent-button-compact {
              background-color: var(--cor-btn-enviado);
              color: white;
              border: none;
-             padding: 5px 10px;
+             padding: 6px 10px; /* Mais fino e menor */
              border-radius: var(--border-radius-small);
-             font-size: 0.75em;
-             font-weight: bold;
+             font-size: 0.75em; /* Fonte menor */
+             font-weight: 600;
              cursor: pointer;
-             transition: background-color 0.2s;
+             transition: background-color 0.2s, transform 0.1s;
              flex-shrink: 0;
              white-space: nowrap;
+             /* Garante que ele fique ao lado do delete button em row-reverse */
+             margin-right: 10px; 
+        }
+        .mark-sent-button-compact:hover {
+             background-color: #388E3C;
+             transform: translateY(-1px);
         }
 
     </style>
@@ -1107,20 +1121,7 @@ Failed to redeem. This code is invalid or redeemed.
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'item-actions';
                 
-                // Botão "Marcar como Enviado" (só aparece se for PENDENTE)
-                if (currentType === 'ANTECIPAR') {
-                    const markSentButton = document.createElement('button');
-                    markSentButton.className = 'mark-sent-button-compact';
-                    markSentButton.innerText = 'Marcar como Enviado';
-                    // Chama a função markAsSent com o índice real
-                    markSentButton.onclick = (e) => {
-                        e.stopPropagation();
-                        markAsSent(originalIndex);
-                    };
-                    actionsDiv.appendChild(markSentButton);
-                }
-
-                // Botão Deletar
+                // Botão Deletar (colocado primeiro para row-reverse levá-lo para a direita)
                 const deleteButton = document.createElement('button');
                 deleteButton.className = 'delete-button';
                 deleteButton.title = 'Apagar Item';
@@ -1130,6 +1131,20 @@ Failed to redeem. This code is invalid or redeemed.
                     deleteHistoryItem(originalIndex);
                 };
                 actionsDiv.appendChild(deleteButton);
+                
+                // Botão "Marcar como Enviado" (só aparece se for PENDENTE)
+                if (currentType === 'ANTECIPAR') {
+                    const markSentButton = document.createElement('button');
+                    markSentButton.className = 'mark-sent-button-compact';
+                    markSentButton.innerText = 'Enviado';
+                    // Chama a função markAsSent com o índice real
+                    markSentButton.onclick = (e) => {
+                        e.stopPropagation();
+                        markAsSent(originalIndex);
+                    };
+                    actionsDiv.appendChild(markSentButton);
+                }
+
                 
                 li.appendChild(actionsDiv);
                 list.appendChild(li);
