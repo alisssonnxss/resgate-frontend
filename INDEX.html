@@ -25,14 +25,15 @@
             --cor-btn-reabrir: var(--cor-verde);
             --cor-btn-deletar: #D50000;
             --cor-btn-testar: #FFA500; /* Laranja para Teste */
+            --cor-btn-enviado: #4CAF50; /* Verde para novo status */
             
             --border-radius-main: 12px;
             --border-radius-small: 6px;
 
             /* Cores de Status para Histórico */
             --status-pendente-cor: var(--cor-amarelo-pendente);
-            --status-concluido-cor: var(--cor-verde);
-            --status-antigo-cor: var(--cor-primaria); /* Novo status: Resgate Antigo */
+            --status-enviado-cor: var(--cor-btn-enviado); /* Novo status: Enviado */
+            --status-antigo-cor: var(--cor-primaria); 
             
             /* Nova Cor para Botão de Suporte/WhatsApp */
             --cor-btn-whatsapp: #25D366; 
@@ -56,10 +57,11 @@
             
             --cor-btn-deletar: #D32F2F;
             --cor-btn-testar: #FF8C00; 
+            --cor-btn-enviado: #4CAF50;
 
             /* Cores de Status para Histórico Light */
             --status-pendente-cor: #FFB300;
-            --status-concluido-cor: #4CAF50;
+            --status-enviado-cor: #4CAF50;
             --status-antigo-cor: var(--cor-primaria);
             
             /* Nova Cor para Botão de Suporte/WhatsApp Light */
@@ -151,6 +153,7 @@
         .top-button {
             position: fixed;
             top: 20px;
+            right: 20px; /* Alinhado à direita */
             z-index: 1000;
             padding: 10px 15px;
             border-radius: var(--border-radius-main);
@@ -164,7 +167,6 @@
         }
         
         .top-support-btn {
-            right: 20px; /* Alinhado à direita */
             background-color: var(--cor-btn-whatsapp);
             color: white;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
@@ -175,48 +177,10 @@
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
             transform: translateY(-2px);
         }
-        
-        /* BOTÃO DE TEMA E MENU */
-        #menu-toggle-btn, #theme-toggle-btn {
-            left: 20px;
-            z-index: 1000;
-            font-size: 24px;
-            color: var(--cor-texto-principal);
-            background: var(--cor-card-fundo);
-            border: 1px solid var(--cor-borda);
-            padding: 5px 10px;
-            border-radius: var(--border-radius-small);
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            text-align: center;
-            line-height: 1; 
-        }
-        
-        #theme-toggle-btn {
-             left: 90px; /* Posiciona o botão de tema ao lado do botão de menu */
-             width: 45px;
-             font-size: 1.5em;
-             padding: 5px;
-             line-height: 1.5em; 
-        }
 
-        #menu-toggle-btn:hover, #theme-toggle-btn:hover {
-             color: var(--cor-primaria);
-             border-color: var(--cor-primaria);
-             transform: scale(1.05);
-        }
-        
-        body:not(.logged-in) #menu-toggle-btn,
-        body:not(.logged-in) #theme-toggle-btn,
-        body:not(.logged-in) .top-support-btn {
-             display: none;
-        }
-
-        /* Ajuste para o botão de menu quando o de tema está presente */
-        #menu-toggle-btn {
-            left: 20px; 
-            padding: 5px 10px;
+        /* Oculta na tela de login, aparece após o login */
+        body:not(.logged-in) .top-button {
+            display: none; 
         }
 
         #msgLogin {
@@ -238,6 +202,31 @@
         }
 
         /* --- SIDEBAR --- */
+        #menu-toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            font-size: 24px;
+            color: var(--cor-texto-principal);
+            background: var(--cor-card-fundo);
+            border: 1px solid var(--cor-borda);
+            padding: 5px 10px;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #menu-toggle-btn:hover {
+             color: var(--cor-primaria);
+             border-color: var(--cor-primaria);
+             transform: scale(1.05);
+        }
+
+        body:not(.logged-in) #menu-toggle-btn {
+             display: none;
+        }
+
         .sidebar {
             height: 100%;
             width: 0; 
@@ -298,14 +287,13 @@
              color: var(--cor-aviso-erro);
         }
         
-        /* Botão de tema removido daqui, este estilo foi mantido por segurança */
+        /* NOVO ESTILO PARA O BOTÃO DE TEMA NO RODAPÉ DO MENU */
         .sidebar-item-theme {
             font-weight: bold;
             color: var(--status-pendente-cor); 
             border-top: 1px solid var(--cor-hr);
             border-bottom: none;
             margin-bottom: 10px;
-            display: none; 
         }
 
         .overlay {
@@ -368,7 +356,7 @@
             transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
         }
         
-        .container button:not(.delete-button, .status-button) {
+        .container button:not(.delete-button, .status-button, .mark-sent-button) {
             width: 100%;
             padding: 15px;
             border: none;
@@ -383,7 +371,7 @@
             box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
         }
         
-        .container button:hover:not(.delete-button, .status-button) {
+        .container button:hover:not(.delete-button, .status-button, .mark-sent-button) {
             background-color: var(--cor-secundaria);
             box-shadow: 0 6px 18px rgba(0, 191, 255, 0.4);
             transform: translateY(-2px);
@@ -409,6 +397,26 @@
             box-shadow: 0 6px 18px rgba(255, 165, 0, 0.4);
         }
         
+        /* Botão de Marcar como Enviado (aba Histórico) */
+        .mark-sent-button {
+             background-color: var(--cor-btn-enviado);
+             color: white;
+             border: none;
+             padding: 8px 12px;
+             border-radius: var(--border-radius-small);
+             font-size: 0.8em;
+             font-weight: bold;
+             cursor: pointer;
+             margin-top: 10px;
+             display: block;
+             width: 100%;
+             transition: background-color 0.2s;
+        }
+        .mark-sent-button:hover {
+             background-color: #388E3C; 
+        }
+
+
         /* --- GUIA DE ERROS --- */
         .guide-container {
             margin-top: 30px;
@@ -492,7 +500,9 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             position: relative;
             transition: all 0.2s;
-            cursor: pointer;
+            
+            /* Ajusta o layout para permitir o botão 'Enviado' no item */
+            flex-wrap: wrap; 
         }
         .historico-item-wrapper:hover {
             transform: translateY(-2px);
@@ -500,8 +510,8 @@
         }
         
         /* Cores de borda baseadas no tipo de resgate */
-        .historico-item-wrapper[data-type="GERAR"] {
-            border-left: 4px solid var(--status-concluido-cor);
+        .historico-item-wrapper[data-type="ENVIADO"] { /* Novo status */
+            border-left: 4px solid var(--status-enviado-cor);
         }
         .historico-item-wrapper[data-type="ANTECIPAR"] {
             border-left: 4px solid var(--status-pendente-cor);
@@ -509,11 +519,52 @@
         .historico-item-wrapper[data-type="ANTIGO"] {
             border-left: 4px solid var(--status-antigo-cor);
         }
+        .historico-item-wrapper[data-type="GERAR"] { /* Mantido para retrocompatibilidade, mas será ENVIADO */
+            border-left: 4px solid var(--status-enviado-cor);
+        }
 
         .historico-item {
             flex-grow: 1;
             padding: 5px;
             background-color: transparent;
+            cursor: pointer; /* Mantém o cursor para abrir o link */
+        }
+        
+        /* Coluna de ações (Delete e Marcar como Enviado) */
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 10px;
+            flex-shrink: 0;
+            gap: 5px;
+            width: 100%; /* Ocupa a linha inteira em telas pequenas */
+            margin-top: 8px;
+            border-top: 1px dashed var(--cor-hr);
+            padding-top: 8px;
+        }
+        
+        /* Ajuste para telas maiores, onde o botão pode ficar ao lado */
+        @media (min-width: 400px) {
+            .item-actions {
+                width: auto;
+                margin-top: 0;
+                border-top: none;
+                padding-top: 0;
+                flex-direction: row;
+                align-items: center;
+            }
+            .historico-item {
+                 padding-right: 15px; /* Espaçamento entre info e ações */
+            }
+            .historico-item-wrapper {
+                 flex-wrap: nowrap;
+            }
+        }
+        
+        /* Ajuste fino dos botões de ação */
+        .delete-button, .mark-sent-button-compact {
+             flex-shrink: 0;
         }
 
         .item-header {
@@ -557,14 +608,15 @@
             margin-left: 10px;
             background-color: var(--cor-borda);
         }
-        .historico-item-wrapper[data-type="GERAR"] .status-tag {
-            background-color: var(--cor-verde);
+        /* Nova cor para status */
+        .historico-item-wrapper[data-type="ENVIADO"] .status-tag {
+            background-color: var(--status-enviado-cor);
         }
         .historico-item-wrapper[data-type="ANTECIPAR"] .status-tag {
-            background-color: var(--cor-amarelo-pendente);
+            background-color: var(--status-pendente-cor);
         }
         .historico-item-wrapper[data-type="ANTIGO"] .status-tag {
-            background-color: var(--cor-primaria);
+            background-color: var(--status-antigo-cor);
         }
         
         .delete-button {
@@ -587,14 +639,22 @@
             transform: scale(1.1);
         }
         
-        /* Media query para telas menores (ajusta posição dos botões de topo) */
-        @media (max-width: 500px) {
-            .top-support-btn {
-                top: 70px; /* Move o botão de suporte para baixo */
-            }
-            #menu-toggle-btn, #theme-toggle-btn {
-                top: 20px; 
-            }
+        /* Oculta o botão de Marcar como Enviado quando o item JÁ FOR Enviado */
+        .historico-item-wrapper[data-type="ENVIADO"] .mark-sent-button-compact {
+            display: none;
+        }
+        .mark-sent-button-compact {
+             background-color: var(--cor-btn-enviado);
+             color: white;
+             border: none;
+             padding: 5px 10px;
+             border-radius: var(--border-radius-small);
+             font-size: 0.75em;
+             font-weight: bold;
+             cursor: pointer;
+             transition: background-color 0.2s;
+             flex-shrink: 0;
+             white-space: nowrap;
         }
 
     </style>
@@ -604,12 +664,6 @@
     <a href="javascript:void(0)" target="_blank" class="top-button top-support-btn" title="Fale com nosso Suporte">
         💬 Suporte
     </a>
-
-    <button id="menu-toggle-btn" class="top-button content-hidden" onclick="openSidebar()" title="Abrir Menu">☰</button>
-    
-    <button id="theme-toggle-btn" class="top-button content-hidden" onclick="toggleTheme()" title="Alternar Tema">
-        <span id="theme-icon">☀️</span>
-    </button>
 
     <div id="loginOverlay" class="login-overlay">
         <div class="login-box">
@@ -624,6 +678,8 @@
         </div>
     </div>
 
+    <button id="menu-toggle-btn" class="content-hidden" onclick="openSidebar()">☰</button>
+
     <div class="overlay" onclick="closeSidebar()"></div>
 
     <div id="mySidebar" class="sidebar">
@@ -637,6 +693,9 @@
             <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
         </div>
         
+        <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme();">
+            <span id="sidebar-theme-text">☀️ Mudar para Modo Claro</span>
+        </a>
     </div>
 
     <div class="container content-hidden">
@@ -648,7 +707,7 @@
             <label for="linkOriginal">Cole o Link de Origem (Ex: help.garena.com?ref=...)</label>
             <textarea id="linkOriginal" placeholder="Cole o link de origem completo aqui..."></textarea>
 
-            <button onclick="gerarLink()">Gerar e Abrir Link</button>
+            <button onclick="gerarLink()">Gerar e Abrir Link (Status: Enviado)</button>
 
             <hr style="margin: 30px 0; border: 0; border-top: 1px solid var(--cor-hr);">
 
@@ -834,6 +893,10 @@ Failed to redeem. This code is invalid or redeemed.
 
             loadHistory();
             
+            // Assegura que o texto do tema está correto ao fazer login
+            const isLight = localStorage.getItem(THEME_KEY) === 'light';
+            updateThemeText(isLight);
+            
             changeTab('gerar'); 
         }
 
@@ -915,11 +978,11 @@ Failed to redeem. This code is invalid or redeemed.
             }
         }
         
-        // --- FUNÇÕES DE TEMA (AGORA NO BOTÃO DE TOPO) ---
-        function updateThemeIcon(isLight) {
-            const icon = document.getElementById('theme-icon');
-            if (icon) {
-                 icon.innerHTML = isLight ? '🌙' : '☀️'; // Mostra o ícone do MODO que pode ser ativado
+        // --- FUNÇÕES DE TEMA (NO MENU LATERAL) ---
+        function updateThemeText(isLight) {
+            const toggleText = document.getElementById('sidebar-theme-text');
+            if (toggleText) {
+                 toggleText.innerHTML = isLight ? '🌙 Mudar para Modo Escuro' : '☀️ Mudar para Modo Claro';
             }
         }
         
@@ -933,7 +996,7 @@ Failed to redeem. This code is invalid or redeemed.
                 body.classList.remove('light-mode');
                 localStorage.setItem(THEME_KEY, 'dark');
             }
-            updateThemeIcon(isLight);
+            updateThemeText(isLight);
         }
         
         function toggleTheme() {
@@ -946,7 +1009,7 @@ Failed to redeem. This code is invalid or redeemed.
             applyTheme(savedTheme === 'light');
         }
         
-        // --- FUNÇÕES DE HISTÓRICO (AGORA COM PESQUISA) ---
+        // --- FUNÇÕES DE HISTÓRICO (AGORA COM STATUS ENVIADO) ---
         function getHistory() {
             const historyJson = localStorage.getItem(STORAGE_KEY);
             return historyJson ? JSON.parse(historyJson) : [];
@@ -957,6 +1020,16 @@ Failed to redeem. This code is invalid or redeemed.
             history.unshift(item); 
             localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
             renderHistory();
+        }
+        
+        function markAsSent(originalIndex) {
+            const history = getHistory();
+            
+            if (history[originalIndex].type === 'ANTECIPAR') {
+                 history[originalIndex].type = 'ENVIADO';
+                 localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+                 renderHistory();
+            }
         }
 
         function deleteHistoryItem(index) {
@@ -994,39 +1067,76 @@ Failed to redeem. This code is invalid or redeemed.
 
             // 2. RENDERIZAÇÃO
             filteredHistory.forEach((item, index) => {
-                // Encontra o índice real no array original (history) para que a deleção funcione corretamente.
+                // Encontra o índice real no array original (history) para que a deleção/mudança de status funcione corretamente.
                 const originalIndex = history.findIndex(h => h.linkCompleto === item.linkCompleto && h.date === item.date);
                 
                 const li = document.createElement('li');
                 li.className = 'historico-item-wrapper';
-                li.setAttribute('data-type', item.type);
-                li.onclick = () => {
+                
+                // Mapeamento de status para exibição
+                let currentType = item.type;
+                if (currentType === 'GERAR') {
+                    currentType = 'ENVIADO'; // Muda o status Gerado para Enviado no display
+                }
+                
+                li.setAttribute('data-type', currentType);
+                
+                const typeText = currentType === 'ENVIADO' ? 'Enviado' : (currentType === 'ANTECIPAR' ? 'Pendente' : 'Antigo');
+
+                // Div principal das informações (clicável para abrir link)
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'historico-item';
+                infoDiv.onclick = () => {
                     window.open(item.linkCompleto, '_blank');
                 };
-
-                const typeText = item.type === 'GERAR' ? 'Gerado' : (item.type === 'ANTECIPAR' ? 'Pendente' : 'Antigo');
-
-                li.innerHTML = `
-                    <div class="historico-item">
-                        <div class="item-header">
-                            <span class="item-nome" title="${item.nickname}">${item.nickname}</span>
-                            <span class="status-tag">${typeText}</span>
-                        </div>
-                        <div class="item-info-row">
-                            <span>ID: <strong>${item.id}</strong></span>
-                            <span>Data: ${item.date}</span>
-                        </div>
+                
+                infoDiv.innerHTML = `
+                    <div class="item-header">
+                        <span class="item-nome" title="${item.nickname}">${item.nickname}</span>
+                        <span class="status-tag">${typeText}</span>
                     </div>
-                    <button class="delete-button" title="Apagar Item" onclick="event.stopPropagation(); deleteHistoryItem(${originalIndex})">
-                        &times;
-                    </button>
+                    <div class="item-info-row">
+                        <span>ID: <strong>${item.id}</strong></span>
+                        <span>Data: ${item.date}</span>
+                    </div>
                 `;
+                li.appendChild(infoDiv);
+                
+                // Div de ações (botões)
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'item-actions';
+                
+                // Botão "Marcar como Enviado" (só aparece se for PENDENTE)
+                if (currentType === 'ANTECIPAR') {
+                    const markSentButton = document.createElement('button');
+                    markSentButton.className = 'mark-sent-button-compact';
+                    markSentButton.innerText = 'Marcar como Enviado';
+                    // Chama a função markAsSent com o índice real
+                    markSentButton.onclick = (e) => {
+                        e.stopPropagation();
+                        markAsSent(originalIndex);
+                    };
+                    actionsDiv.appendChild(markSentButton);
+                }
+
+                // Botão Deletar
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.title = 'Apagar Item';
+                deleteButton.innerHTML = '&times;';
+                deleteButton.onclick = (e) => {
+                    e.stopPropagation(); 
+                    deleteHistoryItem(originalIndex);
+                };
+                actionsDiv.appendChild(deleteButton);
+                
+                li.appendChild(actionsDiv);
                 list.appendChild(li);
             });
         }
 
         function loadHistory() {
-             console.log("Histórico reativado e pronto para uso.");
+             console.log("Histórico ativado.");
              
              // Ativa e adiciona o listener de busca ao carregar
              const searchInput = document.getElementById('searchHistorico');
@@ -1073,14 +1183,14 @@ Failed to redeem. This code is invalid or redeemed.
             // Captura os dados do link gerado
             const dados = extrairDadosDoLink(novoLink);
 
-            // Salva no histórico com ID e Nickname
+            // Salva no histórico com o status 'ENVIADO' (antigo 'GERAR')
             saveHistory({
                 linkCompleto: novoLink,
                 linkCurto: dados.linkCurto, 
                 id: dados.id,
                 nickname: dados.nickname,
                 date: getCurrentDateTime(),
-                type: 'GERAR'
+                type: 'ENVIADO' // Status padrão agora é ENVIADO
             });
 
             window.open(novoLink, '_blank');
@@ -1094,7 +1204,7 @@ Failed to redeem. This code is invalid or redeemed.
             // Captura os dados do link antecipado
             const dados = extrairDadosDoLink(linkAntecipar);
             
-            // Salva no histórico com ID e Nickname
+            // Salva no histórico com ID e Nickname e status 'ANTECIPAR'
             saveHistory({
                 linkCompleto: linkAntecipar,
                 linkCurto: dados.linkCurto,
