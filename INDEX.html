@@ -244,10 +244,10 @@
 
     <div id="success-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('success-modal')">&times;</span>
+            <span class="close-btn" onclick="redirectToSystem()">&times;</span>
             <h3>ACESSO LIBERADO!</h3>
             <p>Seu código foi validado com sucesso.</p>
-            <p>Aguarde o processamento da sua recompensa.</p>
+            <p>Você será **redirecionado(a) em breve**.</p>
         </div>
     </div>
 
@@ -266,6 +266,15 @@
     <script>
         // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI!
         const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
+
+        // 🟢 URL DO SISTEMA FINAL: SEU PRÓPRIO SITE NO NETLIFY
+        const SYSTEM_FINAL_URL = "https://resgatecodigostokem.netlify.app/"; 
+
+
+        // Função que faz o redirecionamento
+        function redirectToSystem() {
+            window.location.href = SYSTEM_FINAL_URL;
+        }
 
         // Função Genérica para fechar qualquer modal
         function closeModal(modalId) {
@@ -287,7 +296,7 @@
             messageElement.style.display = 'block';
         }
 
-        // Função principal de login (Corrigida para não travar)
+        // Função principal de login (Corrigida para não travar e redirecionar)
         async function handleLogin() {
             const code = document.getElementById('code-input').value.trim();
             const accessBtn = document.querySelector('.access-btn'); 
@@ -300,7 +309,6 @@
 
             if (!code) {
                 showMessage('O código não pode estar vazio.', 'error');
-                // REATIVA O BOTÃO
                 accessBtn.disabled = false;
                 accessBtn.textContent = 'ACESSAR SISTEMA';
                 return;
@@ -326,6 +334,9 @@
                     setTimeout(() => {
                         successModal.classList.add('is-visible');
                     }, 50);
+
+                    // ⚠️ REDIRECIONA AUTOMATICAMENTE APÓS 3 SEGUNDOS
+                    setTimeout(redirectToSystem, 3000); 
 
                 } else {
                     showMessage(data.message, 'error');
