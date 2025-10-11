@@ -113,7 +113,6 @@
             margin-bottom: 15px;
         }
         
-        /* NOVO ESTILO: BOTÃO DE LOGIN MAIS BONITO */
         .login-box button {
             width: 100%;
             padding: 15px;
@@ -135,25 +134,29 @@
         }
 
         /* ----------------------------------- */
-        /* BOTÃO DE SUPORTE NO TOPO (NOVO) */
+        /* BOTÕES DE TOPO (SAIR E SUPORTE) */
         /* ----------------------------------- */
-        .top-support-btn {
+        .top-button {
             position: fixed;
             top: 20px;
-            right: 20px;
             z-index: 1000;
-            background-color: var(--cor-btn-whatsapp);
-            color: white;
             padding: 10px 15px;
             border-radius: var(--border-radius-main);
-            text-decoration: none;
             font-size: 0.9em;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
             transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .top-support-btn {
+            right: 20px;
+            background-color: var(--cor-btn-whatsapp);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            text-decoration: none; /* Para manter o link */
         }
         .top-support-btn:hover {
             background-color: #128C7E;
@@ -161,13 +164,28 @@
             transform: translateY(-2px);
         }
         
+        .top-logout-btn {
+            right: 180px; /* Ajuste a posição para não bater no botão de Suporte */
+            background-color: var(--cor-card-fundo);
+            color: var(--cor-aviso-erro);
+            border: 1px solid var(--cor-aviso-erro);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 1.1em;
+            padding: 8px 12px;
+        }
+        .top-logout-btn:hover {
+            background-color: rgba(255, 82, 82, 0.1);
+            color: #FF1744;
+            border-color: #FF1744;
+            transform: translateY(-2px);
+        }
+
         /* Oculta na tela de login, aparece após o login */
-        body:not(.logged-in) .top-support-btn {
+        body:not(.logged-in) .top-button {
             display: none; 
         }
-        /* Mantém o botão visível mesmo quando o menu lateral está aberto */
-        .sidebar-open + .top-support-btn {
-            z-index: 997; /* Abaixo do overlay */
+        .sidebar-open + .top-support-btn, .sidebar-open + .top-logout-btn {
+            z-index: 997; 
         }
 
         #msgLogin {
@@ -218,7 +236,7 @@
             height: 100%;
             width: 0; 
             position: fixed;
-            z-index: 9999; /* Z-index maior para cobrir o botão de suporte */
+            z-index: 9999; 
             top: 0;
             left: 0;
             background-color: var(--cor-card-fundo);
@@ -227,6 +245,13 @@
             padding-top: 60px;
             box-shadow: 4px 0 20px rgba(0,0,0,0.6);
             border-right: 3px solid var(--cor-primaria);
+            display: flex; /* Para centralizar os itens de baixo */
+            flex-direction: column;
+        }
+        
+        /* Contêiner para os itens principais do menu */
+        .sidebar-nav-main {
+            flex-grow: 1; /* Ocupa o espaço restante */
         }
         
         .sidebar-item {
@@ -254,24 +279,6 @@
              border-left: 5px solid var(--cor-primaria);
         }
         
-        /* Estilo para item de Suporte */
-        .sidebar-item-support {
-            background-color: var(--cor-btn-whatsapp);
-            color: white !important;
-            margin-top: 20px;
-            border-bottom: none;
-            border-radius: var(--border-radius-small);
-            margin: 20px 10px 10px 10px;
-            text-align: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            transition: all 0.2s;
-        }
-        .sidebar-item-support:hover {
-             background-color: #128C7E;
-             padding-left: 25px; /* Não move para o lado */
-        }
-        
         .sidebar .closebtn {
             position: absolute;
             top: 0;
@@ -289,6 +296,10 @@
         .sidebar-item-theme {
             font-weight: bold;
             color: var(--status-pendente-cor); 
+            /* Para manter o botão de tema no final */
+            border-top: 1px solid var(--cor-hr);
+            border-bottom: none;
+            margin-bottom: 10px;
         }
 
         .overlay {
@@ -495,8 +506,12 @@
 </head>
 <body>
     
-    <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="top-support-btn" title="Fale com nosso Suporte">
-        💬 Contato com o Suporte
+    <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="top-button top-support-btn" title="Fale com nosso Suporte">
+        💬 Suporte
+    </a>
+    
+    <a onclick="fazerLogout()" class="top-button top-logout-btn" title="Sair do Sistema">
+        <span style="font-size: 0.8em; font-weight: 900;">&#x2716;</span> Sair
     </a>
 
     <div id="loginOverlay" class="login-overlay">
@@ -519,21 +534,16 @@
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
         
-        <a class="sidebar-item" id="nav-gerar" onclick="changeTab('gerar')">🆕 Novo Resgate</a>
-        <a class="sidebar-item" id="nav-antecipar" onclick="changeTab('antecipar')">⭐ Salvar Pendente</a>
-        <a class="sidebar-item" id="nav-resgateAntigo" onclick="changeTab('resgateAntigo')">🗝️ Resgate Antigo</a>
+        <div class="sidebar-nav-main">
+            <a class="sidebar-item" id="nav-gerar" onclick="changeTab('gerar')">🚀 Iniciar Novo Resgate</a>
+            <a class="sidebar-item" id="nav-antecipar" onclick="changeTab('antecipar')">💾 Salvar Link Pendente</a>
+            <a class="sidebar-item" id="nav-resgateAntigo" onclick="changeTab('resgateAntigo')">🔑 Resgate Acesso Antigo</a>
+            <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
+        </div>
         
-        <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📜 Histórico de Resgates</a>
-        
-        <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="sidebar-item sidebar-item-support" onclick="closeSidebar()">
-            📞 Suporte (WhatsApp)
-        </a>
-
         <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme(); closeSidebar();">
-            <span id="sidebar-theme-text">☀️ Mudar Tema</span>
+            <span id="sidebar-theme-text">☀️ Mudar para Modo Claro</span>
         </a>
-
-        <a class="sidebar-item" onclick="fazerLogout();">🚪 Sair (Usar Outro Código)</a>
     </div>
 
     <div class="container content-hidden">
@@ -645,7 +655,7 @@
             document.body.classList.add('logged-in');
             document.getElementById('loginOverlay').style.display = 'none';
             // Atualiza os links do WhatsApp com o número correto
-            document.querySelectorAll('.top-support-btn, .sidebar-item-support').forEach(a => {
+            document.querySelectorAll('.top-support-btn').forEach(a => {
                 a.href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá!%20Preciso%20de%20suporte%20com%20o%20sistema%20de%20resgate.`;
             });
             changeTab('gerar'); 
