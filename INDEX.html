@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA EM MANUTENÇÃO</title>
+    <title>ACESSO EXPIRADO - Sistema de Resgate</title>
     <style>
         :root {
             /* Cores Dark Mode (Padrão) */
-            --cor-primaria: #00BFFF; /* Azul Claro Vibrante */
-            --cor-secundaria: #008DBC;
+            --cor-primaria: #FF5252; /* Vermelho/Alerta */
+            --cor-secundaria: #D50000;
             --cor-fundo: #121212; 
             --cor-card-fundo: #1E1E1E; 
             --cor-texto-principal: #F0F0F0;
@@ -17,8 +17,9 @@
             --border-radius-main: 12px;
         }
 
-        /* Adaptação para o Light Mode (caso o navegador do usuário force) */
+        /* Adaptação para o Light Mode (copiando a cor primária para alerta) */
         body.light-mode {
+            --cor-primaria: #D32F2F; 
             --cor-fundo: #F0F2F5; 
             --cor-card-fundo: #FFFFFF; 
             --cor-texto-principal: #333333; 
@@ -40,7 +41,7 @@
         }
 
         /* ----------------------------------- */
-        /* BOTÃO DE TOPO (SUPORTE) - Estilo copiado do index.html */
+        /* BOTÃO DE TOPO (SUPORTE) */
         /* ----------------------------------- */
         .top-button {
             position: fixed;
@@ -71,52 +72,78 @@
         }
         
         /* ----------------------------------- */
-        /* CAIXA DE MENSAGEM DE MANUTENÇÃO */
+        /* CAIXA DE AVISO DE EXPIRAÇÃO */
         /* ----------------------------------- */
-        .manutencao-box {
+        .aviso-box {
             background-color: var(--cor-card-fundo);
             padding: 40px;
             border-radius: var(--border-radius-main);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 82, 82, 0.3); /* Sombra vermelha de alerta */
             max-width: 400px;
             width: 90%;
             border: 2px solid var(--cor-primaria);
         }
         
-        .manutencao-box h2 {
+        .aviso-box h2 {
             color: var(--cor-primaria);
             font-size: 1.8em;
             margin-bottom: 20px;
             text-transform: uppercase;
         }
         
-        .manutencao-box p {
+        .aviso-box p {
             font-size: 1.1em;
-            color: var(--cor-texto-secundario);
-            margin-bottom: 25px;
+            color: var(--cor-texto-principal);
+            margin-bottom: 15px;
         }
         
-        .manutencao-icon {
+        .aviso-box strong {
+            color: var(--cor-primaria);
+            font-weight: bold;
+        }
+        
+        .aviso-icon {
             font-size: 4em;
             color: var(--cor-primaria);
             margin-bottom: 15px;
-            animation: bounce 2s infinite;
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-15px);}
-            60% {transform: translateY(-7px);}
+        
+        .action-button {
+            display: inline-block;
+            background-color: var(--cor-btn-whatsapp);
+            color: white;
+            padding: 12px 25px;
+            border-radius: var(--border-radius-main);
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        
+        .action-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
     
-    <div class="manutencao-box">
-        <div class="manutencao-icon">🔧</div>
-        <h2>SISTEMA EM MANUTENÇÃO</h2>
-        <p>Estamos realizando melhorias e atualizações importantes.</p>
-        <p>Por favor, **entre em contato com o suporte** para qualquer urgência ou dúvida.</p>
+    <div class="aviso-box">
+        <div class="aviso-icon">🔒</div>
+        <h2>ACESSO EXPIRADO</h2>
+        <p>Seu plano de acesso ao sistema **venceu**.</p>
+        <p>Para **reativar** sua conta e voltar a utilizar o sistema:</p>
+        
+        <p style="font-size: 1.2em; font-weight: 700; margin-top: 30px;">
+            1. Entre em contato com o suporte.
+        </p>
+        <p style="font-size: 1.2em; font-weight: 700;">
+            2. Efetue o pagamento de renovação.
+        </p>
+
+        <a href="javascript:void(0)" class="action-button" id="mainActionButton">
+            📞 Falar com Suporte (Reativação)
+        </a>
     </div>
 
     <a href="javascript:void(0)" target="_blank" class="top-button top-support-btn" id="supportButton" title="Fale com nosso Suporte">
@@ -132,16 +159,19 @@
             // LÓGICA DE ROTAÇÃO DE NÚMEROS DE SUPORTE
             const supportNumbers = [WHATSAPP_NUMBER_MAIN, WHATSAPP_NUMBER_SECONDARY];
             const chosenNumber = supportNumbers[Math.floor(Math.random() * supportNumbers.length)];
+            
+            const whatsappLink = `https://wa.me/${chosenNumber}?text=Olá!%20Meu%20acesso%20expirou%20e%20gostaria%20de%20reativar%20o%20plano%20do%20sistema.`;
 
-            // Configura o link do WhatsApp
+            // Configura o link do WhatsApp para o botão do canto
             const supportButton = document.getElementById('supportButton');
             if (supportButton) {
-                supportButton.href = `https://wa.me/${chosenNumber}?text=Olá!%20O%20site%20está%20em%20manutenção.%20Preciso%20de%20suporte.`;
+                supportButton.href = whatsappLink;
             }
             
-            // Tenta aplicar o tema escuro padrão (para manter o visual)
-            if (!document.body.classList.contains('light-mode')) {
-                 document.body.classList.add('dark-mode');
+            // Configura o link do WhatsApp para o botão principal
+            const mainActionButton = document.getElementById('mainActionButton');
+            if (mainActionButton) {
+                 mainActionButton.href = whatsappLink;
             }
         });
     </script>
