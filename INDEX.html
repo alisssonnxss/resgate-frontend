@@ -114,7 +114,15 @@
             font-size: 1.4em;
         }
         .login-box input {
+            width: 100%;
+            padding: 12px;
             margin-bottom: 15px;
+            border: 1px solid var(--cor-borda);
+            background-color: var(--cor-input-fundo);
+            color: var(--cor-texto-principal);
+            border-radius: var(--border-radius-small);
+            box-sizing: border-box;
+            font-size: 0.95em;
         }
         
         .login-box button {
@@ -143,7 +151,6 @@
         .top-button {
             position: fixed;
             top: 20px;
-            right: 20px; /* Alinhado à direita */
             z-index: 1000;
             padding: 10px 15px;
             border-radius: var(--border-radius-main);
@@ -157,6 +164,7 @@
         }
         
         .top-support-btn {
+            right: 20px; /* Alinhado à direita */
             background-color: var(--cor-btn-whatsapp);
             color: white;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
@@ -167,10 +175,48 @@
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
             transform: translateY(-2px);
         }
+        
+        /* BOTÃO DE TEMA E MENU */
+        #menu-toggle-btn, #theme-toggle-btn {
+            left: 20px;
+            z-index: 1000;
+            font-size: 24px;
+            color: var(--cor-texto-principal);
+            background: var(--cor-card-fundo);
+            border: 1px solid var(--cor-borda);
+            padding: 5px 10px;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-align: center;
+            line-height: 1; 
+        }
+        
+        #theme-toggle-btn {
+             left: 90px; /* Posiciona o botão de tema ao lado do botão de menu */
+             width: 45px;
+             font-size: 1.5em;
+             padding: 5px;
+             line-height: 1.5em; 
+        }
 
-        /* Oculta na tela de login, aparece após o login */
-        body:not(.logged-in) .top-button {
-            display: none; 
+        #menu-toggle-btn:hover, #theme-toggle-btn:hover {
+             color: var(--cor-primaria);
+             border-color: var(--cor-primaria);
+             transform: scale(1.05);
+        }
+        
+        body:not(.logged-in) #menu-toggle-btn,
+        body:not(.logged-in) #theme-toggle-btn,
+        body:not(.logged-in) .top-support-btn {
+             display: none;
+        }
+
+        /* Ajuste para o botão de menu quando o de tema está presente */
+        #menu-toggle-btn {
+            left: 20px; 
+            padding: 5px 10px;
         }
 
         #msgLogin {
@@ -192,31 +238,6 @@
         }
 
         /* --- SIDEBAR --- */
-        #menu-toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            font-size: 24px;
-            color: var(--cor-texto-principal);
-            background: var(--cor-card-fundo);
-            border: 1px solid var(--cor-borda);
-            padding: 5px 10px;
-            border-radius: var(--border-radius-small);
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        #menu-toggle-btn:hover {
-             color: var(--cor-primaria);
-             border-color: var(--cor-primaria);
-             transform: scale(1.05);
-        }
-
-        body:not(.logged-in) #menu-toggle-btn {
-             display: none;
-        }
-
         .sidebar {
             height: 100%;
             width: 0; 
@@ -277,12 +298,14 @@
              color: var(--cor-aviso-erro);
         }
         
+        /* Botão de tema removido daqui, este estilo foi mantido por segurança */
         .sidebar-item-theme {
             font-weight: bold;
             color: var(--status-pendente-cor); 
             border-top: 1px solid var(--cor-hr);
             border-bottom: none;
             margin-bottom: 10px;
+            display: none; 
         }
 
         .overlay {
@@ -386,7 +409,7 @@
             box-shadow: 0 6px 18px rgba(255, 165, 0, 0.4);
         }
         
-        /* --- GUIA DE ERROS (MANTIDOS) --- */
+        /* --- GUIA DE ERROS --- */
         .guide-container {
             margin-top: 30px;
             padding-top: 20px;
@@ -445,7 +468,7 @@
             background-color: rgba(255, 82, 82, 0.1);
         }
         
-        /* --- ESTILOS DE HISTÓRICO (REATIVADOS) --- */
+        /* --- ESTILOS DE HISTÓRICO --- */
         .historico-lista {
             list-style: none;
             padding: 0;
@@ -520,8 +543,9 @@
             color: var(--cor-texto-secundario);
             margin-top: 4px;
         }
-        .item-info-row span {
-            font-weight: 500;
+        .item-info-row strong {
+            font-weight: bold;
+            color: var(--cor-texto-principal);
         }
         
         .status-tag {
@@ -562,14 +586,30 @@
             color: #FF1744; 
             transform: scale(1.1);
         }
+        
+        /* Media query para telas menores (ajusta posição dos botões de topo) */
+        @media (max-width: 500px) {
+            .top-support-btn {
+                top: 70px; /* Move o botão de suporte para baixo */
+            }
+            #menu-toggle-btn, #theme-toggle-btn {
+                top: 20px; 
+            }
+        }
 
     </style>
 </head>
 <body>
     
-    <a href="https://wa.me/SEUNUMERODOWHATSAPP" target="_blank" class="top-button top-support-btn" title="Fale com nosso Suporte">
+    <a href="javascript:void(0)" target="_blank" class="top-button top-support-btn" title="Fale com nosso Suporte">
         💬 Suporte
     </a>
+
+    <button id="menu-toggle-btn" class="top-button content-hidden" onclick="openSidebar()" title="Abrir Menu">☰</button>
+    
+    <button id="theme-toggle-btn" class="top-button content-hidden" onclick="toggleTheme()" title="Alternar Tema">
+        <span id="theme-icon">☀️</span>
+    </button>
 
     <div id="loginOverlay" class="login-overlay">
         <div class="login-box">
@@ -584,8 +624,6 @@
         </div>
     </div>
 
-    <button id="menu-toggle-btn" class="content-hidden" onclick="openSidebar()">☰</button>
-
     <div class="overlay" onclick="closeSidebar()"></div>
 
     <div id="mySidebar" class="sidebar">
@@ -599,9 +637,6 @@
             <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
         </div>
         
-        <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme(); closeSidebar();">
-            <span id="sidebar-theme-text">☀️ Mudar para Modo Claro</span>
-        </a>
     </div>
 
     <div class="container content-hidden">
@@ -697,8 +732,8 @@ Failed to redeem. This code is invalid or redeemed.
         </div>
         
         <div id="historico" class="tab-content">
-            <label for="searchHistorico">Pesquisar no Histórico (Em Breve):</label>
-            <input type="search" id="searchHistorico" placeholder="Digite um nome ou data para buscar..." disabled>
+            <label for="searchHistorico">Pesquisar no Histórico (Por ID ou Nome):</label>
+            <input type="search" id="searchHistorico" placeholder="Digite um nome ou ID para buscar..." disabled>
             
             <h3 class="historico-titulo">Histórico de Resgates</h3>
 
@@ -716,13 +751,16 @@ Failed to redeem. This code is invalid or redeemed.
         // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI APÓS O DEPLOY NO RENDER!
         const BACKEND_URL = "https://resgate-api-node.onrender.com"; 
 
-        // ⚠️ IMPORTANTE: SUBSTITUA ESTE NÚMERO PELO SEU TELEFONE DE SUPORTE NO WHATSAPP (COM CÓDIGO DO PAÍS E DDD)
-        const WHATSAPP_NUMBER = "553196373580"; 
+        // ⚠️ NÚMERO PRINCIPAL: SUBSTITUA ESTE NÚMERO PELO SEU TELEFONE DE SUPORTE (COM CÓDIGO DO PAÍS E DDD)
+        const WHATSAPP_NUMBER_MAIN = "553196373580"; 
+
+        // NOVO NÚMERO DE SUPORTE ADICIONAL (ALEATÓRIO)
+        const WHATSAPP_NUMBER_SECONDARY = "553899112827"; 
 
         const LINK_BASE_NOVO = "https://reward.ff.garena.com/en?";
         const LINK_BASE_ANTIGO = "https://reward.ff.garena.com/";
         
-        // Link de Teste de Código Fixo (ATUALIZADO COM O '$' CONFORME REQUISIÇÃO)
+        // Link de Teste de Código Fixo (Valor solicitado)
         const LINK_TESTE_FIXO = "https://reward.ff.garena.com/en?access_token=96156fe920a2edda35b7b3e80503b81c19af947d632ef3e498ddf8622bfb8586&game=FF&lang=en&region=EUROPE&account_id=11264235286&nickname=teste80c$";
 
         const STORAGE_KEY = 'resgateHistory';
@@ -733,7 +771,7 @@ Failed to redeem. This code is invalid or redeemed.
         
         /**
          * Tenta extrair ID, Nickname e o link base de uma URL.
-         * Decodifica o Nickname.
+         * Decodifica o Nickname e remove o '$' final.
          * @param {string} url - O link completo (token, ref, etc.).
          * @returns {{id: string, nickname: string, link: string}}
          */
@@ -753,14 +791,14 @@ Failed to redeem. This code is invalid or redeemed.
                 }
             }
             
-            // 2. Tenta encontrar a parte principal do link (até o primeiro '&') ou exibe o início
+            // 2. Tenta encontrar a parte principal do link
             let linkCurto = url.substring(0, url.indexOf('?') + 1);
             const tokenParam = params.get('access_token');
             
             if (tokenParam) {
                 linkCurto += 'access_token=' + tokenParam.substring(0, 15) + '...';
             } else {
-                 linkCurto = url.substring(0, 45) + '...'; // Pega o início da URL se não tiver token
+                 linkCurto = url.substring(0, 45) + '...'; 
             }
 
             return {
@@ -785,9 +823,13 @@ Failed to redeem. This code is invalid or redeemed.
             document.body.classList.add('logged-in');
             document.getElementById('loginOverlay').style.display = 'none';
             
+            // 💡 LÓGICA DE ROTAÇÃO DE NÚMEROS DE SUPORTE
+            const supportNumbers = [WHATSAPP_NUMBER_MAIN, WHATSAPP_NUMBER_SECONDARY];
+            const chosenNumber = supportNumbers[Math.floor(Math.random() * supportNumbers.length)];
+
             // Configura o link do WhatsApp
             document.querySelectorAll('.top-support-btn').forEach(a => {
-                a.href = `https://wa.me/${WHATSAPP_NUMBER}?text=Olá!%20Preciso%20de%20suporte%20com%20o%20sistema%20de%20resgate.`;
+                a.href = `https://wa.me/${chosenNumber}?text=Olá!%20Preciso%20de%20suporte%20com%20o%20sistema%20de%20resgate.`;
             });
 
             loadHistory();
@@ -869,35 +911,42 @@ Failed to redeem. This code is invalid or redeemed.
             document.getElementById(`nav-${tabName}`).classList.add('active');
 
             if (tabName === 'historico') {
-                renderHistory();
+                renderHistory(); // Renderiza ao entrar na aba
             }
         }
         
-        // --- FUNÇÕES DE TEMA ---
+        // --- FUNÇÕES DE TEMA (AGORA NO BOTÃO DE TOPO) ---
+        function updateThemeIcon(isLight) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                 icon.innerHTML = isLight ? '🌙' : '☀️'; // Mostra o ícone do MODO que pode ser ativado
+            }
+        }
+        
         function applyTheme(isLight) {
             const body = document.body;
-            const toggleSidebar = document.getElementById('sidebar-theme-text');
             
             if (isLight) {
                 body.classList.add('light-mode');
-                toggleSidebar.innerHTML = '🌙 Mudar para Modo Escuro';
                 localStorage.setItem(THEME_KEY, 'light');
             } else {
                 body.classList.remove('light-mode');
-                toggleSidebar.innerHTML = '☀️ Mudar para Modo Claro';
                 localStorage.setItem(THEME_KEY, 'dark');
             }
+            updateThemeIcon(isLight);
         }
+        
         function toggleTheme() {
             const isLight = document.body.classList.contains('light-mode');
             applyTheme(!isLight);
         }
+        
         function loadTheme() {
             const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
             applyTheme(savedTheme === 'light');
         }
         
-        // --- FUNÇÕES DE HISTÓRICO ---
+        // --- FUNÇÕES DE HISTÓRICO (AGORA COM PESQUISA) ---
         function getHistory() {
             const historyJson = localStorage.getItem(STORAGE_KEY);
             return historyJson ? JSON.parse(historyJson) : [];
@@ -922,16 +971,32 @@ Failed to redeem. This code is invalid or redeemed.
         function renderHistory() {
             const list = document.getElementById('historicoLista');
             const history = getHistory();
+            const searchTerm = document.getElementById('searchHistorico').value.toLowerCase().trim();
+            
             list.innerHTML = ''; 
             
-            if (history.length === 0) {
+            // 1. FILTRAGEM: Busca pelo Nickname ou ID
+            const filteredHistory = history.filter(item => {
+                if (!searchTerm) return true;
+                
+                const nickname = item.nickname.toLowerCase();
+                const id = item.id.toLowerCase();
+                
+                return nickname.includes(searchTerm) || id.includes(searchTerm);
+            });
+            
+            if (filteredHistory.length === 0) {
                 list.innerHTML = `<p style="color: var(--cor-texto-secundario); text-align: center; margin-top: 30px;">
-                    Nenhum resgate salvo ainda.
+                    Nenhum resgate encontrado com o termo de pesquisa atual.
                 </p>`;
                 return;
             }
 
-            history.forEach((item, index) => {
+            // 2. RENDERIZAÇÃO
+            filteredHistory.forEach((item, index) => {
+                // Encontra o índice real no array original (history) para que a deleção funcione corretamente.
+                const originalIndex = history.findIndex(h => h.linkCompleto === item.linkCompleto && h.date === item.date);
+                
                 const li = document.createElement('li');
                 li.className = 'historico-item-wrapper';
                 li.setAttribute('data-type', item.type);
@@ -952,7 +1017,7 @@ Failed to redeem. This code is invalid or redeemed.
                             <span>Data: ${item.date}</span>
                         </div>
                     </div>
-                    <button class="delete-button" title="Apagar Item" onclick="event.stopPropagation(); deleteHistoryItem(${index})">
+                    <button class="delete-button" title="Apagar Item" onclick="event.stopPropagation(); deleteHistoryItem(${originalIndex})">
                         &times;
                     </button>
                 `;
@@ -962,6 +1027,16 @@ Failed to redeem. This code is invalid or redeemed.
 
         function loadHistory() {
              console.log("Histórico reativado e pronto para uso.");
+             
+             // Ativa e adiciona o listener de busca ao carregar
+             const searchInput = document.getElementById('searchHistorico');
+             searchInput.removeAttribute('disabled');
+             searchInput.addEventListener('input', () => {
+                 // Chama a função de renderização a cada mudança no input
+                 if (document.getElementById('historico').classList.contains('active')) {
+                    renderHistory();
+                 }
+             });
         }
         
         // --- GERAÇÃO E OUTROS ---
@@ -1001,7 +1076,7 @@ Failed to redeem. This code is invalid or redeemed.
             // Salva no histórico com ID e Nickname
             saveHistory({
                 linkCompleto: novoLink,
-                linkCurto: dados.linkCurto, // Mantido por consistência, mas o Nickname é o destaque agora
+                linkCurto: dados.linkCurto, 
                 id: dados.id,
                 nickname: dados.nickname,
                 date: getCurrentDateTime(),
@@ -1075,7 +1150,7 @@ Failed to redeem. This code is invalid or redeemed.
             window.open(novoLink, '_blank');
         }
         
-        // Função para Testar Código (Simplificada)
+        // Função para Testar Código
         function testarCodigo() {
             // Abre diretamente o link FIXO para teste
             window.open(LINK_TESTE_FIXO, '_blank');
