@@ -4,101 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Resgate de Códigos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Variáveis CSS para Cores - Padrão "Blueberry Fresh" */
         :root {
+            /* Cores básicas */
             --primary-bg: #f0f4f8; /* Fundo principal */
             --secondary-bg: #ffffff; /* Fundo de componentes */
             --text-color: #333333; /* Cor do texto principal */
-            --placeholder-color: #6a7c8d; /* Cor do placeholder */
-            --primary-button-bg: #4a90e2; /* Azul vibrante */
-            --primary-button-hover: #3a7bd5;
-            --secondary-button-bg: #e0e6eb; /* Botão secundário */
-            --secondary-button-hover: #c9d0d6;
             --border-color: #e0e0e0; /* Cor da borda */
             --shadow-color: rgba(0, 0, 0, 0.08); /* Sombra suave */
-            --tab-active-bg: #4a90e2; /* Fundo da aba ativa */
-            --tab-active-text: #ffffff; /* Texto da aba ativa */
-            --tab-inactive-bg: #e0e6eb; /* Fundo da aba inativa */
-            --tab-inactive-text: #6a7c8d; /* Texto da aba inativa */
-            --success-color: #28a745; /* Verde de sucesso */
-            --error-color: #dc3545; /* Vermelho de erro */
+            
+            /* Cores de status */
+            --success-color: #28a745; 
+            --error-color: #dc3545; 
+
+            /* Cores Temáticas (Mudam conforme a seleção) */
+            --main-color: #4a90e2; /* Cor principal (azul padrão) */
+            --main-hover: #3a7bd5;
+            --main-contrast: #ffffff;
             --settings-icon-color: #6a7c8d;
-            --settings-panel-bg: #ffffff;
-            --settings-shadow: rgba(0, 0, 0, 0.2);
-            --overlay-bg: rgba(0, 0, 0, 0.5); /* Fundo escuro para overlay */
+            --overlay-bg: rgba(0, 0, 0, 0.5); 
         }
 
-        /* Tema Escuro */
+        /* --- Tema Escuro --- */
         body.dark-mode {
             --primary-bg: #2d3748;
             --secondary-bg: #4a5568;
             --text-color: #e2e8f0;
-            --placeholder-color: #a0aec0;
-            --primary-button-bg: #63b3ed; /* Azul mais claro para dark mode */
-            --primary-button-hover: #4299e1;
-            --secondary-button-bg: #2a4365;
-            --secondary-button-hover: #2c5282;
             --border-color: #2d3748;
             --shadow-color: rgba(0, 0, 0, 0.3);
-            --tab-active-bg: #63b3ed;
-            --tab-active-text: #ffffff;
-            --tab-inactive-bg: #2a4365;
-            --tab-inactive-text: #a0aec0;
             --settings-icon-color: #a0aec0;
-            --settings-panel-bg: #4a5568;
-            --settings-shadow: rgba(0, 0, 0, 0.5);
         }
+        
+        /* --- 12 Opções de Cores Temáticas (Substituem --main-color) --- */
+        body[data-theme="blueberry-fresh"] { --main-color: #4a90e2; --main-hover: #3a7bd5; }
+        body[data-theme="forest-green"] { --main-color: #28a745; --main-hover: #218838; }
+        body[data-theme="sunset-orange"] { --main-color: #fd7e14; --main-hover: #e06c00; }
+        body[data-theme="royal-purple"] { --main-color: #6f42c1; --main-hover: #5d35a7; }
+        body[data-theme="crimson-red"] { --main-color: #dc3545; --main-hover: #c82333; }
+        body[data-theme="ocean-teal"] { --main-color: #20c997; --main-hover: #17a2b8; }
+        body[data-theme="golden-yellow"] { --main-color: #ffc107; --main-hover: #e0a800; }
+        body[data-theme="dark-charcoal"] { --main-color: #343a40; --main-hover: #23272b; }
+        body[data-theme="rose-pink"] { --main-color: #e83e8c; --main-hover: #d1227a; }
+        body[data-theme="sky-blue"] { --main-color: #17a2b8; --main-hover: #138496; }
+        body[data-theme="grape-purple"] { --main-color: #6610f2; --main-hover: #560ce0; }
+        body[data-theme="lime-green"] { --main-color: #7cb342; --main-hover: #689f38; }
 
-        /* Cores Temáticas - 12 Opções */
-        body[data-theme="blueberry-fresh"] { 
-            --primary-button-bg: #4a90e2; --primary-button-hover: #3a7bd5; --tab-active-bg: #4a90e2;
-        }
-        body[data-theme="forest-green"] { 
-            --primary-button-bg: #28a745; --primary-button-hover: #218838; --tab-active-bg: #28a745;
-        }
-        body[data-theme="sunset-orange"] { 
-            --primary-button-bg: #fd7e14; --primary-button-hover: #e06c00; --tab-active-bg: #fd7e14;
-        }
-        body[data-theme="royal-purple"] { 
-            --primary-button-bg: #6f42c1; --primary-button-hover: #5d35a7; --tab-active-bg: #6f42c1;
-        }
-        body[data-theme="crimson-red"] { 
-            --primary-button-bg: #dc3545; --primary-button-hover: #c82333; --tab-active-bg: #dc3545;
-        }
-        body[data-theme="ocean-teal"] { 
-            --primary-button-bg: #20c997; --primary-button-hover: #17a2b8; --tab-active-bg: #20c997;
-        }
-        body[data-theme="golden-yellow"] { 
-            --primary-button-bg: #ffc107; --primary-button-hover: #e0a800; --tab-active-bg: #ffc107;
-        }
-        body[data-theme="dark-charcoal"] { 
-            --primary-button-bg: #343a40; --primary-button-hover: #23272b; --tab-active-bg: #343a40;
-        }
-        body[data-theme="rose-pink"] { 
-            --primary-button-bg: #e83e8c; --primary-button-hover: #d1227a; --tab-active-bg: #e83e8c;
-        }
-        body[data-theme="sky-blue"] { 
-            --primary-button-bg: #17a2b8; --primary-button-hover: #138496; --tab-active-bg: #17a2b8;
-        }
-        body[data-theme="grape-purple"] { 
-            --primary-button-bg: #6610f2; --primary-button-hover: #560ce0; --tab-active-bg: #6610f2;
-        }
-        body[data-theme="lime-green"] { 
-            --primary-button-bg: #7cb342; --primary-button-hover: #689f38; --tab-active-bg: #7cb342;
-        }
 
-        /* Base */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* --- Estilos Básicos --- */
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-color);
             line-height: 1.6;
@@ -106,132 +63,109 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 20px;
         }
 
         .container {
             background-color: var(--secondary-bg);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px var(--shadow-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-color);
             padding: 30px;
             width: 100%;
-            max-width: 800px; /* Largura máxima para harmonizar */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative; /* Para o botão de configurações */
+            max-width: 600px; 
+            position: relative;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: var(--text-color);
-            font-weight: 600;
+            font-size: 1.8em;
         }
 
-        /* --- Formulário de Login --- */
+        /* --- Inputs e Botões Gerais --- */
+        input[type="text"], input[type="password"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        /* Botão Principal (Aplica a cor do tema) */
+        #login-button, #convert-button, #copy-button, #test-code-button {
+            background-color: var(--main-color);
+            color: var(--main-contrast);
+        }
+        #login-button:hover, #convert-button:hover, #copy-button:hover, #test-code-button:hover {
+            background-color: var(--main-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Botões Secundários */
+        #save-button, #clear-history-button, .status-history-btn {
+            background-color: var(--border-color);
+            color: var(--text-color);
+        }
+        #save-button:hover, #clear-history-button:hover, .status-history-btn:hover {
+            background-color: var(--secondary-bg);
+        }
+
+        /* --- Seções e Abas --- */
         #login-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            padding: 40px 20px;
+            gap: 15px;
+            padding: 20px 0;
         }
-
-        .login-input-group {
-            width: 100%;
-            max-width: 350px;
-            position: relative;
+        #login-section input {
+            max-width: 300px;
         }
-
-        .login-input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1em;
-            background-color: var(--secondary-bg);
-            color: var(--text-color);
-            transition: border-color 0.3s ease;
-        }
-
-        .login-input-group input:focus {
-            outline: none;
-            border-color: var(--primary-button-bg);
-        }
-
-        .login-input-group input::placeholder {
-            color: var(--placeholder-color);
-        }
-
-        #login-button {
-            padding: 12px 25px;
-            background-color: var(--primary-button-bg);
-            color: var(--tab-active-text);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.05em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: 600;
-            width: 100%;
-            max-width: 350px;
-        }
-
-        #login-button:hover {
-            background-color: var(--primary-button-hover);
-            transform: translateY(-2px);
-        }
-
         #login-message {
-            margin-top: 15px;
-            font-size: 0.9em;
-            text-align: center;
             color: var(--error-color);
+            margin-top: 10px;
         }
 
-        /* --- Seção Principal do Site --- */
         #main-section {
-            display: none; /* Escondido por padrão */
+            display: none;
         }
 
         .tab-buttons {
             display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-            gap: 10px;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
         }
 
         .tab-button {
-            flex: 1;
-            padding: 12px 15px;
-            border: none;
-            background-color: var(--tab-inactive-bg);
-            color: var(--tab-inactive-text);
-            border-radius: 8px 8px 0 0;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            max-width: 150px; /* Limita a largura dos botões de aba */
+            background: none;
+            color: var(--text-color);
+            border-radius: 0;
+            padding: 10px 15px;
+            margin-bottom: -2px; /* Ajusta para esconder a borda */
         }
-
         .tab-button.active {
-            background-color: var(--tab-active-bg);
-            color: var(--tab-active-text);
-            box-shadow: 0 -4px 10px var(--shadow-color);
-            position: relative;
-            z-index: 1;
+            color: var(--main-color);
+            border-bottom: 2px solid var(--main-color);
+            font-weight: bold;
         }
-
         .tab-content {
-            padding: 20px 0;
-            border-top: 1px solid var(--border-border-color); /* Separador visual */
-            margin-top: -1px; /* Ajuste para sobrepor a borda */
-        }
-
-        /* Estilo para abas específicas */
-        #home-tab, #history-tab, #test-tab {
+            padding-top: 15px;
             display: none;
         }
         .tab-content.active {
@@ -239,114 +173,23 @@
         }
 
         /* --- Home Tab --- */
-        .input-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .input-group label {
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 0.95em;
-        }
-
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1em;
-            background-color: var(--secondary-bg);
-            color: var(--text-color);
-            transition: border-color 0.3s ease;
-        }
-
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: var(--primary-button-bg);
-        }
-        
-        .input-group input::placeholder {
-            color: var(--placeholder-color);
-        }
-
         .button-group {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .button-group button {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: 600;
-        }
-
-        #convert-button {
-            background-color: var(--primary-button-bg);
-            color: var(--tab-active-text);
-        }
-
-        #convert-button:hover {
-            background-color: var(--primary-button-hover);
-            transform: translateY(-2px);
-        }
-
-        #save-button {
-            background-color: var(--secondary-button-bg);
-            color: var(--text-color);
-        }
-
-        #save-button:hover {
-            background-color: var(--secondary-button-hover);
-            transform: translateY(-2px);
-        }
-
-        #result-link-group {
-            margin-top: 25px;
-            display: none;
-            flex-direction: column;
             gap: 10px;
-            align-items: center;
-        }
-        #result-link-group label {
-            font-weight: 600;
-            color: var(--text-color);
-        }
-        #result-link {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px dashed var(--primary-button-bg); /* Borda estilizada */
-            border-radius: 8px;
-            font-size: 1em;
-            background-color: var(--secondary-bg);
-            color: var(--text-color);
-            text-align: center;
-            word-break: break-all; /* Garante que o link quebre a linha */
-        }
-        #copy-button {
-            padding: 8px 15px;
-            background-color: var(--primary-button-bg);
-            color: var(--tab-active-text);
-            border: none;
-            border-radius: 6px;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
             margin-top: 10px;
         }
-        #copy-button:hover {
-            background-color: var(--primary-button-hover);
+        #result-link-group {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px dashed var(--main-color);
+            border-radius: 4px;
+            text-align: center;
+        }
+        #result-link {
+            word-break: break-all;
+            margin-top: 5px;
         }
         #copy-message {
-            font-size: 0.8em;
             color: var(--success-color);
             margin-top: 5px;
         }
@@ -354,186 +197,89 @@
         /* --- History Tab --- */
         .history-controls {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap; /* Para quebrar linha em telas pequenas */
+            gap: 10px;
+            margin-bottom: 15px;
         }
-        .history-controls input {
-            flex: 1;
-            min-width: 150px;
+        .history-controls input, .history-controls select {
+            flex-grow: 1;
         }
-        .history-controls select {
-            min-width: 100px;
-        }
-        #clear-history-button {
-            padding: 10px 15px;
-            background-color: var(--error-color);
-            color: var(--tab-active-text);
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-weight: 600;
-        }
-        #clear-history-button:hover {
-            background-color: #c82333;
-        }
-
         #history-list {
             list-style: none;
             padding: 0;
-            max-height: 400px; /* Altura máxima para scroll */
-            overflow-y: auto; /* Scroll se exceder */
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 10px;
-            background-color: var(--secondary-bg);
+            max-height: 300px;
+            overflow-y: auto;
         }
-
         .history-item {
-            background-color: var(--primary-bg);
+            padding: 10px;
+            margin-bottom: 8px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            padding: 15px;
+            border-radius: 4px;
+            background-color: var(--secondary-bg);
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            transition: background-color 0.3s ease;
-        }
-        .history-item:hover {
-            background-color: var(--secondary-button-hover);
+            font-size: 0.9em;
+            flex-wrap: wrap;
         }
         .history-item div {
-            flex: 1;
-            min-width: 120px;
+            flex-basis: 45%;
         }
-        .history-item .item-id, .history-item .item-nickname {
-            font-weight: 600;
-            color: var(--primary-button-bg);
-            font-size: 0.95em;
-        }
-        .history-item .item-date {
-            font-size: 0.85em;
-            color: var(--placeholder-color);
-        }
-        .history-item .item-link {
-            font-size: 0.9em;
+        .history-item a {
+            color: var(--main-color);
             word-break: break-all;
         }
         .history-item .item-status {
-            font-weight: 600;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            text-align: center;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
         }
         .history-item .item-status.pendente {
-            background-color: #ffc10740; /* Amarelo claro */
+            background-color: #ffc10740;
             color: #e0a800;
         }
         .history-item .item-status.enviado {
-            background-color: #28a74540; /* Verde claro */
+            background-color: #28a74540;
             color: #218838;
         }
         .history-item .action-buttons {
             display: flex;
-            gap: 8px;
-            margin-left: auto; /* Alinha à direita */
-        }
-        .history-item .action-buttons button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: background-color 0.3s ease;
-            font-weight: 600;
-        }
-        .history-item .copy-history-btn {
-            background-color: var(--primary-button-bg);
-            color: var(--tab-active-text);
-        }
-        .history-item .copy-history-btn:hover {
-            background-color: var(--primary-button-hover);
-        }
-        .history-item .status-history-btn {
-            background-color: var(--secondary-button-bg);
-            color: var(--text-color);
-        }
-        .history-item .status-history-btn:hover {
-            background-color: var(--secondary-button-hover);
-        }
-        .history-item .delete-history-btn {
-            background-color: var(--error-color);
-            color: var(--tab-active-text);
-        }
-        .history-item .delete-history-btn:hover {
-            background-color: #c82333;
+            gap: 5px;
+            margin-top: 5px;
         }
 
         /* --- Test Tab --- */
-        #test-section {
-            padding: 20px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
         #test-result {
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
             padding: 15px;
-            min-height: 100px;
-            font-size: 0.9em;
-            line-height: 1.8;
-            word-break: break-all;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-top: 15px;
+            min-height: 80px;
+            line-height: 1.5;
         }
-        #test-result strong {
-            color: var(--primary-button-bg);
-        }
-        #test-result .error-msg {
-            color: var(--error-color);
-            font-weight: 600;
-        }
-        #test-result .success-msg {
-            color: var(--success-color);
-            font-weight: 600;
-        }
+        #test-result .success-msg { color: var(--success-color); font-weight: bold; }
+        #test-result .error-msg { color: var(--error-color); font-weight: bold; }
 
-        /* --- Logout Botão --- */
+        /* --- Botões Fixos (Logout e Configurações) --- */
         #logout-button {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: none;
-            border: none;
             color: var(--error-color);
             font-size: 1.5em;
-            cursor: pointer;
-            transition: color 0.3s ease;
+            padding: 5px;
         }
-        #logout-button:hover {
-            color: #c82333;
-        }
-
-        /* --- Botão de Configurações --- */
         #settings-button {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 15px;
+            left: 15px;
             background: none;
-            border: none;
             color: var(--settings-icon-color);
             font-size: 1.5em;
-            cursor: pointer;
-            transition: color 0.3s ease;
+            padding: 5px;
         }
-        #settings-button:hover {
-            color: var(--primary-button-bg);
-        }
+        #logout-button:hover { color: #c82333; }
+        #settings-button:hover { color: var(--main-color); }
 
         /* --- Painel de Configurações --- */
         .settings-panel-overlay {
@@ -543,150 +289,88 @@
             width: 100%;
             height: 100%;
             background-color: var(--overlay-bg);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(3px);
             z-index: 1000;
             display: none;
         }
-
         .settings-panel {
             position: fixed;
             top: 0;
-            left: -350px; /* Escondido à esquerda */
-            width: 320px;
+            left: -300px; /* Escondido à esquerda */
+            width: 280px;
             height: 100%;
-            background-color: var(--settings-panel-bg);
-            box-shadow: 5px 0 15px var(--settings-shadow);
+            background-color: var(--secondary-bg);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
             z-index: 1001;
             transition: left 0.3s ease-in-out;
-            padding: 25px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
         }
-
-        .settings-panel.open {
-            left: 0; /* Abre o painel */
-        }
-
+        .settings-panel.open { left: 0; }
         .settings-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-
-        .settings-header h2 {
-            font-size: 1.4em;
-            color: var(--text-color);
-            font-weight: 600;
-        }
-
         .close-settings-btn {
             background: none;
-            border: none;
-            color: var(--settings-icon-color);
-            font-size: 1.8em;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        .close-settings-btn:hover {
             color: var(--error-color);
+            font-size: 1.5em;
         }
-
         .settings-group {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 20px;
         }
-        .settings-group:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
         .settings-group h3 {
             font-size: 1.1em;
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-weight: 600;
+            margin-bottom: 10px;
         }
-
+        
+        /* Toggle Switch */
         .theme-toggle-group {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .theme-toggle-group label {
-            font-size: 1em;
-            color: var(--text-color);
+            justify-content: space-between;
         }
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 28px;
+            width: 45px;
+            height: 25px;
         }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--border-color);
-            transition: .4s;
-            border-radius: 28px;
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color); transition: .4s; border-radius: 25px;
         }
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+            position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 3.5px;
+            background-color: white; transition: .4s; border-radius: 50%;
         }
-        input:checked + .slider {
-            background-color: var(--primary-button-bg);
-        }
-        input:focus + .slider {
-            box-shadow: 0 0 1px var(--primary-button-bg);
-        }
-        input:checked + .slider:before {
-            transform: translateX(22px);
-        }
+        input:checked + .slider { background-color: var(--main-color); }
+        input:checked + .slider:before { transform: translateX(18px); }
 
+        /* Opções de Cores */
         .color-options {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
         .color-option {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: border-color 0.2s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: border-color 0.2s, transform 0.2s;
         }
         .color-option.selected {
-            border-color: var(--text-color); /* Borda para indicar seleção */
+            border-color: var(--text-color); 
             transform: scale(1.1);
         }
-        .color-option:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        /* Definições de cores para os botões do painel */
         .color-option[data-color="blueberry-fresh"] { background-color: #4a90e2; }
         .color-option[data-color="forest-green"] { background-color: #28a745; }
         .color-option[data-color="sunset-orange"] { background-color: #fd7e14; }
@@ -701,43 +385,12 @@
         .color-option[data-color="lime-green"] { background-color: #7cb342; }
 
 
-        /* --- Responsividade --- */
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 20px;
-                max-width: 95%;
-            }
-            h1 {
-                font-size: 1.8em;
-                margin-bottom: 20px;
-            }
-            .tab-buttons {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-            .tab-button {
-                flex-basis: 48%; /* Duas colunas */
-                font-size: 0.9em;
-                max-width: none;
-            }
-            .button-group {
-                flex-direction: column;
-            }
-            .history-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .history-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .history-item .action-buttons {
-                margin-top: 10px;
-                margin-left: 0;
-                width: 100%;
-                justify-content: flex-end;
-            }
+        @media (max-width: 500px) {
+            .container { padding: 15px; }
+            .history-item { flex-direction: column; align-items: flex-start; }
+            .history-item div { flex-basis: 100%; margin-bottom: 5px; }
+            .history-controls { flex-wrap: wrap; }
+            .history-controls input, .history-controls select { flex-basis: 48%; }
         }
     </style>
 </head>
@@ -746,18 +399,15 @@
         <h1>Sistema de Resgate de Códigos</h1>
 
         <button id="settings-button" aria-label="Abrir Configurações"><i class="fas fa-cog"></i></button>
-
-        <button id="logout-button" aria-label="Sair do sistema"><i class="fas fa-sign-out-alt"></i></button>
+        <button id="logout-button" aria-label="Sair do sistema" style="display: none;"><i class="fas fa-sign-out-alt"></i></button>
 
         <section id="login-section">
-            <div class="login-input-group">
-                <input type="password" id="access-code-input" placeholder="Digite o código de acesso" autocomplete="off">
-            </div>
+            <input type="password" id="access-code-input" placeholder="Digite o código de acesso" autocomplete="off">
             <button id="login-button">Acessar Sistema</button>
-            <p id="login-message" style="display: none;">Código inválido ou não autorizado.</p>
+            <p id="login-message" style="display: none;"></p>
         </section>
 
-        <section id="main-section">
+        <section id="main-section" style="display: none;">
             <div class="tab-buttons">
                 <button class="tab-button active" data-tab="home">Home</button>
                 <button class="tab-button" data-tab="history">Histórico</button>
@@ -765,31 +415,19 @@
             </div>
 
             <div id="home-tab" class="tab-content active">
-                <div class="input-group">
-                    <label for="link-url-input">Link URL Completo:</label>
-                    <input type="text" id="link-url-input" placeholder="Ex: https://play.google.com/store/redeem?code=..." required>
-                </div>
-                <div class="input-group">
-                    <label for="id-input">ID:</label>
-                    <input type="text" id="id-input" placeholder="Ex: R435G" required>
-                </div>
-                <div class="input-group">
-                    <label for="nickname-input">Nickname:</label>
-                    <input type="text" id="nickname-input" placeholder="Ex: João Silva" required>
-                </div>
-                <div class="input-group">
-                    <label for="prefix-select">Prefixo:</label>
-                    <select id="prefix-select">
-                        <option value="https://play.google.com/store/redeem?code=">Google Play</option>
-                        <option value="https://example.com/redeem?code=">Outro (Personalizável)</option>
-                    </select>
-                </div>
+                <input type="text" id="link-url-input" placeholder="Link URL Completo (Ex: https://play.google.com/redeem?code=...)" required>
+                <input type="text" id="id-input" placeholder="ID (Ex: R435G)" required>
+                <input type="text" id="nickname-input" placeholder="Nickname (Ex: João Silva)" required>
+                <select id="prefix-select">
+                    <option value="https://play.google.com/store/redeem?code=">Google Play</option>
+                    <option value="https://example.com/redeem?code=">Outro (Personalizável)</option>
+                </select>
                 <div class="button-group">
                     <button id="convert-button">Gerar e Abrir Link</button>
                     <button id="save-button">Salvar para depois</button>
                 </div>
-                <div id="result-link-group">
-                    <label>Link Gerado:</label>
+                <div id="result-link-group" style="display: none;">
+                    <p>Link Gerado:</p>
                     <input type="text" id="result-link" readonly>
                     <button id="copy-button">Copiar Link</button>
                     <span id="copy-message" style="display: none;">Link copiado!</span>
@@ -811,19 +449,14 @@
             </div>
 
             <div id="test-tab" class="tab-content">
-                <div class="input-group">
-                    <label for="test-code-input">Código de Acesso para Teste:</label>
-                    <input type="text" id="test-code-input" placeholder="Digite um código para testar">
-                </div>
-                <button id="test-code-button" class="button-group button-item">Testar Código</button>
+                <input type="text" id="test-code-input" placeholder="Código de Acesso para Teste">
+                <button id="test-code-button">Testar Código</button>
                 <div id="test-result">
                     <p><strong>Guia Rápido de Erros:</strong></p>
                     <ul>
-                        <li><span class="success-msg">✅ OK:</span> Código ativo e pronto para uso.</li>
-                        <li><span class="error-msg">❌ 401:</span> Código inválido ou sessão expirada.</li>
-                        <li><span class="error-msg">❌ 404:</span> Rota do servidor não encontrada (verifique a URL do backend).</li>
-                        <li><span class="error-msg">❌ Erro de Rede:</span> Problema de conexão com o servidor (servidor offline ou URL errada).</li>
-                        <li><span class="error-msg">⚠️ Não Testado:</span> Clique em "Testar Código" para verificar.</li>
+                        <li><span class="success-msg">✅ OK:</span> Código ativo.</li>
+                        <li><span class="error-msg">❌ 401:</span> Código inválido/não autorizado.</li>
+                        <li><span class="error-msg">❌ Erro de Rede:</span> Servidor offline ou URL errada.</li>
                     </ul>
                 </div>
             </div>
@@ -840,7 +473,7 @@
         <div class="settings-group">
             <h3>Modo de Tema</h3>
             <div class="theme-toggle-group">
-                <label for="dark-mode-toggle">Modo Escuro</label>
+                <span>Modo Escuro</span>
                 <label class="switch">
                     <input type="checkbox" id="dark-mode-toggle">
                     <span class="slider"></span>
@@ -849,30 +482,31 @@
         </div>
 
         <div class="settings-group">
-            <h3>Cor do Tema Principal</h3>
+            <h3>Cor Principal do Tema (12 Cores)</h3>
             <div class="color-options">
-                <div class="color-option" data-color="blueberry-fresh" title="Blueberry Fresh"></div>
-                <div class="color-option" data-color="forest-green" title="Forest Green"></div>
-                <div class="color-option" data-color="sunset-orange" title="Sunset Orange"></div>
-                <div class="color-option" data-color="royal-purple" title="Royal Purple"></div>
-                <div class="color-option" data-color="crimson-red" title="Crimson Red"></div>
-                <div class="color-option" data-color="ocean-teal" title="Ocean Teal"></div>
-                <div class="color-option" data-color="golden-yellow" title="Golden Yellow"></div>
-                <div class="color-option" data-color="dark-charcoal" title="Dark Charcoal"></div>
-                <div class="color-option" data-color="rose-pink" title="Rose Pink"></div>
-                <div class="color-option" data-color="sky-blue" title="Sky Blue"></div>
-                <div class="color-option" data-color="grape-purple" title="Grape Purple"></div>
-                <div class="color-option" data-color="lime-green" title="Lime Green"></div>
+                <div class="color-option" data-color="blueberry-fresh" title="Azul Padrão"></div>
+                <div class="color-option" data-color="forest-green" title="Verde Floresta"></div>
+                <div class="color-option" data-color="sunset-orange" title="Laranja Pôr do Sol"></div>
+                <div class="color-option" data-color="royal-purple" title="Roxo Royal"></div>
+                <div class="color-option" data-color="crimson-red" title="Vermelho Carmesim"></div>
+                <div class="color-option" data-color="ocean-teal" title="Verde Água"></div>
+                <div class="color-option" data-color="golden-yellow" title="Amarelo Ouro"></div>
+                <div class="color-option" data-color="dark-charcoal" title="Carvão Escuro"></div>
+                <div class="color-option" data-color="rose-pink" title="Rosa Choque"></div>
+                <div class="color-option" data-color="sky-blue" title="Azul Celeste"></div>
+                <div class="color-option" data-color="grape-purple" title="Roxo Uva"></div>
+                <div class="color-option" data-color="lime-green" title="Verde Limão"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURAÇÃO (MUITA ATENÇÃO AQUI) ---
-        const BACKEND_URL = 'https://resgate-api-node.onrender.com'; // ⚠️ Mude para a URL do seu Render: 'https://resgate-api-node.onrender.com'
-        const TOKEN_KEY = 'sessionTokenUnique'; // Chave para salvar o token no localStorage
-        const DARK_MODE_KEY = 'darkModeEnabled'; // Chave para o modo escuro
-        const THEME_COLOR_KEY = 'themeColor'; // Chave para a cor do tema
+        // --- CONFIGURAÇÃO CHAVE DO BACKEND ---
+        // A chave do seu servidor Render foi adicionada aqui.
+        const BACKEND_URL = 'https://resgate-api-node.onrender.com';
+        const TOKEN_KEY = 'sessionTokenUnique'; 
+        const DARK_MODE_KEY = 'darkModeEnabled'; 
+        const THEME_COLOR_KEY = 'themeColor'; 
 
         // --- Elementos Comuns ---
         const loginSection = document.getElementById('login-section');
@@ -885,6 +519,7 @@
         const closeSettingsBtn = document.querySelector('.close-settings-btn');
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const colorOptions = document.querySelector('.color-options');
+        const HISTORY_KEY = 'redemptionHistory'; // Chave para o histórico
 
         // --- Funções de Tema ---
         function applyDarkMode(enabled) {
@@ -895,7 +530,7 @@
         function applyThemeColor(color) {
             document.body.setAttribute('data-theme', color);
             localStorage.setItem(THEME_COLOR_KEY, color);
-            // Atualizar seleção visual no painel
+            // Atualiza a seleção visual
             document.querySelectorAll('.color-option').forEach(opt => {
                 opt.classList.remove('selected');
             });
@@ -906,23 +541,19 @@
         }
 
         function loadSettings() {
+            // Carrega Modo Escuro
             const savedDarkMode = localStorage.getItem(DARK_MODE_KEY);
             if (savedDarkMode !== null) {
                 const isDarkMode = savedDarkMode === 'true';
                 darkModeToggle.checked = isDarkMode;
                 applyDarkMode(isDarkMode);
             } else {
-                // Padrão: light mode
-                darkModeToggle.checked = false;
                 applyDarkMode(false);
             }
 
-            const savedThemeColor = localStorage.getItem(THEME_COLOR_KEY);
-            if (savedThemeColor) {
-                applyThemeColor(savedThemeColor);
-            } else {
-                applyThemeColor('blueberry-fresh'); // Tema padrão
-            }
+            // Carrega Cor do Tema
+            const savedThemeColor = localStorage.getItem(THEME_COLOR_KEY) || 'blueberry-fresh';
+            applyThemeColor(savedThemeColor);
         }
 
         // --- Gerenciamento de Autenticação ---
@@ -944,46 +575,38 @@
 
                 if (response.ok) {
                     showMainApp();
-                } else if (response.status === 401) {
-                    // Token inválido ou expirado
-                    localStorage.removeItem(TOKEN_KEY);
-                    showLogin("Sessão expirada. Por favor, faça login novamente.");
                 } else {
-                    // Outro erro do servidor
+                    // Trata 401 (expiração) e outros erros
                     localStorage.removeItem(TOKEN_KEY);
-                    showLogin("Erro de sessão desconhecido. Faça login novamente.");
+                    showLogin("Sessão expirada ou erro. Faça login novamente.");
                 }
             } catch (error) {
                 console.error('Erro ao verificar sessão:', error);
-                localStorage.removeItem(TOKEN_KEY);
-                showLogin("Erro de conexão com o servidor. Tente novamente mais tarde.");
+                showLogin("Erro de conexão com o servidor. Verifique a URL e a internet.");
             }
         }
 
         function showLogin(message = "") {
             loginSection.style.display = 'flex';
             mainSection.style.display = 'none';
-            logoutButton.style.display = 'none'; // Esconde logout na tela de login
-            settingsButton.style.display = 'block'; // Mostra configurações mesmo no login
+            logoutButton.style.display = 'none';
             loginMessage.textContent = message;
             loginMessage.style.display = message ? 'block' : 'none';
-            document.getElementById('access-code-input').value = ''; // Limpa o campo
+            document.getElementById('access-code-input').value = '';
         }
 
         function showMainApp() {
             loginSection.style.display = 'none';
             mainSection.style.display = 'block';
-            logoutButton.style.display = 'block'; // Mostra logout na app principal
-            settingsButton.style.display = 'block'; // Mostra configurações
+            logoutButton.style.display = 'block';
             loginMessage.style.display = 'none';
-            showTab('home'); // Abre a aba Home por padrão
-            renderHistory(); // Carrega o histórico ao entrar
+            showTab('home');
+            renderHistory();
         }
 
         // --- Eventos de Login/Logout ---
         document.getElementById('login-button').addEventListener('click', async () => {
-            const codeInput = document.getElementById('access-code-input');
-            const code = codeInput.value;
+            const code = document.getElementById('access-code-input').value.trim();
 
             try {
                 const response = await fetch(`${BACKEND_URL}/api/login`, {
@@ -1002,19 +625,19 @@
                 }
             } catch (error) {
                 console.error('Erro de login:', error);
-                showLogin("Erro de conexão com o servidor. Verifique sua internet.");
+                showLogin("Erro de conexão com o servidor. Verifique a URL.");
             }
         });
 
         logoutButton.addEventListener('click', () => {
             localStorage.removeItem(TOKEN_KEY);
-            window.location.reload(); // Recarrega a página para voltar ao login
+            window.location.reload();
         });
 
         // --- Gerenciamento de Abas ---
         document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const tab = button.dataset.tab;
+            button.addEventListener('click', (e) => {
+                const tab = e.target.dataset.tab;
                 showTab(tab);
             });
         });
@@ -1022,21 +645,22 @@
         function showTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
+                content.style.display = 'none'; 
             });
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
 
             document.getElementById(`${tabId}-tab`).classList.add('active');
+            document.getElementById(`${tabId}-tab`).style.display = 'block';
             document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
             
-            // Renderiza histórico sempre que a aba é ativada para garantir que esteja atualizado
             if (tabId === 'history') {
                 renderHistory();
             }
         }
 
-        // --- Aba Home: Gerenciamento de Links ---
+        // --- Aba Home: Link Logic ---
         const linkUrlInput = document.getElementById('link-url-input');
         const idInput = document.getElementById('id-input');
         const nicknameInput = document.getElementById('nickname-input');
@@ -1045,25 +669,16 @@
         const saveButton = document.getElementById('save-button');
         const resultLinkGroup = document.getElementById('result-link-group');
         const resultLink = document.getElementById('result-link');
-        const copyButton = document.getElementById('copy-button');
         const copyMessage = document.getElementById('copy-message');
 
-        convertButton.addEventListener('click', () => {
-            generateAndOpenLink(true); // Abre o link após gerar
-        });
-
-        saveButton.addEventListener('click', () => {
-            generateAndOpenLink(false); // Apenas gera e salva, não abre
-        });
-
-        function generateAndOpenLink(shouldOpen) {
+        function generateAndSave(shouldOpen, status) {
             const url = linkUrlInput.value.trim();
             const id = idInput.value.trim();
             const nickname = nicknameInput.value.trim();
             const prefix = prefixSelect.value;
 
             if (!url || !id || !nickname) {
-                alert('Por favor, preencha todos os campos: Link URL, ID e Nickname.');
+                alert('Por favor, preencha todos os campos.');
                 return;
             }
 
@@ -1072,13 +687,13 @@
             if (match && match[1]) {
                 code = match[1];
             } else {
-                alert('Não foi possível extrair o código do link fornecido. Verifique o formato.');
+                alert('Não foi possível extrair o código do link.');
                 return;
             }
 
             const finalLink = `${prefix}${code}`;
             resultLink.value = finalLink;
-            resultLinkGroup.style.display = 'flex';
+            resultLinkGroup.style.display = 'block';
 
             if (shouldOpen) {
                 window.open(finalLink, '_blank');
@@ -1088,68 +703,46 @@
                 id: id,
                 nickname: nickname,
                 link: finalLink,
-                status: 'pendente' // Padrão ao salvar
+                status: status
             });
 
-            copyMessage.style.display = 'none'; // Reseta mensagem de cópia
+            copyMessage.style.display = 'none';
         }
 
-        copyButton.addEventListener('click', () => {
+        convertButton.addEventListener('click', () => generateAndSave(true, 'enviado'));
+        saveButton.addEventListener('click', () => generateAndSave(false, 'pendente'));
+        document.getElementById('copy-button').addEventListener('click', () => {
             resultLink.select();
             document.execCommand('copy');
             copyMessage.style.display = 'block';
-            setTimeout(() => {
-                copyMessage.style.display = 'none';
-            }, 2000);
+            setTimeout(() => copyMessage.style.display = 'none', 2000);
         });
 
-        // --- Aba Histórico: Gerenciamento ---
-        const HISTORY_KEY = 'redemptionHistory'; // Chave para o histórico
-        const historyList = document.getElementById('history-list');
-        const searchHistoryInput = document.getElementById('search-history-input');
-        const filterStatusSelect = document.getElementById('filter-status-select');
-        const clearHistoryButton = document.getElementById('clear-history-button');
-
-        function getHistory() {
-            return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-        }
-
-        function saveHistory(history) {
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-            renderHistory(); // Re-renderiza após salvar
-        }
-
+        // --- Aba Histórico: Logic (simplificado) ---
+        function getHistory() { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+        function saveHistory(history) { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); renderHistory(); }
         function saveToHistory(item) {
             const history = getHistory();
-            const newItem = {
-                ...item,
-                timestamp: new Date().toISOString() // Adiciona data/hora
-            };
-            history.unshift(newItem); // Adiciona no começo
+            const newItem = { ...item, timestamp: new Date().toISOString() };
+            history.unshift(newItem); 
             saveHistory(history);
         }
-
+        
         function renderHistory() {
             const history = getHistory();
-            const searchTerm = searchHistoryInput.value.toLowerCase();
-            const filterStatus = filterStatusSelect.value;
-
-            historyList.innerHTML = ''; // Limpa a lista antes de renderizar
+            const searchTerm = document.getElementById('search-history-input').value.toLowerCase();
+            const filterStatus = document.getElementById('filter-status-select').value;
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = ''; 
 
             const filteredHistory = history.filter(item => {
-                const matchesSearch = item.id.toLowerCase().includes(searchTerm) ||
-                                      item.nickname.toLowerCase().includes(searchTerm);
+                const matchesSearch = item.id.toLowerCase().includes(searchTerm) || item.nickname.toLowerCase().includes(searchTerm);
                 const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
                 return matchesSearch && matchesStatus;
             });
 
             if (filteredHistory.length === 0) {
-                const emptyItem = document.createElement('li');
-                emptyItem.textContent = "Nenhum item no histórico ou encontrado.";
-                emptyItem.style.textAlign = 'center';
-                emptyItem.style.padding = '20px';
-                emptyItem.style.color = 'var(--placeholder-color)';
-                historyList.appendChild(emptyItem);
+                historyList.innerHTML = `<li style="text-align: center; color: var(--text-color);">Nenhum item no histórico ou encontrado.</li>`;
                 return;
             }
 
@@ -1157,93 +750,57 @@
                 const listItem = document.createElement('li');
                 listItem.classList.add('history-item');
                 listItem.innerHTML = `
-                    <div class="item-id">ID: ${item.id}</div>
-                    <div class="item-nickname">Nick: ${item.nickname}</div>
-                    <div class="item-date">${new Date(item.timestamp).toLocaleString()}</div>
-                    <div class="item-link">Link: <a href="${item.link}" target="_blank">${item.link}</a></div>
+                    <div><strong>ID:</strong> ${item.id}</div>
+                    <div><strong>Nick:</strong> ${item.nickname}</div>
+                    <div><a href="${item.link}" target="_blank">Link</a></div>
                     <div class="item-status ${item.status}">${item.status.toUpperCase()}</div>
                     <div class="action-buttons">
-                        <button class="copy-history-btn" data-link="${item.link}" title="Copiar Link"><i class="fas fa-copy"></i></button>
-                        <button class="status-history-btn" data-index="${index}" data-status="${item.status}" title="Mudar Status">
+                        <button class="status-history-btn" data-timestamp="${item.timestamp}" title="Mudar Status">
                             <i class="fas ${item.status === 'pendente' ? 'fa-check-circle' : 'fa-hourglass-half'}"></i>
                         </button>
-                        <button class="delete-history-btn" data-index="${index}" title="Remover"><i class="fas fa-trash-alt"></i></button>
+                        <button class="delete-history-btn" data-timestamp="${item.timestamp}" title="Remover"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 `;
                 historyList.appendChild(listItem);
             });
-
-            // Adiciona listeners para os botões do histórico após renderizar
-            document.querySelectorAll('.copy-history-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const linkToCopy = e.currentTarget.dataset.link;
-                    navigator.clipboard.writeText(linkToCopy).then(() => {
-                        alert('Link copiado para a área de transferência!');
-                    }).catch(err => {
-                        console.error('Erro ao copiar link:', err);
-                        alert('Falha ao copiar o link.');
-                    });
-                });
-            });
-
-            document.querySelectorAll('.status-history-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const originalIndex = e.currentTarget.dataset.index; // Índice no array filtrado
-                    const originalHistory = getHistory(); // Pega o histórico não filtrado
-                    const itemToUpdate = filteredHistory[originalIndex]; // Pega o item do array filtrado
-                    
-                    // Encontra o item original no histórico não filtrado pelo timestamp
-                    const actualIndexInFullHistory = originalHistory.findIndex(histItem => histItem.timestamp === itemToUpdate.timestamp);
-
-                    if (actualIndexInFullHistory > -1) {
-                        originalHistory[actualIndexInFullHistory].status = 
-                            originalHistory[actualIndexInFullHistory].status === 'pendente' ? 'enviado' : 'pendente';
-                        saveHistory(originalHistory);
-                    }
-                });
-            });
-
-            document.querySelectorAll('.delete-history-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    if (confirm('Tem certeza que deseja remover este item do histórico?')) {
-                        const originalIndex = e.currentTarget.dataset.index;
-                        const originalHistory = getHistory();
-                        const itemToRemove = filteredHistory[originalIndex];
-
-                        const actualIndexInFullHistory = originalHistory.findIndex(histItem => histItem.timestamp === itemToRemove.timestamp);
-
-                        if (actualIndexInFullHistory > -1) {
-                            originalHistory.splice(actualIndexInFullHistory, 1);
-                            saveHistory(originalHistory);
-                        }
-                    }
-                });
-            });
+            
+            // Adiciona Listeners de Ações no Histórico
+            document.querySelectorAll('.status-history-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                const timestamp = e.currentTarget.dataset.timestamp;
+                const originalHistory = getHistory();
+                const itemIndex = originalHistory.findIndex(i => i.timestamp === timestamp);
+                if (itemIndex > -1) {
+                    originalHistory[itemIndex].status = originalHistory[itemIndex].status === 'pendente' ? 'enviado' : 'pendente';
+                    saveHistory(originalHistory);
+                }
+            }));
+            document.querySelectorAll('.delete-history-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                if(confirm('Tem certeza?')) {
+                    const timestamp = e.currentTarget.dataset.timestamp;
+                    const originalHistory = getHistory();
+                    const updatedHistory = originalHistory.filter(i => i.timestamp !== timestamp);
+                    saveHistory(updatedHistory);
+                }
+            }));
         }
-
-        searchHistoryInput.addEventListener('input', renderHistory);
-        filterStatusSelect.addEventListener('change', renderHistory);
-        clearHistoryButton.addEventListener('click', () => {
-            if (confirm('Tem certeza que deseja limpar TODO o histórico? Esta ação é irreversível.')) {
+        
+        document.getElementById('search-history-input').addEventListener('input', renderHistory);
+        document.getElementById('filter-status-select').addEventListener('change', renderHistory);
+        document.getElementById('clear-history-button').addEventListener('click', () => {
+            if(confirm('Tem certeza que deseja limpar TODO o histórico?')) {
                 localStorage.removeItem(HISTORY_KEY);
                 renderHistory();
             }
         });
 
-        // --- Aba Teste Rápido ---
-        const testCodeInput = document.getElementById('test-code-input');
-        const testCodeButton = document.getElementById('test-code-button');
-        const testResult = document.getElementById('test-result');
 
-        testCodeButton.addEventListener('click', async () => {
-            const code = testCodeInput.value.trim();
-            if (!code) {
-                testResult.innerHTML = `<p class="error-msg">Por favor, digite um código para testar.</p>`;
-                return;
-            }
+        // --- Aba Teste Rápido ---
+        document.getElementById('test-code-button').addEventListener('click', async () => {
+            const code = document.getElementById('test-code-input').value.trim();
+            const testResult = document.getElementById('test-result');
 
             try {
-                const response = await fetch(`${BACKEND_URL}/api/login`, { // Usa a rota de login para testar se o código é válido
+                const response = await fetch(`${BACKEND_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code })
@@ -1252,49 +809,37 @@
                 if (response.ok) {
                     testResult.innerHTML = `<p class="success-msg">✅ O código <strong>${code}</strong> é válido e está ativo!</p>`;
                 } else if (response.status === 401) {
-                     const errorData = await response.json();
+                    const errorData = await response.json();
                     testResult.innerHTML = `<p class="error-msg">❌ Código <strong>${code}</strong> inválido: ${errorData.message || 'Não autorizado'}.</p>`;
                 } else {
                     testResult.innerHTML = `<p class="error-msg">❌ Erro no servidor (Status: ${response.status}).</p>`;
                 }
             } catch (error) {
-                console.error('Erro ao testar código:', error);
-                testResult.innerHTML = `<p class="error-msg">❌ Erro de conexão com o servidor. Verifique a URL do Backend e sua internet.</p>`;
+                testResult.innerHTML = `<p class="error-msg">❌ Erro de conexão com o servidor. Verifique a URL do Backend ou se o servidor está online.</p>`;
             }
         });
-
 
         // --- Eventos do Painel de Configurações ---
         settingsButton.addEventListener('click', () => {
             settingsPanel.classList.add('open');
             settingsPanelOverlay.style.display = 'block';
         });
-
-        closeSettingsBtn.addEventListener('click', () => {
+        [closeSettingsBtn, settingsPanelOverlay].forEach(el => el.addEventListener('click', () => {
             settingsPanel.classList.remove('open');
             settingsPanelOverlay.style.display = 'none';
-        });
+        }));
 
-        settingsPanelOverlay.addEventListener('click', () => {
-            settingsPanel.classList.remove('open');
-            settingsPanelOverlay.style.display = 'none';
-        });
-
-        darkModeToggle.addEventListener('change', (e) => {
-            applyDarkMode(e.target.checked);
-        });
-
+        darkModeToggle.addEventListener('change', (e) => applyDarkMode(e.target.checked));
         colorOptions.addEventListener('click', (e) => {
             if (e.target.classList.contains('color-option')) {
-                const selectedColor = e.target.dataset.color;
-                applyThemeColor(selectedColor);
+                applyThemeColor(e.target.dataset.color);
             }
         });
 
-        // --- Inicialização ao Carregar a Página ---
+        // --- Inicialização ---
         document.addEventListener('DOMContentLoaded', () => {
-            loadSettings(); // Carrega as configurações de tema primeiro
-            checkLoginStatus(); // Depois verifica o login
+            loadSettings(); 
+            checkLoginStatus(); 
         });
 
     </script>
