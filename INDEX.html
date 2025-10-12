@@ -243,6 +243,7 @@
             color: var(--cor-texto-principal);
             transition: background-color 0.2s, color 0.2s;
             overflow-x: hidden;
+            /* Se o background-image for definido pelo JS, ele será aplicado aqui */
         }
         .login-overlay {
             position: fixed;
@@ -899,8 +900,19 @@ Failed to redeem. This code is invalid or redeemed.
         
         <div id="configuracoes" class="tab-content">
             <h3 class="historico-titulo" style="margin-top: 0;">⚙️ Configurações</h3>
-
-            <div class="toggle-container">
+            
+            <h3 style="font-size: 1.1em; color: var(--cor-texto-principal); margin-top: 30px; border-bottom: 1px solid var(--cor-hr); padding-bottom: 5px;">🖼️ Imagem de Fundo do Sistema</h3>
+            
+            <p style="color: var(--cor-texto-secundario); margin-bottom: 15px;">
+                Cole a **URL completa** de uma imagem (JPG, PNG, etc.) para usá-la como fundo de tela.
+            </p>
+            
+            <input type="text" id="inputBackgroundImageUrl" placeholder="Ex: https://link-da-sua-imagem.com/fundo.jpg" style="margin-bottom: 10px;">
+            
+            <button onclick="handleApplyBackground()" style="margin-bottom: 10px;">Aplicar Imagem de Fundo</button>
+            <button onclick="applyBackgroundImage('')" style="background-color: var(--cor-aviso-erro); box-shadow: none;">Remover Imagem de Fundo</button>
+            
+            <div class="toggle-container" style="margin-top: 30px;">
                 <span class="toggle-label" id="theme-toggle-label">
                     ☀️ Tema de Visualização (Modo Claro/Escuro)
                 </span>
@@ -949,6 +961,7 @@ Failed to redeem. This code is invalid or redeemed.
         const THEME_KEY = 'siteTheme';
         const COLOR_KEY = 'siteColor'; 
         const TOKEN_KEY = 'sessionTokenUnique'; 
+        const BACKGROUND_IMAGE_KEY = 'siteBackgroundImg'; // NOVO: CHAVE PARA IMAGEM DE FUNDO
 
         // NOVO: ARRAY COM 12 CORES E SUAS VARIAÇÕES
         const THEME_COLORS = [
@@ -1207,9 +1220,49 @@ Failed to redeem. This code is invalid or redeemed.
             applyTheme(isLight);
         }
         
+        // --- FUNÇÕES DE BACKGROUND (NOVA) ---
+        function applyBackgroundImage(imageUrl) {
+            const body = document.body;
+            
+            if (!imageUrl || imageUrl.trim() === '') {
+                body.style.backgroundImage = 'none';
+                body.style.backgroundSize = 'auto'; // Reset
+                body.style.backgroundAttachment = 'scroll'; // Reset
+                body.style.backgroundPosition = 'top left'; // Reset
+                localStorage.removeItem(BACKGROUND_IMAGE_KEY);
+                // Atualiza o input para ficar vazio
+                document.getElementById('inputBackgroundImageUrl').value = ''; 
+                return;
+            }
+
+            // Aplica estilos
+            body.style.backgroundImage = `url('${imageUrl}')`;
+            body.style.backgroundSize = 'cover';
+            body.style.backgroundAttachment = 'fixed';
+            body.style.backgroundPosition = 'center center';
+            
+            // Salva no local storage
+            localStorage.setItem(BACKGROUND_IMAGE_KEY, imageUrl);
+        }
+        
+        function handleApplyBackground() {
+            const imageUrlInput = document.getElementById('inputBackgroundImageUrl');
+            const imageUrl = imageUrlInput.value.trim();
+            
+            if (!imageUrl.toLowerCase().startsWith('http')) {
+                 alert("URL de imagem inválida. Por favor, cole um link direto para a imagem (começando com http:// ou https://).");
+                 return;
+            }
+
+            applyBackgroundImage(imageUrl);
+            alert("Imagem de fundo aplicada! Ela será carregada automaticamente nas próximas visitas.");
+            closeSidebar();
+        }
+        
         function loadTheme() {
             const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
             const savedColor = localStorage.getItem(COLOR_KEY) || 'azul'; 
+            const savedBackground = localStorage.getItem(BACKGROUND_IMAGE_KEY); // NOVO
             
             const isLight = savedTheme === 'light';
             
@@ -1223,6 +1276,11 @@ Failed to redeem. This code is invalid or redeemed.
             }
             
             applyColor(savedColor);
+            
+            // Aplica o background se houver um salvo // NOVO
+            if(savedBackground) {
+                applyBackgroundImage(savedBackground);
+            }
         }
         
         // --- FUNÇÕES DE HISTÓRICO ---
@@ -1465,6 +1523,13 @@ Failed to redeem. This code is invalid or redeemed.
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             checkLoginStatus(); 
+            
+            // NOVO: Adiciona o valor do background salvo no input ao carregar
+            const savedBackground = localStorage.getItem(BACKGROUND_IMAGE_KEY);
+            const bgInput = document.getElementById('inputBackgroundImageUrl');
+            if (bgInput && savedBackground) {
+                bgInput.value = savedBackground;
+            }
         });
 
     </script>
