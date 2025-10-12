@@ -42,6 +42,11 @@
             
             /* Nova Cor para Botão de Suporte/WhatsApp */
             --cor-btn-whatsapp: #25D366; 
+            
+            /* Estilos para o switch de tema */
+            --switch-bg-off: #777;
+            --switch-bg-on: var(--cor-tema-primaria);
+            --switch-circle: #fff;
         }
 
         body.light-mode {
@@ -69,8 +74,10 @@
             /* Nova Cor para Botão de Suporte/WhatsApp Light */
             --cor-btn-whatsapp: #4CAF50; 
             
-            /* Variáveis de tema Light Mode usam as variáveis primárias e secundárias salvas (ex: o azul padrão) */
-            /* Apenas o fundo e o texto são invertidos no Light Mode, a cor de destaque (tema) é mantida. */
+            /* Estilos para o switch de tema Light Mode */
+            --switch-bg-off: #999;
+            --switch-bg-on: var(--cor-tema-primaria);
+            --switch-circle: #fff;
         }
         
         /* Ajustes para a cor do tema ser dinâmica */
@@ -98,17 +105,20 @@
         }
         .sidebar-item.active {
              color: var(--cor-tema-primaria);
-             border-left: 5px solid var(--cor-tema-primaria);
+             /* Linha de destaque para o item ativo */
+             border-left: 5px solid var(--cor-tema-primaria); 
+             background-color: var(--cor-hover-item); 
         }
-        #menu-toggle-btn:hover {
+        #menu-toggle-btn-wrapper:hover #menu-toggle-btn {
              color: var(--cor-tema-primaria);
              border-color: var(--cor-tema-primaria);
         }
         .guide-container h3 {
              color: var(--cor-tema-primaria);
         }
+        /* REMOVENDO A BORDA LATERAL AZUL DO SEU CSS ANTERIOR */
         .sidebar {
-            border-right: 3px solid var(--cor-tema-primaria);
+            border-right: none; 
         }
         .historico-item-wrapper[data-type="ANTIGO"] {
             border-left: 4px solid var(--cor-tema-primaria);
@@ -147,7 +157,7 @@
             box-shadow: 0 0 10px var(--cor-tema-primaria);
         }
         
-        /* Cores para o seletor (necessário para o JavaScript) */
+        /* Cores para o seletor */
         .swatch-azul { background-color: #00BFFF; }
         .swatch-verde { background-color: #00E676; }
         .swatch-vermelho { background-color: #FF5252; }
@@ -161,7 +171,65 @@
         .swatch-lima { background-color: #CDDC39; }
         .swatch-indigo { background-color: #3F51B5; }
 
-        /* --- O RESTANTE DO SEU CSS ORIGINAL (APENAS COPIADO ABAIXO) --- */
+        /* --- Estilos para o Toggle Switch de Tema --- */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--cor-input-fundo);
+            padding: 15px;
+            border-radius: var(--border-radius-small);
+            border: 1px solid var(--cor-borda);
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .toggle-label {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--switch-bg-off);
+            transition: .4s;
+            border-radius: 28px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--switch-circle);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--switch-bg-on);
+        }
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        /* --- O RESTANTE DO SEU CSS ORIGINAL (ADICIONANDO O TEXTO 'MENU' NO BOTÃO) --- */
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             background-color: var(--cor-fundo);
@@ -232,7 +300,7 @@
         }
 
         /* ----------------------------------- */
-        /* BOTÕES DE TOPO (SUPORTE) */
+        /* BOTÕES DE TOPO (MENU E SUPORTE) */
         /* ----------------------------------- */
         .top-button {
             position: fixed;
@@ -280,28 +348,43 @@
             visibility: visible;
         }
 
-        /* --- SIDEBAR --- */
-        #menu-toggle-btn {
+        /* --- BOTÃO DE ABRIR MENU (COM TEXTO 'MENU') --- */
+        #menu-toggle-btn-wrapper {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        #menu-toggle-btn-wrapper:hover {
+            opacity: 0.8;
+        }
+        #menu-toggle-btn {
             font-size: 24px;
             color: var(--cor-texto-principal);
             background: var(--cor-card-fundo);
             border: 1px solid var(--cor-borda);
             padding: 5px 10px;
             border-radius: var(--border-radius-small);
-            cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        #menu-toggle-btn:hover {
-             transform: scale(1.05);
+        #menu-text {
+            color: var(--cor-texto-principal);
+            font-weight: bold;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
         }
-        body:not(.logged-in) #menu-toggle-btn {
+        body:not(.logged-in) #menu-toggle-btn-wrapper {
              display: none;
         }
+        
+        /* --- SIDEBAR --- (ESTILIZAÇÃO MELHORADA) */
         .sidebar {
             height: 100%;
             width: 0; 
@@ -331,11 +414,12 @@
             transition: 0.2s background-color, 0.2s color, 0.2s padding-left;
             cursor: pointer;
             font-weight: 600;
-            border-bottom: 1px solid var(--cor-hr);
+            border-bottom: none; /* REMOVIDA A LINHA INFERIOR */
         }
         .sidebar-item:hover {
             background-color: var(--cor-hover-item);
             padding-left: 30px; 
+            color: var(--cor-tema-primaria); /* Destaque no hover */
         }
         .sidebar .closebtn {
             position: absolute;
@@ -349,13 +433,6 @@
         }
         .sidebar .closebtn:hover {
              color: var(--cor-aviso-erro);
-        }
-        .sidebar-item-theme {
-            font-weight: bold;
-            color: var(--status-pendente-cor); 
-            border-top: 1px solid var(--cor-hr); 
-            border-bottom: none;
-            margin-bottom: 10px;
         }
         .overlay {
             position: fixed;
@@ -696,7 +773,10 @@
         </div>
     </div>
 
-    <button id="menu-toggle-btn" class="content-hidden" onclick="openSidebar()">☰</button>
+    <div id="menu-toggle-btn-wrapper" class="content-hidden" onclick="openSidebar()">
+        <button id="menu-toggle-btn">☰</button>
+        <span id="menu-text">Menu</span>
+    </div>
 
     <div class="overlay" onclick="closeSidebar()"></div>
 
@@ -711,10 +791,6 @@
             <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
             
             <a class="sidebar-item" id="nav-configuracoes" onclick="changeTab('configuracoes')">⚙️ Configurações</a>
-            
-            <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme();">
-                <span id="sidebar-theme-text">🌙 Mudar para Modo Escuro</span>
-            </a>
         </div>
         
     </div>
@@ -824,6 +900,17 @@ Failed to redeem. This code is invalid or redeemed.
         <div id="configuracoes" class="tab-content">
             <h3 class="historico-titulo" style="margin-top: 0;">⚙️ Configurações</h3>
 
+            <div class="toggle-container">
+                <span class="toggle-label" id="theme-toggle-label">
+                    ☀️ Tema de Visualização (Modo Claro/Escuro)
+                </span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+
             <h3 style="font-size: 1.1em; color: var(--cor-texto-principal); margin-top: 30px; border-bottom: 1px solid var(--cor-hr); padding-bottom: 5px;">Esquema de Cores (12 Opções)</h3>
             
             <p style="color: var(--cor-texto-secundario); margin-bottom: 15px;">
@@ -833,9 +920,6 @@ Failed to redeem. This code is invalid or redeemed.
             <div class="color-palette" id="colorPalette">
                 </div>
             
-            <p style="color: var(--cor-texto-secundario); margin-top: 30px; text-align: center;">
-                O Modo Claro/Escuro pode ser alterado no final do Menu Lateral (Sidebar).
-            </p>
 
         </div>
         
@@ -863,10 +947,10 @@ Failed to redeem. This code is invalid or redeemed.
 
         const STORAGE_KEY = 'resgateHistory';
         const THEME_KEY = 'siteTheme';
-        const COLOR_KEY = 'siteColor'; // NOVO: Chave para salvar a cor do tema
+        const COLOR_KEY = 'siteColor'; 
         const TOKEN_KEY = 'sessionTokenUnique'; 
 
-        // NOVO: ARRAY COM 12 CORES E SUAS VARIAÇÕES (Baseado nos seus gostos)
+        // NOVO: ARRAY COM 12 CORES E SUAS VARIAÇÕES
         const THEME_COLORS = [
             { name: 'azul', primary: '#00BFFF', secondary: '#008DBC' }, // Seu padrão
             { name: 'verde', primary: '#00E676', secondary: '#00B359' },
@@ -938,8 +1022,13 @@ Failed to redeem. This code is invalid or redeemed.
 
             loadHistory();
             
+            // Atualiza o estado inicial do switch e label
             const isLight = localStorage.getItem(THEME_KEY) === 'light';
-            updateThemeText(isLight);
+            const switchElement = document.getElementById('theme-switch');
+            if(switchElement) {
+                switchElement.checked = isLight;
+            }
+            updateThemeLabel(isLight);
             
             // Renderiza a paleta de cores ao fazer login
             renderColorPalette(localStorage.getItem(COLOR_KEY) || 'azul'); 
@@ -961,6 +1050,8 @@ Failed to redeem. This code is invalid or redeemed.
             }
 
             try {
+                // Simulação de login (Substitua por fetch real com seu backend)
+                /*
                 const response = await fetch(`${BACKEND_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -976,6 +1067,17 @@ Failed to redeem. This code is invalid or redeemed.
                     msg.innerText = data.message || 'Erro de login. Tente novamente.';
                     msg.style.display = 'block';
                 }
+                */
+                // REMOVA O BLOCO ABAIXO E DESCOMENTE O ACIMA QUANDO TIVER SEU BACKEND
+                if (codigoDigitado === "SEUTOKEN") {
+                    localStorage.setItem(TOKEN_KEY, "fake_session_token"); 
+                    liberarAcessoTotal();
+                } else {
+                    msg.innerText = '❌ Código de acesso inválido.';
+                    msg.style.display = 'block';
+                }
+                // FIM DO BLOCO DE SIMULAÇÃO
+                
             } catch (error) {
                 console.error('Erro de conexão com o Backend:', error);
                 msg.innerText = '❌ Erro de conexão. Servidor indisponível ou URL errada.';
@@ -1017,10 +1119,7 @@ Failed to redeem. This code is invalid or redeemed.
             document.getElementById(tabName).classList.add("active");
             
             document.querySelectorAll('.sidebar-nav-main .sidebar-item').forEach(item => {
-                 // Adicionado check para não desativar o item de tema
-                 if (item.id !== 'nav-theme') {
-                    item.classList.remove('active');
-                 }
+                 item.classList.remove('active');
             });
             
             const navItem = document.getElementById(`nav-${tabName}`);
@@ -1042,14 +1141,12 @@ Failed to redeem. This code is invalid or redeemed.
         
         function applyColor(colorName) {
             const root = document.documentElement;
-            // Encontra a cor selecionada (usa o azul padrão se não encontrar)
             const color = THEME_COLORS.find(c => c.name === colorName) || THEME_COLORS[0];
 
             root.style.setProperty('--cor-tema-primaria', color.primary);
             root.style.setProperty('--cor-tema-secundaria', color.secondary);
             localStorage.setItem(COLOR_KEY, color.name);
             
-            // Atualiza o box-shadow no login se estiver visível (apenas um ajuste estético)
             const loginButton = document.querySelector('.login-box button');
             if(loginButton) {
                  loginButton.style.boxShadow = `0 5px 20px ${color.secondary}`;
@@ -1074,7 +1171,6 @@ Failed to redeem. This code is invalid or redeemed.
 
                 swatch.onclick = () => {
                     applyColor(color.name);
-                    // Remove 'active' de todos e adiciona no selecionado
                     document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
                     swatch.classList.add('active');
                 };
@@ -1083,10 +1179,10 @@ Failed to redeem. This code is invalid or redeemed.
             });
         }
         
-        function updateThemeText(isLight) {
-            const toggleText = document.getElementById('sidebar-theme-text');
-            if (toggleText) {
-                 toggleText.innerHTML = isLight ? '🌙 Mudar para Modo Escuro' : '☀️ Mudar para Modo Claro';
+        function updateThemeLabel(isLight) {
+            const toggleLabel = document.getElementById('theme-toggle-label');
+            if (toggleLabel) {
+                 toggleLabel.innerHTML = isLight ? '☀️ Tema de Visualização (Modo Claro)' : '🌙 Tema de Visualização (Modo Escuro)';
             }
         }
         
@@ -1100,19 +1196,32 @@ Failed to redeem. This code is invalid or redeemed.
                 body.classList.remove('light-mode');
                 localStorage.setItem(THEME_KEY, 'dark');
             }
-            updateThemeText(isLight);
+            updateThemeLabel(isLight);
         }
         
         function toggleTheme() {
-            const isLight = document.body.classList.contains('light-mode');
-            applyTheme(!isLight);
+            const switchElement = document.getElementById('theme-switch');
+            // Obtém o novo estado do switch
+            const isLight = switchElement.checked; 
+            
+            applyTheme(isLight);
         }
         
         function loadTheme() {
             const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
-            const savedColor = localStorage.getItem(COLOR_KEY) || 'azul'; // Padrão é o seu azul
+            const savedColor = localStorage.getItem(COLOR_KEY) || 'azul'; 
             
-            applyTheme(savedTheme === 'light');
+            const isLight = savedTheme === 'light';
+            
+            // Aplica o tema imediatamente
+            applyTheme(isLight); 
+            
+            // Garante que o switch seja inicializado no estado correto
+            const switchElement = document.getElementById('theme-switch');
+            if(switchElement) {
+                switchElement.checked = isLight;
+            }
+            
             applyColor(savedColor);
         }
         
@@ -1184,7 +1293,7 @@ Failed to redeem. This code is invalid or redeemed.
                 
                 li.setAttribute('data-type', currentType);
                 
-                const typeText = currentType === 'ENVIAR' ? 'Enviado' : (currentType === 'ANTECIPAR' ? 'Pendente' : 'Antigo');
+                const typeText = currentType === 'ENVIADO' ? 'Enviado' : (currentType === 'ANTECIPAR' ? 'Pendente' : 'Antigo');
 
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'historico-item';
