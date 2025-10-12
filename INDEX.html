@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISTEMA DE RESGATE DE CÓDIGO ÚNICO</title>
     <style>
-        /* --- ESTILOS GLOBAIS COM VARIÁVEIS CSS (ADICIONADAS PARA CORES/TEMA DINÂMICO) --- */
         :root {
-            /* Cores Dark Mode (Padrão) - Baseado no seu Azul Vibrante */
-            --cor-primaria: #00BFFF; /* Azul Claro Vibrante (Cor base para o tema) */
-            --cor-secundaria: #008DBC; /* Azul Mais Escuro (Sombra do botão) */
+            /* Cores Dark Mode (Padrão) */
+            --cor-primaria: #00BFFF; /* Azul Claro Vibrante */
+            --cor-secundaria: #008DBC; /* Azul Mais Escuro */
             --cor-fundo: #121212; /* Fundo Escuro Sólido */
             --cor-card-fundo: #1E1E1E; /* Card Escuro */
             --cor-texto-principal: #F0F0F0;
@@ -22,11 +21,7 @@
             --cor-hr: #3A3A3A;
             --cor-hover-item: #252525;
             
-            /* Variáveis de Tema (Definidas pelo JS: Padrão é Azul do seu design) */
-            --cor-tema-primaria: var(--cor-primaria);
-            --cor-tema-secundaria: var(--cor-secundaria);
-            
-            --cor-btn-principal: var(--cor-tema-primaria); /* Agora usa a variável de tema */
+            --cor-btn-principal: var(--cor-primaria);
             --cor-btn-reabrir: var(--cor-verde);
             --cor-btn-deletar: #D50000;
             --cor-btn-testar: #FFA500; /* Laranja para Teste */
@@ -37,20 +32,17 @@
 
             /* Cores de Status para Histórico */
             --status-pendente-cor: var(--cor-amarelo-pendente);
-            --status-enviado-cor: var(--cor-btn-enviado); 
-            --status-antigo-cor: var(--cor-tema-primaria); /* Agora usa a variável de tema */
+            --status-enviado-cor: var(--cor-btn-enviado); /* Novo status: Enviado */
+            --status-antigo-cor: var(--cor-primaria); 
             
             /* Nova Cor para Botão de Suporte/WhatsApp */
             --cor-btn-whatsapp: #25D366; 
-            
-            /* Estilos para o switch de tema */
-            --switch-bg-off: #777;
-            --switch-bg-on: var(--cor-tema-primaria);
-            --switch-circle: #fff;
         }
 
         body.light-mode {
             /* Cores Light Mode */
+            --cor-primaria: #1E90FF;
+            --cor-secundaria: #1C86EE;
             --cor-fundo: #F0F2F5; 
             --cor-card-fundo: #FFFFFF; 
             --cor-texto-principal: #333333; 
@@ -70,166 +62,12 @@
             /* Cores de Status para Histórico Light */
             --status-pendente-cor: #FFB300;
             --status-enviado-cor: #4CAF50;
+            --status-antigo-cor: var(--cor-primaria);
             
             /* Nova Cor para Botão de Suporte/WhatsApp Light */
             --cor-btn-whatsapp: #4CAF50; 
-            
-            /* Estilos para o switch de tema Light Mode */
-            --switch-bg-off: #999;
-            --switch-bg-on: var(--cor-tema-primaria);
-            --switch-circle: #fff;
-        }
-        
-        /* Ajustes para a cor do tema ser dinâmica */
-        .login-box button {
-            background-color: var(--cor-tema-primaria); 
-            box-shadow: 0 5px 20px var(--cor-tema-secundaria); 
-        }
-        .login-box button:hover {
-            background-color: var(--cor-tema-secundaria);
-            box-shadow: 0 8px 25px var(--cor-tema-secundaria);
-        }
-        .login-box h2 {
-            color: var(--cor-tema-primaria);
-        }
-        .header-content {
-            border-bottom: 3px solid var(--cor-tema-primaria);
-        }
-        .container button:not(.delete-button, .status-button, .mark-sent-button) {
-            background-color: var(--cor-btn-principal);
-            box-shadow: 0 4px 15px var(--cor-tema-secundaria);
-        }
-        .container button:hover:not(.delete-button, .status-button, .mark-sent-button) {
-            background-color: var(--cor-tema-secundaria);
-            box-shadow: 0 6px 18px var(--cor-tema-secundaria);
-        }
-        .sidebar-item.active {
-             color: var(--cor-tema-primaria);
-             /* Linha de destaque para o item ativo */
-             border-left: 5px solid var(--cor-tema-primaria); 
-             background-color: var(--cor-hover-item); 
-        }
-        #menu-toggle-btn-wrapper:hover #menu-toggle-btn {
-             color: var(--cor-tema-primaria);
-             border-color: var(--cor-tema-primaria);
-        }
-        .guide-container h3 {
-             color: var(--cor-tema-primaria);
-        }
-        /* REMOVENDO A BORDA LATERAL AZUL DO SEU CSS ANTERIOR */
-        .sidebar {
-            border-right: none; 
-        }
-        .historico-item-wrapper[data-type="ANTIGO"] {
-            border-left: 4px solid var(--cor-tema-primaria);
-        }
-        .historico-item-wrapper[data-type="ANTIGO"] .status-tag {
-            background-color: var(--cor-tema-primaria);
-            color: white;
-        }
-        .item-nome {
-            color: var(--cor-tema-primaria);
         }
 
-        /* --- Estilos para a nova aba CONFIGURAÇÕES --- */
-        .color-palette {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-        .color-swatch {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
-            transition: border-color 0.2s, transform 0.1s;
-        }
-        .color-swatch:hover {
-            transform: scale(1.1);
-        }
-        .color-swatch.active {
-            border-color: var(--cor-texto-principal);
-            transform: scale(1.15);
-            box-shadow: 0 0 10px var(--cor-tema-primaria);
-        }
-        
-        /* Cores para o seletor */
-        .swatch-azul { background-color: #00BFFF; }
-        .swatch-verde { background-color: #00E676; }
-        .swatch-vermelho { background-color: #FF5252; }
-        .swatch-laranja { background-color: #FFA500; }
-        .swatch-roxo { background-color: #9C27B0; }
-        .swatch-ciano { background-color: #00BCD4; }
-        .swatch-rosa { background-color: #E91E63; }
-        .swatch-amarelo { background-color: #FFC107; }
-        .swatch-teal { background-color: #009688; }
-        .swatch-marrom { background-color: #795548; }
-        .swatch-lima { background-color: #CDDC39; }
-        .swatch-indigo { background-color: #3F51B5; }
-
-        /* --- Estilos para o Toggle Switch de Tema --- */
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: var(--cor-input-fundo);
-            padding: 15px;
-            border-radius: var(--border-radius-small);
-            border: 1px solid var(--cor-borda);
-            margin-bottom: 25px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .toggle-label {
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 28px;
-        }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--switch-bg-off);
-            transition: .4s;
-            border-radius: 28px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 4px;
-            background-color: var(--switch-circle);
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider {
-            background-color: var(--switch-bg-on);
-        }
-        input:checked + .slider:before {
-            transform: translateX(22px);
-        }
-
-        /* --- O RESTANTE DO SEU CSS ORIGINAL (ADICIONANDO O TEXTO 'MENU' NO BOTÃO) --- */
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             background-color: var(--cor-fundo);
@@ -244,6 +82,10 @@
             transition: background-color 0.2s, color 0.2s;
             overflow-x: hidden;
         }
+
+        /* ----------------------------------- */
+        /* TELA DE LOGIN (OVERLAY) */
+        /* ----------------------------------- */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -269,6 +111,7 @@
             border: 1px solid var(--cor-borda);
         }
         .login-box h2 {
+            color: var(--cor-primaria);
             margin-bottom: 20px;
             font-size: 1.4em;
         }
@@ -283,6 +126,7 @@
             box-sizing: border-box;
             font-size: 0.95em;
         }
+        
         .login-box button {
             width: 100%;
             padding: 15px;
@@ -294,18 +138,22 @@
             letter-spacing: 0.5px;
             transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
             color: white;
+            background-color: var(--cor-primaria); 
+            box-shadow: 0 5px 20px rgba(0, 191, 255, 0.5); 
         }
         .login-box button:hover {
+            background-color: var(--cor-secundaria);
+            box-shadow: 0 8px 25px rgba(0, 191, 255, 0.7);
             transform: translateY(-3px); 
         }
 
         /* ----------------------------------- */
-        /* BOTÕES DE TOPO (MENU E SUPORTE) */
+        /* BOTÕES DE TOPO (SUPORTE) */
         /* ----------------------------------- */
         .top-button {
             position: fixed;
             top: 20px;
-            right: 20px; 
+            right: 20px; /* Alinhado à direita */
             z-index: 1000;
             padding: 10px 15px;
             border-radius: var(--border-radius-main);
@@ -329,62 +177,56 @@
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
             transform: translateY(-2px);
         }
+
+        /* Oculta na tela de login, aparece após o login */
         body:not(.logged-in) .top-button {
             display: none; 
         }
+
         #msgLogin {
             color: var(--cor-aviso-erro);
             font-weight: bold;
             margin-top: 10px;
             display: none;
         }
+        
         .content-hidden {
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s;
         }
+        
         body.logged-in .content-hidden {
             opacity: 1;
             visibility: visible;
         }
 
-        /* --- BOTÃO DE ABRIR MENU (COM TEXTO 'MENU') --- */
-        #menu-toggle-btn-wrapper {
+        /* --- SIDEBAR --- */
+        #menu-toggle-btn {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-        }
-        #menu-toggle-btn-wrapper:hover {
-            opacity: 0.8;
-        }
-        #menu-toggle-btn {
             font-size: 24px;
             color: var(--cor-texto-principal);
             background: var(--cor-card-fundo);
             border: 1px solid var(--cor-borda);
             padding: 5px 10px;
             border-radius: var(--border-radius-small);
+            cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        #menu-text {
-            color: var(--cor-texto-principal);
-            font-weight: bold;
-            font-size: 1.1em;
-            letter-spacing: 0.5px;
+        #menu-toggle-btn:hover {
+             color: var(--cor-primaria);
+             border-color: var(--cor-primaria);
+             transform: scale(1.05);
         }
-        body:not(.logged-in) #menu-toggle-btn-wrapper {
+
+        body:not(.logged-in) #menu-toggle-btn {
              display: none;
         }
-        
-        /* --- SIDEBAR --- (ESTILIZAÇÃO MELHORADA) */
+
         .sidebar {
             height: 100%;
             width: 0; 
@@ -397,12 +239,15 @@
             transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
             padding-top: 60px;
             box-shadow: 4px 0 20px rgba(0,0,0,0.6);
+            border-right: 3px solid var(--cor-primaria);
             display: flex; 
             flex-direction: column;
         }
+        
         .sidebar-nav-main {
             flex-grow: 1; 
         }
+        
         .sidebar-item {
             padding: 15px 25px;
             text-decoration: none;
@@ -414,13 +259,20 @@
             transition: 0.2s background-color, 0.2s color, 0.2s padding-left;
             cursor: pointer;
             font-weight: 600;
-            border-bottom: none; /* REMOVIDA A LINHA INFERIOR */
+            border-bottom: 1px solid var(--cor-hr);
         }
+
         .sidebar-item:hover {
             background-color: var(--cor-hover-item);
+            color: var(--cor-primaria);
             padding-left: 30px; 
-            color: var(--cor-tema-primaria); /* Destaque no hover */
         }
+        .sidebar-item.active {
+             background-color: var(--cor-hover-item);
+             color: var(--cor-primaria);
+             border-left: 5px solid var(--cor-primaria);
+        }
+        
         .sidebar .closebtn {
             position: absolute;
             top: 0;
@@ -434,6 +286,16 @@
         .sidebar .closebtn:hover {
              color: var(--cor-aviso-erro);
         }
+        
+        /* NOVO ESTILO PARA O BOTÃO DE TEMA NO RODAPÉ DO MENU */
+        .sidebar-item-theme {
+            font-weight: bold;
+            color: var(--status-pendente-cor); 
+            border-top: 1px solid var(--cor-hr); /* Separador visual */
+            border-bottom: none;
+            margin-bottom: 10px;
+        }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -444,6 +306,7 @@
             z-index: 998;
             display: none;
         }
+
         .container {
             background-color: var(--cor-card-fundo); 
             padding: 25px;
@@ -457,13 +320,16 @@
             transition: background-color 0.2s, box-shadow 0.2s;
             margin-top: 50px;
         }
+
         .header-content {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 25px;
             padding-bottom: 15px;
+            border-bottom: 3px solid var(--cor-primaria);
         }
+
         h1 {
             color: var(--cor-texto-principal);
             text-align: center;
@@ -473,6 +339,7 @@
             text-transform: uppercase;
             font-weight: 700;
         }
+        
         .tab-content { display: none; padding-top: 10px; }
         .tab-content.active { display: block; }
 
@@ -489,7 +356,7 @@
             transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
         }
         
-        .container button:not(.delete-button, .status-button, .mark-sent-button) {
+        .container button:not(.delete-button, .status-button, .mark-sent-button, .copy-button) {
             width: 100%;
             padding: 15px;
             border: none;
@@ -500,7 +367,16 @@
             letter-spacing: 0.5px;
             transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
             color: white;
+            background-color: var(--cor-btn-principal);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
         }
+        
+        .container button:hover:not(.delete-button, .status-button, .mark-sent-button, .copy-button) {
+            background-color: var(--cor-secundaria);
+            box-shadow: 0 6px 18px rgba(0, 191, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
         .reopen-button {
             background-color: var(--cor-btn-reabrir) !important;
             box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
@@ -511,6 +387,7 @@
             box-shadow: 0 6px 18px rgba(0, 230, 118, 0.4);
             transform: translateY(-2px);
         }
+
         .test-button { 
             background-color: var(--cor-btn-testar) !important;
             box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
@@ -518,8 +395,9 @@
         .test-button:hover {
             background-color: #FF8C00 !important;
             box-shadow: 0 6px 18px rgba(255, 165, 0, 0.4);
-            transform: translateY(-2px);
         }
+        
+        /* Botão de Marcar como Enviado (aba Histórico) */
         .mark-sent-button {
              background-color: var(--cor-btn-enviado);
              color: white;
@@ -537,6 +415,9 @@
         .mark-sent-button:hover {
              background-color: #388E3C; 
         }
+
+
+        /* --- GUIA DE ERROS --- */
         .guide-container {
             margin-top: 30px;
             padding-top: 20px;
@@ -544,8 +425,10 @@
         }
         .guide-container h3 {
              font-size: 1.1em;
+             color: var(--cor-primaria);
              margin-bottom: 15px;
         }
+
         .guide-step {
             background-color: var(--cor-input-fundo);
             padding: 15px;
@@ -553,11 +436,13 @@
             border: 1px solid var(--cor-borda);
             margin-bottom: 15px;
         }
+
         .guide-step p {
             font-weight: bold;
             font-size: 1em;
             margin-bottom: 5px;
         }
+        
         .guide-step .error-status {
             font-size: 0.9em;
             font-weight: 700;
@@ -566,6 +451,7 @@
             border-radius: var(--border-radius-small);
             margin-top: 8px;
         }
+
         .guide-step .error-message {
             background-color: var(--cor-card-fundo);
             border: 1px dashed var(--cor-texto-secundario);
@@ -577,16 +463,20 @@
             margin-top: 10px;
             color: var(--cor-texto-secundario);
         }
+
         .status-funcionando {
             color: var(--cor-verde);
             border: 1px solid var(--cor-verde);
             background-color: rgba(0, 230, 118, 0.1);
         }
+        
         .status-vencido {
             color: var(--cor-aviso-erro);
             border: 1px solid var(--cor-aviso-erro);
             background-color: rgba(255, 82, 82, 0.1);
         }
+        
+        /* --- ESTILOS DE HISTÓRICO --- */
         .historico-lista {
             list-style: none;
             padding: 0;
@@ -610,45 +500,60 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             position: relative;
             transition: all 0.2s;
+            
+            /* Ajusta o layout para permitir o botão 'Enviado' no item */
             flex-wrap: wrap; 
         }
         .historico-item-wrapper:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        
+        /* Cores de borda baseadas no tipo de resgate */
         .historico-item-wrapper[data-type="ENVIADO"] { 
             border-left: 4px solid var(--status-enviado-cor);
         }
         .historico-item-wrapper[data-type="ANTECIPAR"] {
             border-left: 4px solid var(--status-pendente-cor);
         }
+        .historico-item-wrapper[data-type="ANTIGO"] {
+            border-left: 4px solid var(--status-antigo-cor);
+        }
         .historico-item-wrapper[data-type="GERAR"] { 
             border-left: 4px solid var(--status-enviado-cor);
         }
+
         .historico-item {
             flex-grow: 1;
             padding: 5px;
             background-color: transparent;
             cursor: pointer; 
         }
+        
+        /* NOVO ESTILO: Botões de Ação para harmonia em qualquer tela */
         .item-actions {
             display: flex;
+            /* Usa row-reverse para o botão de deletar (pequeno) ficar na ponta direita */
             flex-direction: row-reverse; 
             align-items: center;
-            justify-content: flex-end; 
+            justify-content: flex-end; /* Alinha tudo à direita */
             margin-left: 10px;
             flex-shrink: 0;
             gap: 8px;
+            
+            /* Em telas pequenas, garante que os botões fiquem alinhados horizontalmente */
             width: auto; 
             margin-top: 0;
             border-top: none; 
             padding-top: 0;
         }
+
         @media (max-width: 400px) {
+             /* Em telas muito pequenas, o botão "Marcar como Enviado" deve ter 100% para não quebrar o layout */
              .item-actions {
                  width: 100%; 
-                 flex-direction: column-reverse; 
-                 align-items: stretch; 
+                 flex-direction: column-reverse; /* Força o botão maior para cima */
+                 align-items: stretch; /* Estica os botões para largura total */
                  gap: 5px;
                  margin-top: 8px;
                  border-top: 1px dashed var(--cor-hr);
@@ -659,12 +564,14 @@
                  margin-right: 0 !important;
              }
              .delete-button {
+                 /* Em tela pequena, deixa o delete mais discreto ou remove a largura forçada */
                  align-self: flex-end;
                  width: auto;
                  height: auto;
                  padding: 5px;
              }
         }
+        
         .item-header {
             display: flex;
             justify-content: space-between;
@@ -673,6 +580,7 @@
         }
         .item-nome {
             font-weight: 700;
+            color: var(--cor-primaria); /* Nickname em destaque */
             font-size: 1.1em;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -695,6 +603,7 @@
             font-weight: bold;
             color: var(--cor-texto-principal);
         }
+        
         .status-tag {
             font-size: 0.75em;
             font-weight: 600;
@@ -706,16 +615,21 @@
         }
         .historico-item-wrapper[data-type="ENVIADO"] .status-tag {
             background-color: var(--status-enviado-cor);
-            color: white; 
+            color: white; /* Fica melhor em fundo verde */
         }
         .historico-item-wrapper[data-type="ANTECIPAR"] .status-tag {
             background-color: var(--status-pendente-cor);
         }
+        .historico-item-wrapper[data-type="ANTIGO"] .status-tag {
+            background-color: var(--status-antigo-cor);
+            color: white;
+        }
+        
         .delete-button {
             background-color: transparent;
             color: var(--cor-btn-deletar);
             border: none;
-            width: 30px; 
+            width: 30px; /* Mantém o tamanho do hit area */
             height: 30px;
             line-height: 1;
             font-size: 1.2em; 
@@ -730,26 +644,106 @@
             color: #FF1744; 
             transform: scale(1.1);
         }
+        
+        /* Oculta o botão de Marcar como Enviado quando o item JÁ FOR Enviado */
         .historico-item-wrapper[data-type="ENVIADO"] .mark-sent-button-compact {
             display: none;
         }
+        
+        /* ESTILO NOVO E HARMONIZADO PARA O BOTÃO COMPACTO */
         .mark-sent-button-compact {
              background-color: var(--cor-btn-enviado);
              color: white;
              border: none;
-             padding: 6px 10px; 
+             padding: 6px 10px; /* Mais fino e menor */
              border-radius: var(--border-radius-small);
-             font-size: 0.75em; 
+             font-size: 0.75em; /* Fonte menor */
              font-weight: 600;
              cursor: pointer;
              transition: background-color 0.2s, transform 0.1s;
              flex-shrink: 0;
              white-space: nowrap;
+             /* Garante que ele fique ao lado do delete button em row-reverse */
              margin-right: 10px; 
         }
         .mark-sent-button-compact:hover {
              background-color: #388E3C;
              transform: translateY(-1px);
+        }
+
+        /* ----------------------------------- */
+        /* TOAST NOTIFICATIONS (NOVO) */
+        /* ----------------------------------- */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none; /* Permite cliques através */
+        }
+        .toast {
+            background-color: var(--cor-card-fundo);
+            color: var(--cor-texto-principal);
+            padding: 15px 20px;
+            border-radius: var(--border-radius-small);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            min-width: 250px;
+            max-width: 90vw;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            font-size: 0.9em;
+            font-weight: 600;
+            border-left: 5px solid var(--cor-primaria);
+            pointer-events: auto; 
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast.success { border-left-color: var(--cor-verde); }
+        .toast.error { border-left-color: var(--cor-aviso-erro); }
+        
+        /* Layout para Input + Botão Copiar (Novo) */
+        .input-with-button {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px; /* Substitui a margem inferior do input */
+        }
+        .input-with-button input[type="text"] {
+            margin-bottom: 0; /* Remove a margem inferior padrão */
+            flex-grow: 1;
+        }
+        .copy-button {
+            background-color: var(--cor-secundaria) !important;
+            color: white;
+            padding: 12px 15px !important;
+            border: none;
+            border-radius: var(--border-radius-small);
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: background-color 0.2s, transform 0.1s;
+            flex-shrink: 0; /* Não permite encolher */
+            width: auto !important;
+        }
+        .copy-button:hover {
+            background-color: var(--cor-primaria) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        @media (max-width: 400px) {
+            .input-with-button {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .copy-button {
+                width: 100% !important;
+            }
         }
 
     </style>
@@ -773,10 +767,7 @@
         </div>
     </div>
 
-    <div id="menu-toggle-btn-wrapper" class="content-hidden" onclick="openSidebar()">
-        <button id="menu-toggle-btn">☰</button>
-        <span id="menu-text">Menu</span>
-    </div>
+    <button id="menu-toggle-btn" class="content-hidden" onclick="openSidebar()">☰</button>
 
     <div class="overlay" onclick="closeSidebar()"></div>
 
@@ -790,7 +781,9 @@
             <a class="sidebar-item" id="nav-testar" onclick="changeTab('testar')">🛠️ Testar Código</a> 
             <a class="sidebar-item" id="nav-historico" onclick="changeTab('historico')">📋 Histórico de Resgates</a>
             
-            <a class="sidebar-item" id="nav-configuracoes" onclick="changeTab('configuracoes')">⚙️ Configurações</a>
+            <a class="sidebar-item sidebar-item-theme" id="nav-theme" onclick="toggleTheme();">
+                <span id="sidebar-theme-text">🌙 Mudar para Modo Escuro</span>
+            </a>
         </div>
         
     </div>
@@ -809,8 +802,12 @@
             <hr style="margin: 30px 0; border: 0; border-top: 1px solid var(--cor-hr);">
 
             <label for="linkResultado">Link de Resgate Gerado:</label>
-            <input type="text" id="linkResultado" value="Aguardando..." readonly>
-
+            <div class="input-with-button">
+                <input type="text" id="linkResultado" value="Aguardando..." readonly>
+                <button class="copy-button" onclick="copyLink()" id="btnCopiar" disabled title="Copiar o link gerado para a área de transferência">
+                    📋 Copiar
+                </button>
+            </div>
             <button class="reopen-button" onclick="reabrirLink()" id="btnReabrir" disabled style="margin-top: 10px;">
                 ➡️ Reabrir Link Atual
             </button>
@@ -897,37 +894,13 @@ Failed to redeem. This code is invalid or redeemed.
                 </ul>
         </div>
         
-        <div id="configuracoes" class="tab-content">
-            <h3 class="historico-titulo" style="margin-top: 0;">⚙️ Configurações</h3>
-
-            <div class="toggle-container">
-                <span class="toggle-label" id="theme-toggle-label">
-                    ☀️ Tema de Visualização (Modo Claro/Escuro)
-                </span>
-                <label class="switch">
-                    <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
-
-            <h3 style="font-size: 1.1em; color: var(--cor-texto-principal); margin-top: 30px; border-bottom: 1px solid var(--cor-hr); padding-bottom: 5px;">Esquema de Cores (12 Opções)</h3>
-            
-            <p style="color: var(--cor-texto-secundario); margin-bottom: 15px;">
-                Selecione a cor principal de destaque do sistema (botões, bordas, etc.):
-            </p>
-            
-            <div class="color-palette" id="colorPalette">
-                </div>
-            
-
-        </div>
-        
     </div>
     
     <div class="footer content-hidden">
         Sistema de Resgate de Código Único
     </div>
+    
+    <div id="toast-container"></div>
 
     <script>
         // CRÍTICO: COLOQUE A URL DO SEU BACKEND AQUI APÓS O DEPLOY NO RENDER!
@@ -947,41 +920,80 @@ Failed to redeem. This code is invalid or redeemed.
 
         const STORAGE_KEY = 'resgateHistory';
         const THEME_KEY = 'siteTheme';
-        const COLOR_KEY = 'siteColor'; 
         const TOKEN_KEY = 'sessionTokenUnique'; 
 
-        // NOVO: ARRAY COM 12 CORES E SUAS VARIAÇÕES
-        const THEME_COLORS = [
-            { name: 'azul', primary: '#00BFFF', secondary: '#008DBC' }, // Seu padrão
-            { name: 'verde', primary: '#00E676', secondary: '#00B359' },
-            { name: 'vermelho', primary: '#FF5252', secondary: '#C62828' },
-            { name: 'laranja', primary: '#FFA500', secondary: '#D38000' },
-            { name: 'roxo', primary: '#9C27B0', secondary: '#7B1FA2' },
-            { name: 'ciano', primary: '#00BCD4', secondary: '#00838F' },
-            { name: 'rosa', primary: '#E91E63', secondary: '#C2185B' },
-            { name: 'amarelo', primary: '#FFC107', secondary: '#FF8F00' },
-            { name: 'teal', primary: '#009688', secondary: '#00695C' },
-            { name: 'marrom', primary: '#795548', secondary: '#5D4037' },
-            { name: 'lima', primary: '#CDDC39', secondary: '#AFB42B' },
-            { name: 'indigo', primary: '#3F51B5', secondary: '#303F9F' },
-        ];
+        // --- FUNÇÕES DE TOAST NOTIFICATIONS (NOVO) ---
+        function showToast(message, type = 'default') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
 
+            container.appendChild(toast);
+            
+            // Força o reflow para garantir a transição
+            void toast.offsetWidth;
+
+            // Inicia a transição
+            toast.classList.add('show');
+
+            // Remove após 4 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+                // Remove o elemento do DOM após a transição
+                setTimeout(() => {
+                    if (container.contains(toast)) {
+                        container.removeChild(toast);
+                    }
+                }, 300); 
+            }, 4000);
+        }
+        
+        // --- FUNÇÃO DE COPIAR LINK (NOVO) ---
+        function copyLink() {
+            const linkResultadoInput = document.getElementById('linkResultado');
+            const link = linkResultadoInput.value;
+            
+            if (link === "Aguardando..." || !link) {
+                showToast("Nenhum link para copiar.", 'error');
+                return;
+            }
+
+            navigator.clipboard.writeText(link)
+                .then(() => {
+                    showToast("Link copiado para a área de transferência!", 'success');
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar link:', err);
+                    showToast("Falha ao copiar. Copie manualmente.", 'error');
+                });
+        }
 
         // --- FUNÇÕES DE UTILIDADE ---
         
+        /**
+         * Tenta extrair ID, Nickname e o link base de uma URL.
+         * Decodifica o Nickname e remove o '$' final.
+         * @param {string} url - O link completo (token, ref, etc.).
+         * @returns {{id: string, nickname: string, link: string}}
+         */
         function extrairDadosDoLink(url) {
             const params = new URLSearchParams(url.substring(url.indexOf('?') + 1));
             let nickname = params.get('nickname') || 'N/D';
             const account_id = params.get('account_id') || 'N/D';
             
+            // 1. Tenta decodificar o Nickname
             if (nickname && nickname !== 'N/D') {
                 try {
+                    // Decodifica a URL (resolve %E3%85%A4) e remove o caractere '$' se estiver no final
                     nickname = decodeURIComponent(nickname).replace(/\$$/, '').trim(); 
                 } catch (e) {
                     console.error("Erro ao decodificar Nickname:", e);
+                    // Se falhar, usa o valor original.
                 }
             }
             
+            // 2. Tenta encontrar a parte principal do link
             let linkCurto = url.substring(0, url.indexOf('?') + 1);
             const tokenParam = params.get('access_token');
             
@@ -1007,31 +1019,26 @@ Failed to redeem. This code is invalid or redeemed.
         }
 
 
-        // --- FUNÇÕES DE LOGIN ---
+        // --- FUNÇÕES DE LOGIN (INTEGRAÇÃO COM O BACKEND) ---
         
         function liberarAcessoTotal() {
             document.body.classList.add('logged-in');
             document.getElementById('loginOverlay').style.display = 'none';
             
+            // 💡 LÓGICA DE ROTAÇÃO DE NÚMEROS DE SUPORTE
             const supportNumbers = [WHATSAPP_NUMBER_MAIN, WHATSAPP_NUMBER_SECONDARY];
             const chosenNumber = supportNumbers[Math.floor(Math.random() * supportNumbers.length)];
 
+            // Configura o link do WhatsApp
             document.querySelectorAll('.top-support-btn').forEach(a => {
                 a.href = `https://wa.me/${chosenNumber}?text=Olá!%20Preciso%20de%20suporte%20com%20o%20sistema%20de%20resgate.`;
             });
 
             loadHistory();
             
-            // Atualiza o estado inicial do switch e label
+            // Assegura que o texto do tema está correto ao fazer login
             const isLight = localStorage.getItem(THEME_KEY) === 'light';
-            const switchElement = document.getElementById('theme-switch');
-            if(switchElement) {
-                switchElement.checked = isLight;
-            }
-            updateThemeLabel(isLight);
-            
-            // Renderiza a paleta de cores ao fazer login
-            renderColorPalette(localStorage.getItem(COLOR_KEY) || 'azul'); 
+            updateThemeText(isLight);
             
             changeTab('gerar'); 
         }
@@ -1050,8 +1057,7 @@ Failed to redeem. This code is invalid or redeemed.
             }
 
             try {
-                // Simulação de login (Substitua por fetch real com seu backend)
-                /*
+                // Envia o código para o Backend (Render)
                 const response = await fetch(`${BACKEND_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1067,17 +1073,6 @@ Failed to redeem. This code is invalid or redeemed.
                     msg.innerText = data.message || 'Erro de login. Tente novamente.';
                     msg.style.display = 'block';
                 }
-                */
-                // REMOVA O BLOCO ABAIXO E DESCOMENTE O ACIMA QUANDO TIVER SEU BACKEND
-                if (codigoDigitado === "SEUTOKEN") {
-                    localStorage.setItem(TOKEN_KEY, "fake_session_token"); 
-                    liberarAcessoTotal();
-                } else {
-                    msg.innerText = '❌ Código de acesso inválido.';
-                    msg.style.display = 'block';
-                }
-                // FIM DO BLOCO DE SIMULAÇÃO
-                
             } catch (error) {
                 console.error('Erro de conexão com o Backend:', error);
                 msg.innerText = '❌ Erro de conexão. Servidor indisponível ou URL errada.';
@@ -1118,71 +1113,19 @@ Failed to redeem. This code is invalid or redeemed.
             
             document.getElementById(tabName).classList.add("active");
             
-            document.querySelectorAll('.sidebar-nav-main .sidebar-item').forEach(item => {
-                 item.classList.remove('active');
-            });
-            
-            const navItem = document.getElementById(`nav-${tabName}`);
-            if (navItem) {
-                navItem.classList.add('active');
-            }
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(`nav-${tabName}`).classList.add('active');
 
             if (tabName === 'historico') {
-                renderHistory(); 
-            }
-             if (tabName === 'configuracoes') {
-                 // Garante que a paleta de cores seja renderizada/atualizada ao entrar na aba
-                 const savedColor = localStorage.getItem(COLOR_KEY) || 'azul';
-                 renderColorPalette(savedColor);
+                renderHistory(); // Renderiza ao entrar na aba
             }
         }
         
-        // --- FUNÇÕES DE TEMA E CORES (NOVAS) ---
-        
-        function applyColor(colorName) {
-            const root = document.documentElement;
-            const color = THEME_COLORS.find(c => c.name === colorName) || THEME_COLORS[0];
-
-            root.style.setProperty('--cor-tema-primaria', color.primary);
-            root.style.setProperty('--cor-tema-secundaria', color.secondary);
-            localStorage.setItem(COLOR_KEY, color.name);
-            
-            const loginButton = document.querySelector('.login-box button');
-            if(loginButton) {
-                 loginButton.style.boxShadow = `0 5px 20px ${color.secondary}`;
-            }
-        }
-        
-        function renderColorPalette(activeColorName) {
-            const palette = document.getElementById('colorPalette');
-            if (!palette) return;
-
-            palette.innerHTML = '';
-            
-            THEME_COLORS.forEach(color => {
-                const swatch = document.createElement('div');
-                swatch.className = `color-swatch swatch-${color.name}`;
-                swatch.style.backgroundColor = color.primary;
-                swatch.setAttribute('data-color', color.name);
-                
-                if (color.name === activeColorName) {
-                    swatch.classList.add('active');
-                }
-
-                swatch.onclick = () => {
-                    applyColor(color.name);
-                    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-                    swatch.classList.add('active');
-                };
-                
-                palette.appendChild(swatch);
-            });
-        }
-        
-        function updateThemeLabel(isLight) {
-            const toggleLabel = document.getElementById('theme-toggle-label');
-            if (toggleLabel) {
-                 toggleLabel.innerHTML = isLight ? '☀️ Tema de Visualização (Modo Claro)' : '🌙 Tema de Visualização (Modo Escuro)';
+        // --- FUNÇÕES DE TEMA (NO MENU LATERAL) ---
+        function updateThemeText(isLight) {
+            const toggleText = document.getElementById('sidebar-theme-text');
+            if (toggleText) {
+                 toggleText.innerHTML = isLight ? '🌙 Mudar para Modo Escuro' : '☀️ Mudar para Modo Claro';
             }
         }
         
@@ -1196,36 +1139,20 @@ Failed to redeem. This code is invalid or redeemed.
                 body.classList.remove('light-mode');
                 localStorage.setItem(THEME_KEY, 'dark');
             }
-            updateThemeLabel(isLight);
+            updateThemeText(isLight);
         }
         
         function toggleTheme() {
-            const switchElement = document.getElementById('theme-switch');
-            // Obtém o novo estado do switch
-            const isLight = switchElement.checked; 
-            
-            applyTheme(isLight);
+            const isLight = document.body.classList.contains('light-mode');
+            applyTheme(!isLight);
         }
         
         function loadTheme() {
             const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
-            const savedColor = localStorage.getItem(COLOR_KEY) || 'azul'; 
-            
-            const isLight = savedTheme === 'light';
-            
-            // Aplica o tema imediatamente
-            applyTheme(isLight); 
-            
-            // Garante que o switch seja inicializado no estado correto
-            const switchElement = document.getElementById('theme-switch');
-            if(switchElement) {
-                switchElement.checked = isLight;
-            }
-            
-            applyColor(savedColor);
+            applyTheme(savedTheme === 'light');
         }
         
-        // --- FUNÇÕES DE HISTÓRICO ---
+        // --- FUNÇÕES DE HISTÓRICO (AGORA COM STATUS ENVIADO) ---
         function getHistory() {
             const historyJson = localStorage.getItem(STORAGE_KEY);
             return historyJson ? JSON.parse(historyJson) : [];
@@ -1264,6 +1191,7 @@ Failed to redeem. This code is invalid or redeemed.
             
             list.innerHTML = ''; 
             
+            // 1. FILTRAGEM: Busca pelo Nickname ou ID
             const filteredHistory = history.filter(item => {
                 if (!searchTerm) return true;
                 
@@ -1280,21 +1208,32 @@ Failed to redeem. This code is invalid or redeemed.
                 return;
             }
 
+            // 2. RENDERIZAÇÃO
             filteredHistory.forEach((item, index) => {
+                // Encontra o índice real no array original (history) para que a deleção/mudança de status funcione corretamente.
                 const originalIndex = history.findIndex(h => h.linkCompleto === item.linkCompleto && h.date === item.date);
                 
                 const li = document.createElement('li');
                 li.className = 'historico-item-wrapper';
                 
+                // Mapeamento de status para exibição
                 let currentType = item.type;
                 if (currentType === 'GERAR') {
-                    currentType = 'ENVIADO'; 
+                    currentType = 'ENVIADO'; // Muda o status Gerado para Enviado no display
                 }
                 
                 li.setAttribute('data-type', currentType);
                 
-                const typeText = currentType === 'ENVIADO' ? 'Enviado' : (currentType === 'ANTECIPAR' ? 'Pendente' : 'Antigo');
+                let typeText;
+                if (currentType === 'ENVIADO') {
+                    typeText = 'Enviado';
+                } else if (currentType === 'ANTECIPAR') {
+                    typeText = 'Pendente';
+                } else {
+                    typeText = 'Antigo';
+                }
 
+                // Div principal das informações (clicável para abrir link)
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'historico-item';
                 infoDiv.onclick = () => {
@@ -1313,9 +1252,11 @@ Failed to redeem. This code is invalid or redeemed.
                 `;
                 li.appendChild(infoDiv);
                 
+                // Div de ações (botões)
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'item-actions';
                 
+                // Botão Deletar (colocado primeiro para row-reverse levá-lo para a direita)
                 const deleteButton = document.createElement('button');
                 deleteButton.className = 'delete-button';
                 deleteButton.title = 'Apagar Item';
@@ -1326,10 +1267,12 @@ Failed to redeem. This code is invalid or redeemed.
                 };
                 actionsDiv.appendChild(deleteButton);
                 
+                // Botão "Marcar como Enviado" (só aparece se for PENDENTE)
                 if (currentType === 'ANTECIPAR') {
                     const markSentButton = document.createElement('button');
                     markSentButton.className = 'mark-sent-button-compact';
                     markSentButton.innerText = 'Enviado';
+                    // Chama a função markAsSent com o índice real
                     markSentButton.onclick = (e) => {
                         e.stopPropagation();
                         markAsSent(originalIndex);
@@ -1344,16 +1287,21 @@ Failed to redeem. This code is invalid or redeemed.
         }
 
         function loadHistory() {
+             console.log("Histórico ativado.");
+             
+             // Ativa e adiciona o listener de busca ao carregar
              const searchInput = document.getElementById('searchHistorico');
              searchInput.removeAttribute('disabled');
              searchInput.addEventListener('input', () => {
+                 // Chama a função de renderização a cada mudança no input
                  if (document.getElementById('historico').classList.contains('active')) {
                     renderHistory();
                  }
              });
         }
         
-        // --- FUNÇÕES DE GERAÇÃO ---
+        // --- GERAÇÃO E OUTROS ---
+        
         function validarLink(link, avisoId, deveConter = '?') {
             const avisoErro = document.getElementById(avisoId);
             const isValid = link.includes(deveConter);
@@ -1371,8 +1319,10 @@ Failed to redeem. This code is invalid or redeemed.
             const linkOriginal = document.getElementById('linkOriginal').value.trim();
             const linkResultadoInput = document.getElementById('linkResultado');
             const btnReabrir = document.getElementById('btnReabrir');
+            const btnCopiar = document.getElementById('btnCopiar'); // NOVO
             
             btnReabrir.disabled = true;
+            btnCopiar.disabled = true; // NOVO
             linkResultadoInput.value = "Aguardando...";
 
             if (!validarLink(linkOriginal, 'avisoErroGerar', '?')) return;
@@ -1382,17 +1332,23 @@ Failed to redeem. This code is invalid or redeemed.
             
             linkResultadoInput.value = novoLink;
             btnReabrir.disabled = false;
+            btnCopiar.disabled = false; // NOVO
             
+            // Captura os dados do link gerado
             const dados = extrairDadosDoLink(novoLink);
 
+            // Salva no histórico com o status 'ENVIADO' (antigo 'GERAR')
             saveHistory({
                 linkCompleto: novoLink,
                 linkCurto: dados.linkCurto, 
                 id: dados.id,
                 nickname: dados.nickname,
                 date: getCurrentDateTime(),
-                type: 'ENVIADO' 
+                type: 'ENVIADO' // Status padrão agora é ENVIADO
             });
+
+            // NOVO: Confirmação visual
+            showToast("Link de resgate gerado e aberto!", 'success'); 
 
             window.open(novoLink, '_blank');
         }
@@ -1402,8 +1358,10 @@ Failed to redeem. This code is invalid or redeemed.
             
             if (!validarLink(linkAntecipar, 'avisoErroAntecipar', '?')) return;
             
+            // Captura os dados do link antecipado
             const dados = extrairDadosDoLink(linkAntecipar);
             
+            // Salva no histórico com ID e Nickname e status 'ANTECIPAR'
             saveHistory({
                 linkCompleto: linkAntecipar,
                 linkCurto: dados.linkCurto,
@@ -1413,7 +1371,8 @@ Failed to redeem. This code is invalid or redeemed.
                 type: 'ANTECIPAR'
             });
             
-            alert(`Link de ${dados.nickname} salvo como Pendente no Histórico!`);
+            // SUBSTITUIÇÃO: alert(...) por showToast(...)
+            showToast(`Link de ${dados.nickname} salvo como Pendente no Histórico!`, 'success');
             
             document.getElementById('linkAntecipar').value = ''; 
         }
@@ -1443,8 +1402,10 @@ Failed to redeem. This code is invalid or redeemed.
 
             const novoLink = LINK_BASE_ANTIGO + stringDeConsulta;
             
+            // Captura os dados do link antigo
             const dados = extrairDadosDoLink(novoLink);
 
+            // Salva no histórico com ID e Nickname
             saveHistory({
                 linkCompleto: novoLink,
                 linkCurto: dados.linkCurto,
@@ -1457,7 +1418,9 @@ Failed to redeem. This code is invalid or redeemed.
             window.open(novoLink, '_blank');
         }
         
+        // Função para Testar Código
         function testarCodigo() {
+            // Abre diretamente o link FIXO para teste
             window.open(LINK_TESTE_FIXO, '_blank');
         }
 
