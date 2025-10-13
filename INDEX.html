@@ -3,177 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACESSO EXPIRADO - Sistema de Resgate</title>
+    <title>Seu Servidor MTA RP | O Melhor Roleplay</title>
+    
     <style>
-        :root {
-            /* Cores Dark Mode (Padrão) */
-            --cor-primaria: #FF5252; /* Vermelho/Alerta */
-            --cor-secundaria: #D50000;
-            --cor-fundo: #121212; 
-            --cor-card-fundo: #1E1E1E; 
-            --cor-texto-principal: #F0F0F0;
-            --cor-texto-secundario: #A0A0A0;
-            --cor-btn-whatsapp: #25D366; 
-            --border-radius-main: 12px;
-        }
-
-        /* Adaptação para o Light Mode (copiando a cor primária para alerta) */
-        body.light-mode {
-            --cor-primaria: #D32F2F; 
-            --cor-fundo: #F0F2F5; 
-            --cor-card-fundo: #FFFFFF; 
-            --cor-texto-principal: #333333; 
-            --cor-texto-secundario: #666666;
-            --cor-btn-whatsapp: #4CAF50;
+        /* RESET BÁSICO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background-color: var(--cor-fundo);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* Dark Mode Fundo */
+            color: #f0f0f0; /* Dark Mode Texto Claro */
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ESTILO DO CABEÇALHO */
+        .header {
+            background-color: #1f1f1f; /* Cor do Menu */
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #00BFFF; /* Linha de destaque: Azul Neon */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header .container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            color: var(--cor-texto-principal);
-            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .logo {
+            color: #00BFFF; /* Cor de destaque */
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            margin-left: 25px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00BFFF;
+        }
+
+        /* BOTÃO PADRÃO */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .primary-btn {
+            background-color: #00BFFF;
+            color: #121212;
+        }
+
+        .primary-btn:hover {
+            background-color: #009ACD;
+            transform: scale(1.05);
+        }
+
+        #discord-button {
+            background-color: #5865F2; /* Cor do Discord */
+            color: white;
+            margin-left: 25px;
+        }
+        #discord-button:hover {
+            background-color: #404EED;
+        }
+
+        /* SEÇÃO DE DESTAQUE (HERO) */
+        .hero {
+            /* **SUBSTITUA A URL ABAIXO PELA SUA IMAGEM DE FUNDO BONITA!** */
+            background: url('https://via.placeholder.com/1920x800/222222/FFFFFF?text=FUNDO+GTA+MTA+RP+AQUI') no-repeat center center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Overlay escuro */
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: #00BFFF;
+            text-shadow: 0 0 15px rgba(0, 191, 255, 0.8); /* Efeito Neon */
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            font-weight: 300;
+            cursor: pointer; /* Indica que é clicável */
+        }
+
+        /* SEÇÃO DE RECURSOS (FEATURES) */
+        .features {
+            padding: 80px 0;
             text-align: center;
         }
 
-        /* ----------------------------------- */
-        /* BOTÃO DE TOPO (SUPORTE) */
-        /* ----------------------------------- */
-        .top-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            padding: 10px 15px;
-            border-radius: var(--border-radius-main);
-            font-size: 0.9em;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        
-        .top-support-btn {
-            background-color: var(--cor-btn-whatsapp);
-            color: white;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
-        }
-        .top-support-btn:hover {
-            background-color: #128C7E;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
-            transform: translateY(-2px);
-        }
-        
-        /* ----------------------------------- */
-        /* CAIXA DE AVISO DE EXPIRAÇÃO */
-        /* ----------------------------------- */
-        .aviso-box {
-            background-color: var(--cor-card-fundo);
-            padding: 40px;
-            border-radius: var(--border-radius-main);
-            box-shadow: 0 10px 30px rgba(255, 82, 82, 0.3); /* Sombra vermelha de alerta */
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid var(--cor-primaria);
-        }
-        
-        .aviso-box h2 {
-            color: var(--cor-primaria);
-            font-size: 1.8em;
-            margin-bottom: 20px;
+        .features h3 {
+            font-size: 38px;
+            color: #00BFFF;
+            margin-bottom: 50px;
             text-transform: uppercase;
         }
-        
-        .aviso-box p {
-            font-size: 1.1em;
-            color: var(--cor-texto-principal);
+
+        .feature-grid {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap; /* Garante quebras em telas menores */
+        }
+
+        .feature-item {
+            background-color: #1f1f1f;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            width: 30%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #00BFFF;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.4);
+        }
+
+        .feature-item img {
+            /* **SUBSTITUA AS URLS ABAIXO PELAS SUAS FOTOS!** */
+            width: 100%; 
+            height: 200px;
+            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+            border-radius: 5px;
             margin-bottom: 15px;
         }
-        
-        .aviso-box strong {
-            color: var(--cor-primaria);
-            font-weight: bold;
+
+        .feature-item h4 {
+            color: #f0f0f0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 20px;
         }
-        
-        .aviso-icon {
-            font-size: 4em;
-            color: var(--cor-primaria);
-            margin-bottom: 15px;
+
+        /* RODAPÉ */
+        footer {
+            background-color: #1f1f1f;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 3px solid #00BFFF;
+            margin-top: 40px;
         }
-        
-        .action-button {
-            display: inline-block;
-            background-color: var(--cor-btn-whatsapp);
-            color: white;
-            padding: 12px 25px;
-            border-radius: var(--border-radius-main);
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-        
-        .action-button:hover {
-            background-color: #128C7E;
-            transform: translateY(-2px);
+
+        /* RESPONSIVIDADE BÁSICA */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav {
+                margin-top: 15px;
+            }
+            .nav a, #discord-button {
+                margin: 5px 10px;
+            }
+            .hero h2 {
+                font-size: 40px;
+            }
+            .feature-item {
+                width: 80%; /* Itens de recursos empilham em telas menores */
+                margin-bottom: 20px;
+            }
         }
     </style>
-</head>
+    </head>
 <body>
-    
-    <div class="aviso-box">
-        <div class="aviso-icon">🔒</div>
-        <h2>ACESSO EXPIRADO</h2>
-        <p>Seu plano de acesso ao sistema **venceu**.</p>
-        <p>Para **reativar** sua conta e voltar a utilizar o sistema:</p>
-        
-        <p style="font-size: 1.2em; font-weight: 700; margin-top: 30px;">
-            1. Entre em contato com o suporte.
-        </p>
-        <p style="font-size: 1.2em; font-weight: 700;">
-            2. Efetue o pagamento de renovação.
-        </p>
 
-        <a href="javascript:void(0)" class="action-button" id="mainActionButton">
-            📞 Falar com Suporte (Reativação)
-        </a>
-    </div>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">SEU SERVER RP</h1>
+            <nav class="nav">
+                <a href="#home">Início</a>
+                <a href="#features">Recursos</a>
+                <a href="#">Loja VIP</a>
+                <a href="#">Regras</a>
+                <button id="discord-button" class="btn">Discord</button>
+            </nav>
+        </div>
+    </header>
 
-    <a href="javascript:void(0)" target="_blank" class="top-button top-support-btn" id="supportButton" title="Fale com nosso Suporte">
-        💬 Suporte
-    </a>
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>BEM-VINDO AO MELHOR MTA ROLEPLAY</h2>
+                <p>IP: MTASERVER.COM:22003 (**Clique para Copiar!**)</p>
+                <a href="#" class="btn primary-btn">COMECE A JOGAR AGORA</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h3>Sistemas e Conteúdo Exclusivo</h3>
+            <div class="feature-grid">
+                
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/300x200/555555/FFFFFF?text=FOTO+DE+CARRO+EXCLUSIVO" alt="Carros Personalizados">
+                    <h4>Veículos Exclusivos HD</h4>
+                    <p>Mais de 150 veículos com modelagens únicas e sistema de tunagem aprimorado.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/300x200/555555/FFFFFF?text=FOTO+DE+RP+NA+FAVELA" alt="Cenas de Roleplay">
+                    <h4>RP Hardcore & Otimizado</h4>
+                    <p>Mapas detalhados, interiores exclusivos e um Roleplay com foco total na imersão.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/300x200/555555/FFFFFF?text=FOTO+DE+EMPREGO+OU+BASE" alt="Empregos e Facções">
+                    <h4>Empregos & Organizações</h4>
+                    <p>Sistema de gangues/facções equilibrado e empregos legais para todos os níveis de experiência.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Seu Servidor MTA RP. Desenvolvido para a comunidade.</p>
+        </div>
+    </footer>
 
     <script>
-        // CRÍTICO: MANTENHA ESTES NÚMEROS AQUI
-        const WHATSAPP_NUMBER_MAIN = "553196373580"; 
-        const WHATSAPP_NUMBER_SECONDARY = "553899112827"; 
+        // Função para copiar o IP do servidor
+        function copyIP() {
+            const ip = "MTASERVER.COM:22003"; // **SUBSTITUA PELO SEU IP REAL!**
+            navigator.clipboard.writeText(ip)
+                .then(() => {
+                    alert(`IP copiado para a área de transferência! ${ip}`);
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar o texto: ', err);
+                    alert(`Não foi possível copiar automaticamente. O IP é: ${ip}`);
+                });
+        }
 
+        // Adiciona eventos de clique
         document.addEventListener('DOMContentLoaded', () => {
-            // LÓGICA DE ROTAÇÃO DE NÚMEROS DE SUPORTE
-            const supportNumbers = [WHATSAPP_NUMBER_MAIN, WHATSAPP_NUMBER_SECONDARY];
-            const chosenNumber = supportNumbers[Math.floor(Math.random() * supportNumbers.length)];
-            
-            const whatsappLink = `https://wa.me/${chosenNumber}?text=Olá!%20Meu%20acesso%20expirou%20e%20gostaria%20de%20reativar%20o%20plano%20do%20sistema.`;
-
-            // Configura o link do WhatsApp para o botão do canto
-            const supportButton = document.getElementById('supportButton');
-            if (supportButton) {
-                supportButton.href = whatsappLink;
+            const ipElement = document.querySelector('.hero-content p');
+            if (ipElement) {
+                // Adiciona a funcionalidade de clique para copiar o IP
+                ipElement.addEventListener('click', copyIP);
             }
             
-            // Configura o link do WhatsApp para o botão principal
-            const mainActionButton = document.getElementById('mainActionButton');
-            if (mainActionButton) {
-                 mainActionButton.href = whatsappLink;
+            // Adiciona o link ao botão Discord
+            const discordButton = document.getElementById('discord-button');
+            if (discordButton) {
+                discordButton.addEventListener('click', () => {
+                    // **SUBSTITUA PELO SEU LINK DO DISCORD!**
+                    window.open('SEU_LINK_DISCORD_AQUI', '_blank'); 
+                });
             }
         });
     </script>
-</body>
+    </body>
 </html>
