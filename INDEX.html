@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Servidor MTA RP | O Melhor Roleplay</title>
+    <title>FM GLOBAL RP | Servidor de Elite MTA</title>
+    
+    <link href="c:\Users\alissonxss\Documents\PROJETO NELSON\fundo-da-paisagem-com-palmeiras.jpg" rel="stylesheet">
     
     <style>
         /* RESET BÁSICO */
@@ -14,10 +16,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212; /* Dark Mode Fundo */
-            color: #f0f0f0; /* Dark Mode Texto Claro */
-            line-height: 1.6;
+            font-family: 'Open Sans', sans-serif; /* Fonte mais suave para o corpo */
+            background-color: #0d0d0d; /* Fundo bem escuro */
+            color: #e0e0e0; /* Texto claro suave */
+            line-height: 1.7;
             scroll-behavior: smooth;
         }
 
@@ -29,13 +31,14 @@
 
         /* ESTILO DO CABEÇALHO */
         .header {
-            background-color: #1f1f1f; /* Cor do Menu */
+            background-color: rgba(18, 18, 18, 0.95); /* Fundo semi-transparente para o header */
             padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid #00BFFF; /* Linha de destaque: Azul Neon */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid #00E5FF; /* Linha de destaque: Ciano Neon */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
         }
 
         .header .container {
@@ -45,62 +48,88 @@
         }
 
         .logo {
-            color: #00BFFF; /* Cor de destaque */
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 1px;
+            font-family: 'Oswald', sans-serif; /* Fonte impactante para o logo */
+            color: #00E5FF; /* Cor de destaque */
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         }
 
         .nav a {
-            color: #f0f0f0;
+            color: #e0e0e0;
             text-decoration: none;
-            margin-left: 25px;
+            margin-left: 30px;
             text-transform: uppercase;
             font-weight: 600;
-            transition: color 0.3s;
+            font-size: 15px;
+            transition: color 0.3s, transform 0.2s;
+            position: relative;
+        }
+
+        .nav a::after { /* Linha inferior ao passar o mouse */
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: #00E5FF;
+            transition: width 0.3s ease-out;
         }
 
         .nav a:hover {
-            color: #00BFFF;
+            color: #00E5FF;
+            transform: translateY(-2px);
+        }
+        .nav a:hover::after {
+            width: 100%;
         }
 
         /* BOTÃO PADRÃO */
         .btn {
             display: inline-block;
-            padding: 12px 25px;
-            border-radius: 5px;
+            padding: 14px 30px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
             text-transform: uppercase;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
             cursor: pointer;
             border: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
 
         .primary-btn {
-            background-color: #00BFFF;
-            color: #121212;
+            background-color: #00E5FF; /* Ciano Neon */
+            color: #0d0d0d;
         }
 
         .primary-btn:hover {
-            background-color: #009ACD;
+            background-color: #00C4D8;
             transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 229, 255, 0.4);
         }
 
         #discord-button {
             background-color: #5865F2; /* Cor do Discord */
             color: white;
-            margin-left: 25px;
+            margin-left: 30px;
         }
         #discord-button:hover {
             background-color: #404EED;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(88, 101, 242, 0.4);
         }
 
         /* SEÇÃO DE DESTAQUE (HERO) */
         .hero {
-            /* **SUBSTITUA A URL ABAIXO PELA SUA IMAGEM DE FUNDO BONITA!** */
-            background: url('https://via.placeholder.com/1920x800/222222/FFFFFF?text=FUNDO+GTA+MTA+RP+AQUI') no-repeat center center/cover;
-            height: 80vh;
+            /* **IMAGEM DE FUNDO PRINCIPAL AQUI!** (Ex: Vista aérea de Los Santos com carros de luxo) */
+            background: url('https://via.placeholder.com/1920x1080/1a1a1a/FFFFFF?text=FOTO+PRINCIPAL+FM+GLOBAL') no-repeat center center/cover;
+            height: 90vh; /* Altura total da tela para impacto */
             display: flex;
             align-items: center;
             text-align: center;
@@ -114,7 +143,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5); /* Overlay escuro */
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)); /* Gradiente escuro para o texto */
             z-index: 1;
         }
 
@@ -124,29 +153,81 @@
         }
 
         .hero h2 {
-            font-size: 60px;
-            margin-bottom: 15px;
-            color: #00BFFF;
-            text-shadow: 0 0 15px rgba(0, 191, 255, 0.8); /* Efeito Neon */
+            font-family: 'Oswald', sans-serif;
+            font-size: 72px;
+            margin-bottom: 20px;
+            color: #00E5FF;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 30px rgba(0, 229, 255, 0.6); /* Efeito Neon mais intenso */
+            animation: fadeInTop 1s ease-out forwards;
         }
 
         .hero p {
-            font-size: 24px;
-            margin-bottom: 40px;
+            font-size: 28px;
+            margin-bottom: 50px;
             font-weight: 300;
             cursor: pointer; /* Indica que é clicável */
+            color: #f0f0f0;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeInTop {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* SEÇÃO SOBRE NÓS */
+        .about-us {
+            padding: 80px 0;
+            text-align: center;
+            /* **IMAGEM DE FUNDO SOBRE NÓS!** (Ex: Uma cidade iluminada ou base secreta) */
+            background: url('https://via.placeholder.com/1920x800/1e1e1e/FFFFFF?text=FUNDO+SOBRE+NOS') no-repeat center center/cover fixed; /* Fundo fixo para parallax */
+            position: relative;
+            z-index: 0;
+            color: #f0f0f0;
+        }
+
+        .about-us::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(13, 13, 13, 0.85); /* Overlay escuro */
+            z-index: -1;
+        }
+
+        .about-us h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            color: #00E5FF;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .about-us p {
+            font-size: 19px;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            line-height: 1.8;
         }
 
         /* SEÇÃO DE RECURSOS (FEATURES) */
         .features {
             padding: 80px 0;
             text-align: center;
+            background-color: #0d0d0d;
         }
 
         .features h3 {
-            font-size: 38px;
-            color: #00BFFF;
-            margin-bottom: 50px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            color: #00E5FF;
+            margin-bottom: 60px;
             text-transform: uppercase;
         }
 
@@ -158,63 +239,138 @@
         }
 
         .feature-item {
-            background-color: #1f1f1f;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
             width: 30%;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 5px solid #00BFFF;
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+            border-bottom: 5px solid #00E5FF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
         }
 
         .feature-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.4);
+            transform: translateY(-15px);
+            box-shadow: 0 12px 25px rgba(0, 229, 255, 0.6);
         }
 
         .feature-item img {
             /* **SUBSTITUA AS URLS ABAIXO PELAS SUAS FOTOS!** */
             width: 100%; 
-            height: 200px;
+            height: 220px;
             object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
-            border-radius: 5px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #333; /* Borda sutil */
         }
 
         .feature-item h4 {
-            color: #f0f0f0;
-            margin-bottom: 10px;
+            font-family: 'Oswald', sans-serif;
+            color: #00E5FF;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            font-size: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .feature-item p {
+            font-size: 17px;
+            color: #c0c0c0;
+            text-align: center;
         }
 
         /* RODAPÉ */
         footer {
-            background-color: #1f1f1f;
-            padding: 30px 0;
+            background-color: #1a1a1a;
+            padding: 40px 0;
             text-align: center;
-            border-top: 3px solid #00BFFF;
-            margin-top: 40px;
+            border-top: 3px solid #00E5FF;
+            margin-top: 60px;
+            color: #a0a0a0;
+            font-size: 15px;
         }
 
-        /* RESPONSIVIDADE BÁSICA */
+        /* RESPONSIVIDADE */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 56px;
+            }
+            .hero p {
+                font-size: 24px;
+            }
+            .feature-item {
+                width: 45%; /* Dois itens por linha em tablets */
+            }
+        }
+
         @media (max-width: 768px) {
             .header .container {
                 flex-direction: column;
                 text-align: center;
             }
+            .logo {
+                margin-bottom: 15px;
+            }
             .nav {
                 margin-top: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             .nav a, #discord-button {
                 margin: 5px 10px;
             }
+            .hero {
+                height: 70vh;
+            }
             .hero h2 {
                 font-size: 40px;
             }
+            .hero p {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+            .about-us h3, .features h3 {
+                font-size: 36px;
+            }
             .feature-item {
-                width: 80%; /* Itens de recursos empilham em telas menores */
+                width: 90%; /* Itens de recursos empilham em telas menores */
                 margin-bottom: 20px;
+            }
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 28px;
+            }
+            .nav a {
+                margin: 5px 8px;
+                font-size: 13px;
+            }
+            #discord-button {
+                margin: 5px 8px;
+            }
+            .hero h2 {
+                font-size: 32px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .about-us h3, .features h3 {
+                font-size: 30px;
+            }
+            .feature-item h4 {
+                font-size: 20px;
+            }
+            .feature-item p {
+                font-size: 15px;
             }
         }
     </style>
@@ -223,10 +379,11 @@
 
     <header class="header">
         <div class="container">
-            <h1 class="logo">SEU SERVER RP</h1>
+            <h1 class="logo">FM GLOBAL</h1>
             <nav class="nav">
                 <a href="#home">Início</a>
-                <a href="#features">Recursos</a>
+                <a href="#about-us">Sobre Nós</a>
+                <a href="#features">Sistemas</a>
                 <a href="#">Loja VIP</a>
                 <a href="#">Regras</a>
                 <button id="discord-button" class="btn">Discord</button>
@@ -237,34 +394,52 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h2>BEM-VINDO AO MELHOR MTA ROLEPLAY</h2>
-                <p>IP: MTASERVER.COM:22003 (**Clique para Copiar!**)</p>
-                <a href="#" class="btn primary-btn">COMECE A JOGAR AGORA</a>
+                <h2>EXPERIMENTE O PRÓXIMO NÍVEL DE ROLEPLAY</h2>
+                <p>IP: FMG.MTASERVER.COM:22003 (**Clique para Conectar!**)</p>
+                <a href="#" class="btn primary-btn">COMECE SUA JORNADA</a>
             </div>
+        </div>
+    </section>
+
+    <section id="about-us" class="about-us">
+        <div class="container">
+            <h3>UM MUNDO SEM LIMITES TE ESPERA</h3>
+            <p>
+                Na FM GLOBAL, redefinimos o Roleplay. Com uma comunidade vibrante, sistemas inovadores e uma equipe dedicada,
+                oferecemos uma experiência imersiva onde cada decisão molda seu destino. Construa seu império, viva sua história
+                e domine as ruas de Los Santos como nunca antes.
+            </p>
+            <a href="#" class="btn primary-btn">CONHEÇA NOSSA VISÃO</a>
         </div>
     </section>
 
     <section id="features" class="features">
         <div class="container">
-            <h3>Sistemas e Conteúdo Exclusivo</h3>
+            <h3>SISTEMAS EXCLUSIVOS E INOVAÇÃO</h3>
             <div class="feature-grid">
                 
                 <div class="feature-item">
-                    <img src="https://via.placeholder.com/300x200/555555/FFFFFF?text=FOTO+DE+CARRO+EXCLUSIVO" alt="Carros Personalizados">
-                    <h4>Veículos Exclusivos HD</h4>
-                    <p>Mais de 150 veículos com modelagens únicas e sistema de tunagem aprimorado.</p>
+                    <img src="https://www.autoindustriya.com/images/new-cars/Chevrolet/2017_Trailblazer-1.jpg" alt="Frota Veicular Elite">
+                    <h4>Frota Veicular Elite</h4>
+                    <p>Coleção exclusiva de veículos de luxo e superesportivos com personalização profunda.</p>
                 </div>
                 
                 <div class="feature-item">
-                    <img src="https://via.placeholder.com/300x200/555555/FFFFFF?text=FOTO+DE+RP+NA+FAVELA" alt="Cenas de Roleplay">
-                    <h4>RP Hardcore & Otimizado</h4>
-                    <p>Mapas detalhados, interiores exclusivos e um Roleplay com foco total na imersão.</p>
+                    <img src="https://via.placeholder.com/400x220/2a2a2a/FFFFFF?text=AMBIENTES+PREMIUM" alt="Ambientes Premium">
+                    <h4>Ambientes Premium</h4>
+                    <p>Mapeamentos únicos, casas personalizáveis e bases de facções detalhadamente projetadas.</p>
                 </div>
                 
                 <div class="feature-item">
-                    <img src="https://via.placeholder.com/300x200/555555/FFFFFF?text=FOTO+DE+EMPREGO+OU+BASE" alt="Empregos e Facções">
-                    <h4>Empregos & Organizações</h4>
-                    <p>Sistema de gangues/facções equilibrado e empregos legais para todos os níveis de experiência.</p>
+                    <img src="https://via.placeholder.com/400x220/2a2a2a/FFFFFF?text=ECONOMIA+DINAMICA" alt="Economia Dinâmica">
+                    <h4>Economia Dinâmica</h4>
+                    <p>Sistemas de empregos, negócios e organizações criminosas com impacto real no RP.</p>
+                </div>
+
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/400x220/2a2a2a/FFFFFF?text=COMUNIDADE+ATIVA" alt="Comunidade Ativa">
+                    <h4>Comunidade Ativa</h4>
+                    <p>Eventos diários, suporte dedicado e uma comunidade que valoriza o verdadeiro Roleplay.</p>
                 </div>
 
             </div>
@@ -273,14 +448,14 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Seu Servidor MTA RP. Desenvolvido para a comunidade.</p>
+            <p>FM GLOBAL RP &trade; &copy; 2024. Todos os direitos reservados. Onde o seu legado começa.</p>
         </div>
     </footer>
 
     <script>
         // Função para copiar o IP do servidor
         function copyIP() {
-            const ip = "MTASERVER.COM:22003"; // **SUBSTITUA PELO SEU IP REAL!**
+            const ip = "FMG.MTASERVER.COM:22003"; // **SUBSTITUA PELO SEU IP REAL!**
             navigator.clipboard.writeText(ip)
                 .then(() => {
                     alert(`IP copiado para a área de transferência! ${ip}`);
@@ -309,5 +484,5 @@
             }
         });
     </script>
-    </body>
+</body>
 </html>
