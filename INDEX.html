@@ -1082,13 +1082,7 @@ Failed to redeem. This code is invalid or redeemed.
                 }
                 */
                 // REMOVA O BLOCO ABAIXO E DESCOMENTE O ACIMA QUANDO TIVER SEU BACKEND
-                if (codigoDigitado === "SEUTOKEN") {
-                    localStorage.setItem(TOKEN_KEY, "fake_session_token"); 
-                    liberarAcessoTotal();
-                } else {
-                    msg.innerText = '❌ Código de acesso inválido.';
-                    msg.style.display = 'block';
-                }
+                const BACKEND_URL = "https://resgate-api-node.onrender.com";
                 // FIM DO BLOCO DE SIMULAÇÃO
                 
             } catch (error) {
@@ -1534,4 +1528,5 @@ Failed to redeem. This code is invalid or redeemed.
 
     </script>
 </body>
+
 </html>
