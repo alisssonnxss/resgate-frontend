@@ -1062,7 +1062,27 @@ Failed to redeem. This code is invalid or redeemed.
                 return;
             }
 
-             catch (error) {
+            try {
+                // Conexão real com o backend: /api/login
+                const response = await fetch(`${BACKEND_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: codigoDigitado })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Salva o token de sessão retornado pelo backend
+                    localStorage.setItem(TOKEN_KEY, data.sessionToken); 
+                    liberarAcessoTotal();
+                } else {
+                    // Exibe a mensagem de erro retornada pelo backend
+                    msg.innerText = data.message || 'Erro de login. Tente novamente.';
+                    msg.style.display = 'block';
+                }
+                
+            } catch (error) {
                 console.error('Erro de conexão com o Backend:', error);
                 msg.innerText = '❌ Erro de conexão. Servidor indisponível ou URL errada.';
                 msg.style.display = 'block';
@@ -1505,6 +1525,4 @@ Failed to redeem. This code is invalid or redeemed.
 
     </script>
 </body>
-
 </html>
-
