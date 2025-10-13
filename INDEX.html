@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FM GLOBAL RP | Servidor de Elite MTA</title>
+    <title>FM GLOBAL RP | Loja e Servidor de Elite MTA</title>
     
-    <link href="c:\Users\alissonxss\Documents\PROJETO NELSON\fundo-da-paisagem-com-palmeiras.jpg" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         /* RESET BÁSICO */
@@ -16,9 +16,9 @@
         }
 
         body {
-            font-family: 'Open Sans', sans-serif; /* Fonte mais suave para o corpo */
-            background-color: #0d0d0d; /* Fundo bem escuro */
-            color: #e0e0e0; /* Texto claro suave */
+            font-family: 'Open Sans', sans-serif;
+            background-color: #0d0d0d;
+            color: #e0e0e0;
             line-height: 1.7;
             scroll-behavior: smooth;
         }
@@ -29,16 +29,30 @@
             margin: 0 auto;
         }
 
+        /* VARIAVEIS DE COR E ESTILO */
+        :root {
+            --neon-color: #00E5FF; /* Ciano Neon */
+            --dark-bg: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --header-bg: rgba(18, 18, 18, 0.95);
+        }
+
+        /* ESTILO GERAL DE SEÇÕES */
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
         /* ESTILO DO CABEÇALHO */
         .header {
-            background-color: rgba(18, 18, 18, 0.95); /* Fundo semi-transparente para o header */
+            background-color: var(--header-bg);
             padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid #00E5FF; /* Linha de destaque: Ciano Neon */
+            border-bottom: 3px solid var(--neon-color);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+            backdrop-filter: blur(5px);
         }
 
         .header .container {
@@ -48,8 +62,8 @@
         }
 
         .logo {
-            font-family: 'Oswald', sans-serif; /* Fonte impactante para o logo */
-            color: #00E5FF; /* Cor de destaque */
+            font-family: 'Oswald', sans-serif;
+            color: var(--neon-color);
             font-size: 32px;
             font-weight: 700;
             letter-spacing: 2px;
@@ -68,23 +82,33 @@
             position: relative;
         }
 
-        .nav a::after { /* Linha inferior ao passar o mouse */
+        .nav a::after {
             content: '';
             position: absolute;
             left: 0;
             bottom: -5px;
             width: 0;
             height: 2px;
-            background-color: #00E5FF;
+            background-color: var(--neon-color);
             transition: width 0.3s ease-out;
         }
 
         .nav a:hover {
-            color: #00E5FF;
+            color: var(--neon-color);
             transform: translateY(-2px);
         }
         .nav a:hover::after {
             width: 100%;
+        }
+
+        /* TÍTULOS DE SEÇÃO */
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            color: var(--neon-color);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            text-align: center;
         }
 
         /* BOTÃO PADRÃO */
@@ -104,8 +128,8 @@
         }
 
         .primary-btn {
-            background-color: #00E5FF; /* Ciano Neon */
-            color: #0d0d0d;
+            background-color: var(--neon-color);
+            color: var(--dark-bg);
         }
 
         .primary-btn:hover {
@@ -115,7 +139,7 @@
         }
 
         #discord-button {
-            background-color: #5865F2; /* Cor do Discord */
+            background-color: #5865F2;
             color: white;
             margin-left: 30px;
         }
@@ -127,9 +151,9 @@
 
         /* SEÇÃO DE DESTAQUE (HERO) */
         .hero {
-            /* **IMAGEM DE FUNDO PRINCIPAL AQUI!** (Ex: Vista aérea de Los Santos com carros de luxo) */
-            background: url('https://via.placeholder.com/1920x1080/1a1a1a/FFFFFF?text=FOTO+PRINCIPAL+FM+GLOBAL') no-repeat center center/cover;
-            height: 90vh; /* Altura total da tela para impacto */
+            /* **IMAGEM DE FUNDO PRINCIPAL AQUI!** */
+            background: url('https://tse1.mm.bing.net/th/id/OIP.HsyGtD6AaN1w1K3poFtsTQHaEK?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3.') no-repeat center center/cover;
+            height: 90vh;
             display: flex;
             align-items: center;
             text-align: center;
@@ -143,7 +167,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)); /* Gradiente escuro para o texto */
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
             z-index: 1;
         }
 
@@ -156,8 +180,8 @@
             font-family: 'Oswald', sans-serif;
             font-size: 72px;
             margin-bottom: 20px;
-            color: #00E5FF;
-            text-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 30px rgba(0, 229, 255, 0.6); /* Efeito Neon mais intenso */
+            color: var(--neon-color);
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 30px rgba(0, 229, 255, 0.6);
             animation: fadeInTop 1s ease-out forwards;
         }
 
@@ -165,7 +189,7 @@
             font-size: 28px;
             margin-bottom: 50px;
             font-weight: 300;
-            cursor: pointer; /* Indica que é clicável */
+            cursor: pointer;
             color: #f0f0f0;
             animation: fadeIn 1.5s ease-out forwards;
         }
@@ -179,77 +203,26 @@
             to { opacity: 1; }
         }
 
-        /* SEÇÃO SOBRE NÓS */
-        .about-us {
-            padding: 80px 0;
-            text-align: center;
-            /* **IMAGEM DE FUNDO SOBRE NÓS!** (Ex: Uma cidade iluminada ou base secreta) */
-            background: url('https://via.placeholder.com/1920x800/1e1e1e/FFFFFF?text=FUNDO+SOBRE+NOS') no-repeat center center/cover fixed; /* Fundo fixo para parallax */
-            position: relative;
-            z-index: 0;
-            color: #f0f0f0;
-        }
-
-        .about-us::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(13, 13, 13, 0.85); /* Overlay escuro */
-            z-index: -1;
-        }
-
-        .about-us h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 48px;
-            color: #00E5FF;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .about-us p {
-            font-size: 19px;
-            max-width: 800px;
-            margin: 0 auto 40px auto;
-            line-height: 1.8;
-        }
-
-        /* SEÇÃO DE RECURSOS (FEATURES) */
-        .features {
-            padding: 80px 0;
-            text-align: center;
-            background-color: #0d0d0d;
-        }
-
-        .features h3 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 48px;
-            color: #00E5FF;
-            margin-bottom: 60px;
-            text-transform: uppercase;
-        }
-
+        /* SEÇÃO DE RECURSOS E SOBRE NÓS */
         .feature-grid {
             display: flex;
             gap: 30px;
             justify-content: center;
-            flex-wrap: wrap; /* Garante quebras em telas menores */
+            flex-wrap: wrap;
         }
 
         .feature-item {
-            background-color: #1a1a1a;
+            background-color: var(--card-bg);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
             width: 30%;
             transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
-            border-bottom: 5px solid #00E5FF;
+            border-bottom: 5px solid var(--neon-color);
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: left;
+            text-align: center;
         }
 
         .feature-item:hover {
@@ -261,25 +234,139 @@
             /* **SUBSTITUA AS URLS ABAIXO PELAS SUAS FOTOS!** */
             width: 100%; 
             height: 220px;
-            object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+            object-fit: cover;
             border-radius: 8px;
             margin-bottom: 20px;
-            border: 2px solid #333; /* Borda sutil */
+            border: 2px solid #333;
         }
 
         .feature-item h4 {
             font-family: 'Oswald', sans-serif;
-            color: #00E5FF;
+            color: var(--neon-color);
             margin-bottom: 15px;
             text-transform: uppercase;
             font-size: 24px;
+        }
+
+        /* --- SEÇÃO LOJA VIP --- */
+
+        .store-section {
+            background-color: var(--dark-bg);
+        }
+
+        .vip-benefits {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 60px;
+            border-left: 5px solid #FFD700; /* Dourado para Vantagens */
             text-align: center;
         }
 
-        .feature-item p {
-            font-size: 17px;
+        .vip-benefits h4 {
+            font-family: 'Oswald', sans-serif;
+            color: #FFD700;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .vip-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .vip-list li {
+            background-color: #2c2c2c;
+            padding: 10px 15px;
+            border-radius: 5px;
             color: #c0c0c0;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .vip-list li:hover {
+            background-color: #3a3a3a;
+        }
+
+        /* CARDS DA LOJA */
+        .store-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s;
+            border: 1px solid #333;
             text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-color);
+        }
+
+        .product-card-header {
+            background-color: var(--neon-color);
+            color: var(--dark-bg);
+            padding: 15px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        .product-card-body {
+            padding: 20px;
+        }
+
+        .product-card-body img {
+            /* **SUBSTITUA PELA IMAGEM DO PACOTE VIP!** */
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #FFD700;
+        }
+
+        .product-card-body p {
+            font-size: 16px;
+            color: #c0c0c0;
+            margin-bottom: 15px;
+            height: 60px; /* Altura fixa para alinhar os botões */
+            overflow: hidden;
+        }
+
+        .price {
+            font-size: 36px;
+            font-family: 'Oswald', sans-serif;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        .buy-btn {
+            background-color: #00E5FF;
+            color: var(--dark-bg);
+            padding: 10px 20px;
+            width: 100%;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+        .buy-btn:hover {
+            background-color: #00C4D8;
+            transform: none;
         }
 
         /* RODAPÉ */
@@ -287,7 +374,7 @@
             background-color: #1a1a1a;
             padding: 40px 0;
             text-align: center;
-            border-top: 3px solid #00E5FF;
+            border-top: 3px solid var(--neon-color);
             margin-top: 60px;
             color: #a0a0a0;
             font-size: 15px;
@@ -295,86 +382,30 @@
 
         /* RESPONSIVIDADE */
         @media (max-width: 992px) {
-            .hero h2 {
-                font-size: 56px;
-            }
-            .hero p {
-                font-size: 24px;
-            }
             .feature-item {
-                width: 45%; /* Dois itens por linha em tablets */
+                width: 45%;
+            }
+            .product-card {
+                width: 45%;
             }
         }
 
         @media (max-width: 768px) {
-            .header .container {
-                flex-direction: column;
-                text-align: center;
-            }
-            .logo {
-                margin-bottom: 15px;
-            }
-            .nav {
-                margin-top: 15px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .nav a, #discord-button {
-                margin: 5px 10px;
-            }
-            .hero {
-                height: 70vh;
-            }
             .hero h2 {
-                font-size: 40px;
+                font-size: 48px;
             }
-            .hero p {
-                font-size: 18px;
-                margin-bottom: 30px;
-            }
-            .about-us h3, .features h3 {
+            .section-title {
                 font-size: 36px;
             }
-            .feature-item {
-                width: 90%; /* Itens de recursos empilham em telas menores */
-                margin-bottom: 20px;
+            .feature-item, .product-card {
+                width: 90%;
             }
-            .btn {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 28px;
-            }
-            .nav a {
-                margin: 5px 8px;
-                font-size: 13px;
-            }
-            #discord-button {
-                margin: 5px 8px;
-            }
-            .hero h2 {
-                font-size: 32px;
-            }
-            .hero p {
-                font-size: 16px;
-            }
-            .about-us h3, .features h3 {
-                font-size: 30px;
-            }
-            .feature-item h4 {
-                font-size: 20px;
-            }
-            .feature-item p {
-                font-size: 15px;
+            .vip-list {
+                flex-direction: column;
             }
         }
     </style>
-    </head>
+</head>
 <body>
 
     <header class="header">
@@ -382,9 +413,8 @@
             <h1 class="logo">FM GLOBAL</h1>
             <nav class="nav">
                 <a href="#home">Início</a>
-                <a href="#about-us">Sobre Nós</a>
                 <a href="#features">Sistemas</a>
-                <a href="#">Loja VIP</a>
+                <a href="#store">Loja VIP</a>
                 <a href="#">Regras</a>
                 <button id="discord-button" class="btn">Discord</button>
             </nav>
@@ -396,30 +426,18 @@
             <div class="hero-content">
                 <h2>EXPERIMENTE O PRÓXIMO NÍVEL DE ROLEPLAY</h2>
                 <p>IP: FMG.MTASERVER.COM:22003 (**Clique para Conectar!**)</p>
-                <a href="#" class="btn primary-btn">COMECE SUA JORNADA</a>
+                <a href="#store" class="btn primary-btn">ACESSAR LOJA VIP</a>
             </div>
-        </div>
-    </section>
-
-    <section id="about-us" class="about-us">
-        <div class="container">
-            <h3>UM MUNDO SEM LIMITES TE ESPERA</h3>
-            <p>
-                Na FM GLOBAL, redefinimos o Roleplay. Com uma comunidade vibrante, sistemas inovadores e uma equipe dedicada,
-                oferecemos uma experiência imersiva onde cada decisão molda seu destino. Construa seu império, viva sua história
-                e domine as ruas de Los Santos como nunca antes.
-            </p>
-            <a href="#" class="btn primary-btn">CONHEÇA NOSSA VISÃO</a>
         </div>
     </section>
 
     <section id="features" class="features">
         <div class="container">
-            <h3>SISTEMAS EXCLUSIVOS E INOVAÇÃO</h3>
+            <h3 class="section-title">SISTEMAS EXCLUSIVOS E INOVAÇÃO</h3>
             <div class="feature-grid">
                 
                 <div class="feature-item">
-                    <img src="https://www.autoindustriya.com/images/new-cars/Chevrolet/2017_Trailblazer-1.jpg" alt="Frota Veicular Elite">
+                    <img src="https://via.placeholder.com/400x220/2a2a2a/FFFFFF?text=FROTA+VEICULAR+ELITE" alt="Frota Veicular Elite">
                     <h4>Frota Veicular Elite</h4>
                     <p>Coleção exclusiva de veículos de luxo e superesportivos com personalização profunda.</p>
                 </div>
@@ -435,20 +453,85 @@
                     <h4>Economia Dinâmica</h4>
                     <p>Sistemas de empregos, negócios e organizações criminosas com impacto real no RP.</p>
                 </div>
-
-                <div class="feature-item">
-                    <img src="https://via.placeholder.com/400x220/2a2a2a/FFFFFF?text=COMUNIDADE+ATIVA" alt="Comunidade Ativa">
-                    <h4>Comunidade Ativa</h4>
-                    <p>Eventos diários, suporte dedicado e uma comunidade que valoriza o verdadeiro Roleplay.</p>
-                </div>
-
             </div>
         </div>
     </section>
 
+    <section id="store" class="store-section">
+        <div class="container">
+            <h3 class="section-title">LOJA VIP FM GLOBAL - VANTAGENS EXCLUSIVAS</h3>
+
+            <div class="vip-benefits">
+                <h4>Benefícios de Ser um Membro VIP</h4>
+                <ul class="vip-list">
+                    <li>Prioridade na Conexão</li>
+                    <li>Roupas e Acessórios Exclusivos</li>
+                    <li>Dinheiro ou Itens Iniciais Bônus</li>
+                    <li>Descontos em Concessionárias</li>
+                    <li>Tag Exclusiva no Discord e no Game</li>
+                </ul>
+            </div>
+
+            <div class="store-grid">
+                
+                <div class="product-card">
+                    <div class="product-card-header" style="background-color: #A9A9A9;">VIP SILVER</div>
+                    <div class="product-card-body">
+                        <img src="https://via.placeholder.com/100x100/A9A9A9/FFFFFF?text=S" alt="VIP Silver">
+                        <p>Acesso rápido, tag Silver e um pequeno bônus inicial para começar sua jornada.</p>
+                        <div class="price">R$ 29,90</div>
+                        <a href="SEU_LINK_DE_PAGAMENTO_AQUI" class="btn buy-btn" style="background-color: #A9A9A9;">Comprar Agora</a>
+                    </div>
+                </div>
+
+                <div class="product-card" style="border: 3px solid #FFD700; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);">
+                    <div class="product-card-header" style="background-color: #FFD700; color: var(--dark-bg); font-size: 32px;">👑 VIP GOLD</div>
+                    <div class="product-card-body">
+                         <img src="https://via.placeholder.com/100x100/FFD700/000000?text=G" alt="VIP Gold">
+                        <p>O melhor custo-benefício! Roupas exclusivas, carro bônus e muito mais para dominar o RP.</p>
+                        <div class="price">R$ 69,90</div>
+                        <a href="SEU_LINK_DE_PAGAMENTO_AQUI" class="btn buy-btn" style="background-color: #FFD700; color: var(--dark-bg);">Mais Vendido</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-card-header" style="background-color: #E5E4E2;">VIP PLATINUM</div>
+                    <div class="product-card-body">
+                         <img src="https://via.placeholder.com/100x100/E5E4E2/000000?text=P" alt="VIP Platinum">
+                        <p>Máximo de vantagens, carros raros, acesso a áreas exclusivas e suporte prioritário.</p>
+                        <div class="price">R$ 119,90</div>
+                        <a href="SEU_LINK_DE_PAGAMENTO_AQUI" class="btn buy-btn" style="background-color: #E5E4E2; color: var(--dark-bg);">Comprar Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title" style="margin-top: 80px; font-size: 36px; border-bottom: 2px solid #00E5FF; padding-bottom: 10px;">ITENS AVULSOS</h3>
+            <div class="store-grid">
+                 <div class="product-card" style="width: 250px;">
+                    <div class="product-card-header" style="background-color: #4CAF50;">Mochila Tática</div>
+                    <div class="product-card-body">
+                         <img src="https://via.placeholder.com/80x80/4CAF50/FFFFFF?text=M" alt="Mochila Tática" style="border-color: #4CAF50;">
+                        <p>Aumente sua capacidade de inventário em 50%.</p>
+                        <div class="price">R$ 15,00</div>
+                        <a href="SEU_LINK_DE_PAGAMENTO_AQUI" class="btn buy-btn" style="background-color: #4CAF50;">Comprar</a>
+                    </div>
+                </div>
+                 <div class="product-card" style="width: 250px;">
+                    <div class="product-card-header" style="background-color: #FF6347;">Kit Reparo</div>
+                    <div class="product-card-body">
+                         <img src="https://via.placeholder.com/80x80/FF6347/FFFFFF?text=K" alt="Kit Reparo" style="border-color: #FF6347;">
+                        <p>Reparo instantâneo de veículos em qualquer lugar do mapa.</p>
+                        <div class="price">R$ 9,90</div>
+                        <a href="SEU_LINK_DE_PAGAMENTO_AQUI" class="btn buy-btn" style="background-color: #FF6347;">Comprar</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
     <footer>
         <div class="container">
-            <p>FM GLOBAL RP &trade; &copy; 2024. Todos os direitos reservados. Onde o seu legado começa.</p>
+            <p>FM GLOBAL RP &trade; &copy; 2024. Onde o seu legado começa. Use seu dinheiro real com responsabilidade.</p>
         </div>
     </footer>
 
@@ -470,7 +553,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const ipElement = document.querySelector('.hero-content p');
             if (ipElement) {
-                // Adiciona a funcionalidade de clique para copiar o IP
                 ipElement.addEventListener('click', copyIP);
             }
             
