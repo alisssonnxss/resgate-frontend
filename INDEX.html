@@ -11,7 +11,6 @@
 
     <style>
         :root {
-            /* TEMA CLARO SOLICITADO */
             --primary: #0984e3;
             --secondary: #6c5ce7;
             --accent: #e84393;
@@ -35,7 +34,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* MODAL ALERTA */
         #custom-alert {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
             background: white; border: 2px solid var(--primary);
@@ -47,7 +45,6 @@
         #custom-alert h2 { font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 15px; color: var(--primary); }
         .close-alert { background: var(--primary); color: #fff; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Syncopate'; font-size: 0.6rem; }
 
-        /* MÚSICA COM PLAYLIST E BOTÃO PULAR */
         .music-widget {
             position: fixed; top: 15px; right: 15px; background: white;
             border: 1px solid var(--border); padding: 8px 12px; border-radius: 50px;
@@ -66,7 +63,6 @@
         .music-btn { background: none; border: none; color: var(--text); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
         .music-btn:hover { color: var(--primary); }
 
-        /* HEADER */
         .hero-section {
             text-align: center; padding: 40px 20px; background: var(--glass);
             border: 1px solid var(--border); border-radius: 30px; backdrop-filter: blur(10px); 
@@ -86,7 +82,6 @@
             font-family: 'Share Tech Mono'; letter-spacing: 2px; text-transform: uppercase;
         }
 
-        /* REDES SOCIAIS */
         .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
         .social-link {
             display: flex; align-items: center; gap: 8px; padding: 10px 18px;
@@ -97,7 +92,6 @@
         }
         .social-link:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--primary); }
 
-        /* JANELA DE RESGATE */
         .redeem-window {
             background: white; border: 1px solid var(--border); border-radius: 25px;
             padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.03);
@@ -114,7 +108,6 @@
         }
         .btn-action:hover { filter: brightness(1.1); transform: scale(1.02); }
 
-        /* HISTÓRICO AJUSTADO PARA 5 ITENS */
         .history-section {
             margin-top: 40px; background: white; border: 1px solid var(--border);
             border-radius: 25px; padding: 25px 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
@@ -123,7 +116,6 @@
         .history-table th { color: var(--primary); padding: 12px; border-bottom: 2px solid var(--bg); }
         .history-table td { padding: 12px; border-bottom: 1px solid #f1f1f1; color: var(--text); }
 
-        /* PARCEIROS */
         .creators-section {
             margin-top: 40px; padding: 40px 20px; background: rgba(255,255,255,0.5); 
             border-radius: 40px; border: 1px solid var(--border); text-align: center;
@@ -233,7 +225,6 @@
     const mDisplay = document.getElementById('music-display');
     const API_URL = "https://resgate-api-node.onrender.com"; 
 
-    /* CONFIGURAÇÃO DA PLAYLIST COM 5 ABAS */
     const playlist = [
         { name: "SÓ CAPA EM PEAK - @ALISSONNXSS", src: "FOTOS MEMES/Só Capa em Peak (1).mp3" },
         { name: "Banda djavu-rubiA", src: "FOTOS MEMES/Banda djavu-rubi(MP3_160K).mp3" },
@@ -250,7 +241,6 @@
     }
     loadMusic(0);
 
-    /* FUNÇÃO DE PULAR MÚSICA */
     function nextM(e) {
         if(e) e.stopPropagation();
         currentM = (currentM + 1) % playlist.length;
@@ -276,7 +266,6 @@
     }
     function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
 
-    /* CARREGAR HISTÓRICO - LIMITADO AOS 5 ÚLTIMOS */
     async function loadHistory() {
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
@@ -290,7 +279,7 @@
                     <td style="color:var(--primary)">${log.reward}</td>
                     <td>${log.data || '--/--/--'}</td>
                     <td style="color:${isFinalized ? '#2ecc71' : '#f39c12'}">
-                        ${isFinalized ? 'ID: '+log.id : 'PROCESSANDO...'}
+                        ${isFinalized ? 'ID: ' + log.id : 'PROCESSANDO...'}
                     </td>
                 </tr>`}).join('');
         } catch(e) {}
@@ -300,20 +289,42 @@
         const btn = document.getElementById('btnVerify');
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE UM CÓDIGO.");
+        
         btn.disabled = true;
+        btn.innerText = "VERIFICANDO...";
+
         try {
             const res = await fetch(`${API_URL}/api/validate`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code }) });
             const data = await res.json();
+
             if(data.success) {
-                await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "---" }) });
+                await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "AGUARDE" }) });
                 confetti();
-                codeGlobal = code; itemGlobal = data.reward;
+                codeGlobal = code; 
+                itemGlobal = data.reward;
                 document.getElementById('step-1').style.display = 'none';
                 document.getElementById('step-2').style.display = 'block';
                 document.getElementById('rewardTxt').innerText = itemGlobal;
                 loadHistory(); 
-            } else { showAlert("ERRO", "Código inválido ou já usado!"); btn.disabled = false; }
-        } catch(e) { showAlert("ERRO", "FALHA DE CONEXÃO."); btn.disabled = false; }
+            } else {
+                // VERIFICA SE ALGUÉM JÁ PEGOU E EXIBE O NOME
+                const historyRes = await fetch(`${API_URL}/api/public/history`);
+                const historyData = await historyRes.json();
+                const ganhador = historyData.find(log => log.code === code);
+
+                if(ganhador) {
+                    showAlert("TARDE DEMAIS!", `${ganhador.user} chegou mais rápido e já resgatou esse código! kkkkk`);
+                } else {
+                    showAlert("ERRO", "Código inválido ou expirado!");
+                }
+                btn.disabled = false;
+                btn.innerText = "RESGATAR";
+            }
+        } catch(e) { 
+            showAlert("ERRO", "FALHA DE CONEXÃO."); 
+            btn.disabled = false;
+            btn.innerText = "RESGATAR";
+        }
     }
 
     async function finalizar() {
@@ -324,22 +335,24 @@
         const horaS = agora.toLocaleTimeString();
 
         if(!n || !i) return showAlert("DADOS", "PREENCHA TUDO.");
-        const jaResgatou = window.lastHistoryData.some(log => log.id === i);
-        if(jaResgatou) return showAlert("BLOQUEADO", "Este ID já resgatou anteriormente!");
 
         try {
             await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: codeGlobal, name: n, id: i }) });
             
-            /* ENVIO COMPLETO PARA WHATSAPP SOLICITADO */
             const msg = `🎁 *NOVO RESGATE CONFIRMADO* 🎁\n\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n⏰ *HORA:* ${horaS}\n📅 *DATA:* ${dataS}\n🎫 *CÓDIGO:* ${codeGlobal}`;
-            window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(msg)}`);
+            showAlert("SUCESSO!", "Resgate concluído! Abrindo WhatsApp...");
             
-            setTimeout(() => { location.reload(); }, 2000);
-        } catch(e) { showAlert("ERRO", "FALHA AO SALVAR."); }
+            setTimeout(() => { 
+                window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(msg)}`);
+                location.reload(); 
+            }, 2000);
+        } catch(e) { 
+            showAlert("ERRO", "FALHA AO SALVAR."); 
+        }
     }
 
     loadHistory();
-    setInterval(loadHistory, 10000); 
+    setInterval(loadHistory, 7000); 
 </script>
 </body>
 </html>
