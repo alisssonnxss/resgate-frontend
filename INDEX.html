@@ -233,7 +233,7 @@
         { name: "BARBIE - Mc Tuto", src: "FOTOS MEMES/BARBIE - Mc Tuto.mp3" }
     ];
     let currentM = 0;
-    let codeGlobal = "", itemGlobal = "";
+    let codeGlobal = "", itemGlobal = "", historyDataGlobal = [];
 
     function loadMusic(idx) {
         audio.src = playlist[idx].src;
@@ -266,23 +266,24 @@
     }
     function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
 
-    /* CARREGA O HISTÓRICO - AGORA MOSTRANDO O ID PREENCHIDO */
+    /* CARREGA O HISTÓRICO - AGORA APENAS CONCLUÍDOS */
     async function loadHistory() {
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
             const data = await res.json();
+            historyDataGlobal = data;
             const body = document.getElementById('historyBody');
             
-            body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
-                const processando = log.user === 'RESGATANDO...';
-                return `<tr>
-                    <td>${processando ? '---' : log.user}</td>
+            // Filtra para remover o status temporário do histórico visual
+            const concluidos = data.filter(log => log.user !== 'RESGATANDO...');
+
+            body.innerHTML = [...concluidos].reverse().slice(0, 5).map(log => `
+                <tr>
+                    <td>${log.user}</td>
                     <td style="color:var(--primary)">${log.reward}</td>
                     <td>${log.data || '--/--/--'}</td>
-                    <td style="color:${processando ? '#f39c12' : '#2ecc71'}; font-weight: bold;">
-                        ${processando ? '⚡ PROCESSANDO...' : log.id}
-                    </td>
-                </tr>`}).join('');
+                    <td style="color:#2ecc71; font-weight: bold;">${log.id}</td>
+                </tr>`).join('');
         } catch(e) {}
     }
 
@@ -299,7 +300,7 @@
             const data = await res.json();
 
             if(data.success) {
-                // Registro temporário
+                // Registro temporário (silencioso no histórico)
                 await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "AGUARDE" }) });
                 
                 confetti();
@@ -310,15 +311,16 @@
                 document.getElementById('rewardTxt').innerText = itemGlobal;
                 loadHistory(); 
             } else {
+                // BUSCA QUEM RESGATOU OU SE ESTÃO NO FORMULÁRIO
                 const historyRes = await fetch(`${API_URL}/api/public/history`);
                 const historyData = await historyRes.json();
-                const ganhador = historyData.find(log => log.code === code);
+                const registro = historyData.find(log => log.code === code);
 
-                if(ganhador) {
-                    if(ganhador.user === "RESGATANDO...") {
-                        showAlert("MUITO LENTO!", "Opa! Outra pessoa já está resgatando este código agora! Seja mais rápido!");
+                if(registro) {
+                    if(registro.user === "RESGATANDO...") {
+                        showAlert("OCUPADO", "Opa! Alguém já está no formulário resgatando este código! Seja mais rápido!");
                     } else {
-                        showAlert("TARDE DEMAIS!", `${ganhador.user} chegou mais rápido e já resgatou esse código! kkkkk`);
+                        showAlert("TARDE DEMAIS!", `${registro.user} chegou mais rápido e já resgatou esse código! kkkkk`);
                     }
                 } else {
                     showAlert("ERRO", "Código inválido ou já usado!");
@@ -336,17 +338,20 @@
     async function finalizar() {
         const n = document.getElementById('uNick').value.trim();
         const i = document.getElementById('uID').value.trim();
-        const agora = new Date();
-        const dataS = agora.toLocaleDateString();
-        const horaS = agora.toLocaleTimeString();
-
+        const hoje = new Date().toLocaleDateString();
+        
         if(!n || !i) return showAlert("DADOS", "PREENCHA TUDO.");
 
+        // TRAVA: 1 RESGATE POR ID POR DIA
+        const jaResgatouHoje = historyDataGlobal.some(log => log.id === i && log.data === hoje && log.user !== 'RESGATANDO...');
+        if(jaResgatouHoje) {
+            return showAlert("LIMITE DIÁRIO", "Este ID já resgatou um prêmio hoje! Tente novamente amanhã.");
+        }
+
         try {
-            // Aqui enviamos o ID real que o usuário digitou no formulário
             await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: codeGlobal, name: n, id: i }) });
             
-            const msg = `🎁 *NOVO RESGATE CONFIRMADO* 🎁\n\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n⏰ *HORA:* ${horaS}\n📅 *DATA:* ${dataS}\n🎫 *CÓDIGO:* ${codeGlobal}`;
+            const msg = `🎁 *NOVO RESGATE CONFIRMADO* 🎁\n\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n🎫 *CÓDIGO:* ${codeGlobal}`;
             showAlert("SUCESSO!", "Resgate concluído! Abrindo WhatsApp...");
             
             setTimeout(() => { 
