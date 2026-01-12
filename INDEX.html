@@ -11,131 +11,130 @@
 
     <style>
         :root {
-            --primary: #00f2ff;
-            --secondary: #bc13fe;
-            --accent: #ff00c1;
-            --gold: #ffcc00;
-            --bg: #050508;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(0, 242, 255, 0.3);
+            /* TEMA CLARO SOLICITADO */
+            --primary: #0984e3;
+            --secondary: #6c5ce7;
+            --accent: #e84393;
+            --gold: #f1c40f;
+            --bg: #f0f2f5;
+            --text: #2d3436;
+            --glass: rgba(255, 255, 255, 0.9);
+            --border: rgba(9, 132, 227, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
         
         body {
             background-color: var(--bg);
-            color: #fff;
+            color: var(--text);
             font-family: 'Rajdhani', sans-serif;
-            background: radial-gradient(circle at top right, #1a0b2e, #050508);
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f2f5 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* MODAL CENTRAL */
+        /* MODAL ALERTA */
         #custom-alert {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
-            background: rgba(0, 0, 0, 0.95); border: 2px solid var(--primary);
+            background: white; border: 2px solid var(--primary);
             padding: 30px; border-radius: 20px; z-index: 10000; text-align: center;
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.4); display: none;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); display: none;
             width: 90%; max-width: 400px; transition: 0.3s;
         }
         #custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
         #custom-alert h2 { font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 15px; color: var(--primary); }
-        .close-alert { background: var(--primary); color: #000; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Syncopate'; font-size: 0.6rem; }
+        .close-alert { background: var(--primary); color: #fff; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Syncopate'; font-size: 0.6rem; }
 
-        /* MÚSICA */
+        /* MÚSICA COM PLAYLIST E BOTÃO PULAR */
         .music-widget {
-            position: fixed; top: 15px; right: 15px; background: rgba(0,0,0,0.9);
-            border: 1px solid var(--primary); padding: 8px 12px; border-radius: 50px;
-            display: flex; align-items: center; gap: 10px; z-index: 1000; width: 220px; overflow: hidden;
+            position: fixed; top: 15px; right: 15px; background: white;
+            border: 1px solid var(--border); padding: 8px 12px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px; z-index: 1000; width: 280px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         .music-scroll { white-space: nowrap; overflow: hidden; flex: 1; }
         .music-scroll span {
             display: inline-block; padding-left: 100%;
-            font-family: 'Share Tech Mono'; font-size: 0.7rem; color: var(--primary);
+            font-family: 'Share Tech Mono'; font-size: 0.65rem; color: var(--primary);
             animation: marquee 10s linear infinite;
         }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        
+        .music-controls { display: flex; gap: 10px; align-items: center; }
+        .music-btn { background: none; border: none; color: var(--text); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+        .music-btn:hover { color: var(--primary); }
 
         /* HEADER */
         .hero-section {
             text-align: center; padding: 40px 20px; background: var(--glass);
-            border: 1px solid var(--border); border-radius: 30px; backdrop-filter: blur(15px); margin-bottom: 30px;
+            border: 1px solid var(--border); border-radius: 30px; backdrop-filter: blur(10px); 
+            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
         .profile-img {
-            width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary);
-            padding: 5px; box-shadow: 0 0 20px var(--primary); margin-bottom: 15px;
+            width: 120px; height: 120px; border-radius: 50%; border: 4px solid white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px;
         }
         .tag-alisson {
             font-family: 'Syncopate', sans-serif; font-size: clamp(1.2rem, 8vw, 2.2rem);
-            background: linear-gradient(90deg, #00f2ff, #bc13fe); -webkit-background-clip: text;
+            background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text;
             background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;
         }
         .sub-title {
-            margin-top: 10px; font-size: 0.9rem; color: var(--primary);
+            margin-top: 10px; font-size: 0.9rem; color: var(--text); opacity: 0.7;
             font-family: 'Share Tech Mono'; letter-spacing: 2px; text-transform: uppercase;
         }
 
         /* REDES SOCIAIS */
-        .social-grid {
-            display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap;
-        }
+        .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
         .social-link {
-            display: flex; align-items: center; gap: 8px; padding: 10px 15px;
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            border-radius: 50px; color: #fff; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; padding: 10px 18px;
+            background: white; border: 1px solid var(--border);
+            border-radius: 50px; color: var(--text); text-decoration: none;
             font-family: 'Rajdhani'; font-weight: bold; font-size: 0.8rem; transition: 0.4s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
-        .social-link:hover { transform: translateY(-5px); border-color: #fff; }
-        .insta:hover { background: #E1306C; box-shadow: 0 0 15px #E1306C; }
-        .tt:hover { background: #000; box-shadow: 0 0 15px #fff; }
-        .yt:hover { background: #FF0000; box-shadow: 0 0 15px #FF0000; }
-        .dc:hover { background: #5865F2; box-shadow: 0 0 15px #5865F2; }
+        .social-link:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--primary); }
 
         /* JANELA DE RESGATE */
         .redeem-window {
-            background: var(--glass); border: 2px solid var(--primary); border-radius: 25px;
-            padding: 40px 20px; text-align: center; box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+            background: white; border: 1px solid var(--border); border-radius: 25px;
+            padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.03);
         }
         .input-hacker {
-            width: 100%; max-width: 500px; padding: 18px; background: rgba(0,0,0,0.8);
-            border: 2px solid var(--border); border-radius: 12px; color: var(--primary);
-            font-family: 'Share Tech Mono'; font-size: 1.1rem; text-align: center; margin-bottom: 15px;
+            width: 100%; max-width: 500px; padding: 18px; background: #f8f9fa;
+            border: 1px solid var(--border); border-radius: 12px; color: var(--primary);
+            font-family: 'Share Tech Mono'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; outline: none;
         }
         .btn-action {
             width: 100%; max-width: 500px; padding: 18px; border: none; border-radius: 12px;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: #fff; font-family: 'Syncopate'; font-size: 0.8rem; cursor: pointer; transition: 0.4s;
         }
-        .btn-action:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--primary); }
+        .btn-action:hover { filter: brightness(1.1); transform: scale(1.02); }
 
-        /* TABELA DE HISTÓRICO */
+        /* HISTÓRICO AJUSTADO PARA 5 ITENS */
         .history-section {
-            margin-top: 40px; background: var(--glass); border: 1px solid var(--border);
-            border-radius: 25px; padding: 25px 15px; text-align: center;
+            margin-top: 40px; background: white; border: 1px solid var(--border);
+            border-radius: 25px; padding: 25px 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
         .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Share Tech Mono'; font-size: 0.8rem; }
-        .history-table th { color: var(--primary); padding: 10px; border-bottom: 2px solid var(--border); }
-        .history-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .history-table th { color: var(--primary); padding: 12px; border-bottom: 2px solid var(--bg); }
+        .history-table td { padding: 12px; border-bottom: 1px solid #f1f1f1; color: var(--text); }
 
         /* PARCEIROS */
         .creators-section {
-            margin-top: 40px; padding: 40px 20px;
-            background: rgba(0,0,0,0.3); border-radius: 40px; border: 1px solid var(--border);
-            text-align: center;
+            margin-top: 40px; padding: 40px 20px; background: rgba(255,255,255,0.5); 
+            border-radius: 40px; border: 1px solid var(--border); text-align: center;
         }
-        .creators-title { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary); margin-bottom: 30px; display: block; }
+        .creators-title { font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary); margin-bottom: 30px; display: block; letter-spacing: 2px; }
         .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-items: center; }
-        .creator-card { width: 100%; max-width: 320px; background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff; transition: 0.5s; position: relative; overflow: hidden; }
-        .creator-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2); }
-        .creator-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary); }
-        
-        .be-partner { border: 2px dashed var(--gold) !important; background: rgba(255, 204, 0, 0.05) !important; }
-        .be-partner i { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--gold); border: 2px solid var(--gold); border-radius: 50%; }
+        .creator-card { width: 100%; max-width: 320px; background: white; border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text); transition: 0.3s; }
+        .creator-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .creator-img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); }
 
-        footer { text-align: center; padding: 50px; color: var(--primary); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
+        footer { text-align: center; padding: 50px; color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
     </style>
 </head>
 <body onclick="handleFirstInteraction()">
@@ -149,56 +148,51 @@
 <div class="music-widget">
     <i class="fas fa-compact-disc fa-spin" style="color:var(--primary)"></i>
     <div class="music-scroll">
-        <span>SÓ CAPA EM PEAK - @ALISSONNXSS - SÓ CAPA EM PEAK - @ALISSONNXSS</span>
+        <span id="music-display">CARREGANDO PLAYLIST...</span>
     </div>
-    <button onclick="toggleM(event)" style="background:none; border:none; color:white; cursor:pointer;">
-        <i class="fas fa-pause" id="m-icon"></i>
-    </button>
+    <div class="music-controls">
+        <button class="music-btn" onclick="toggleM(event)"><i class="fas fa-pause" id="m-icon"></i></button>
+        <button class="music-btn" onclick="nextM(event)"><i class="fas fa-forward"></i></button>
+    </div>
 </div>
 
 <div class="container" data-aos="fade-up">
     
     <header class="hero-section">
-        <img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg" class="profile-img" data-aos="zoom-in">
+        <img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg" class="profile-img">
         <br>
         <h1 class="tag-alisson">@ALISSONNXSS</h1> 
-        <div class="sub-title">Sistema de Resgate para Seguidores</div>
+        <div class="sub-title">Central de Resgate para Seguidores</div>
         
         <div class="social-grid">
-            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link insta"><i class="fab fa-instagram"></i> INSTAGRAM</a>
-            <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link tt"><i class="fab fa-tiktok"></i> TIKTOK</a>
-            <a href="https://www.youtube.com/@alissonnxss" target="_blank" class="social-link yt"><i class="fab fa-youtube"></i> YOUTUBE</a>
-            <a href="https://discord.gg/JntCCCQK" target="_blank" class="social-link dc"><i class="fab fa-discord"></i> DISCORD</a>
+            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link"><i class="fab fa-instagram" style="color:#E1306C"></i> INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-tiktok"></i> TIKTOK</a>
+            <a href="https://www.youtube.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-youtube" style="color:#FF0000"></i> YOUTUBE</a>
+            <a href="https://discord.gg/JntCCCQK" target="_blank" class="social-link"><i class="fab fa-discord" style="color:#5865F2"></i> DISCORD</a>
         </div>
     </header>
 
     <section class="redeem-window" data-aos="fade-up">
         <div id="step-1">
-            <input type="text" id="codeInput" class="input-hacker" placeholder="INSIRA O CÓDIGO AQUI">
+            <input type="text" id="codeInput" class="input-hacker" placeholder="DIGITE O CÓDIGO AQUI">
             <button class="btn-action" id="btnVerify" onclick="validar()">RESGATAR</button>
         </div>
 
         <div id="step-2" style="display:none;">
-            <h2 style="color: var(--primary); font-family: 'Syncopate';">CÓDIGO BLOQUEADO PARA VOCÊ!</h2>
-            <p style="margin-bottom:15px; font-family:'Share Tech Mono'; color:var(--gold)">Agora finalize seus dados para o histórico.</p>
-            <h3 id="rewardTxt" style="font-size: 1.5rem; margin: 15px 0; color: #fff;"></h3>
+            <h2 style="color: var(--primary); font-family: 'Syncopate';">CÓDIGO RESERVADO!</h2>
+            <h3 id="rewardTxt" style="font-size: 1.5rem; margin: 15px 0; color: var(--secondary);"></h3>
             <input type="text" id="uNick" class="input-hacker" placeholder="SEU NICK">
             <input type="text" id="uID" class="input-hacker" placeholder="SEU ID">
-            <button class="btn-action" style="background:#25d366" onclick="finalizar()">SALVAR NO HISTÓRICO</button>
+            <button class="btn-action" style="background:#2ecc71" onclick="finalizar()">CONCLUIR RESGATE</button>
         </div>
     </section>
 
     <section class="history-section" data-aos="fade-up">
-        <h2 style="font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary);">📜 ÚLTIMOS PREMIADOS</h2>
+        <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary);">📜 ÚLTIMOS 5 PREMIADOS</h2>
         <div style="overflow-x: auto;">
             <table class="history-table">
                 <thead>
-                    <tr>
-                        <th>PLAYER</th>
-                        <th>PRÊMIO</th>
-                        <th>DATA/HORA</th>
-                        <th>STATUS / ID</th>
-                    </tr>
+                    <tr><th>PLAYER</th><th>ITEM</th><th>DATA/HORA</th><th>STATUS / ID</th></tr>
                 </thead>
                 <tbody id="historyBody"></tbody>
             </table>
@@ -210,44 +204,59 @@
         <div class="creators-container">
             <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
-                <div class="creator-info"><h4>ITTALOFF7</h4><span>VER PERFIL OFICIAL</span></div>
+                <div class="creator-info"><h4>ITTALOFF7</h4><span style="font-size:0.7rem; opacity:0.6">VER PERFIL</span></div>
             </a>
             <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
-                <div class="creator-info"><h4>EDUZINSSFF</h4><span>VER PERFIL OFICIAL</span></div>
+                <div class="creator-info"><h4>EDUZINSSFF</h4><span style="font-size:0.7rem; opacity:0.6">VER PERFIL</span></div>
             </a>
-            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="creator-card be-partner">
-                <i class="fas fa-handshake"></i>
-                <div class="creator-info"><h4>SEJA UM PARCEIRO</h4><span style="color:var(--gold)">CHAME NO INSTA</span></div>
+            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="creator-card">
+                <i class="fas fa-handshake" style="font-size:2rem; color:var(--gold); margin-left:15px"></i>
+                <div class="creator-info"><h4>PARCERIA</h4><span style="font-size:0.7rem; color:var(--gold)">CHAME NO INSTA</span></div>
             </a>
         </div>
     </section>
 
 </div>
 
-<footer>DESENVOLVIDO POR @ALISSONNXSS - 2026</footer>
+<footer>Desenvolvido por @alissonnxss</footer>
 
-<audio id="bgAudio" src="FOTOS MEMES/Só Capa em Peak (1).mp3" loop muted></audio>
+<audio id="bgAudio" src="" loop muted></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script>
-    AOS.init({ duration: 1000 });
+    AOS.init();
     const audio = document.getElementById('bgAudio');
     const mIcon = document.getElementById('m-icon');
+    const mDisplay = document.getElementById('music-display');
     const API_URL = "https://resgate-api-node.onrender.com"; 
+
+    /* CONFIGURAÇÃO DA PLAYLIST COM 5 ABAS */
+    const playlist = [
+        { name: "SÓ CAPA EM PEAK - @ALISSONNXSS", src: "FOTOS MEMES/Só Capa em Peak (1).mp3" },
+        { name: "Banda djavu-rubiA", src: "FOTOS MEMES/Banda djavu-rubi(MP3_160K).mp3" },
+        { name: "Banda Magníficos - Verdadeiro Amo", src: "FOTOS MEMES/Banda Magníficos - Verdadeiro Amor(MP3_160K).mp3" },
+        { name: "NATANZINHO LIMA REPERTÓRIO NOVO 2025", src: "FOTOS MEMES/NATANZINHO LIMA REPERTÓRIO NOVO 2025 - CD COMPLETO JUNHO - NATANZINHO LIMA ATUALIZADO(MP3_160K).mp3" },
+        { name: "BARBIE - Mc Tuto", src: "FOTOS MEMES/BARBIE - Mc Tuto.mp3" }
+    ];
+    let currentM = 0;
     let codeGlobal = "", itemGlobal = "";
 
-    function showAlert(title, msg) {
-        document.getElementById('alert-title').innerText = title;
-        document.getElementById('alert-msg').innerText = msg;
-        document.getElementById('custom-alert').classList.add('active');
+    function loadMusic(idx) {
+        audio.src = playlist[idx].src;
+        mDisplay.innerText = playlist[idx].name + " - " + playlist[idx].name;
     }
-    function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
+    loadMusic(0);
 
-    function handleFirstInteraction() {
-        if(audio.muted) { audio.muted = false; audio.play().catch(e => {}); mIcon.className = "fas fa-pause"; }
+    /* FUNÇÃO DE PULAR MÚSICA */
+    function nextM(e) {
+        if(e) e.stopPropagation();
+        currentM = (currentM + 1) % playlist.length;
+        loadMusic(currentM);
+        audio.play();
+        mIcon.className = "fas fa-pause";
     }
 
     function toggleM(e) {
@@ -256,24 +265,34 @@
         else { audio.pause(); mIcon.className = "fas fa-play"; }
     }
 
+    function handleFirstInteraction() {
+        if(audio.muted) { audio.muted = false; audio.play().catch(e => {}); mIcon.className = "fas fa-pause"; }
+    }
+
+    function showAlert(title, msg) {
+        document.getElementById('alert-title').innerText = title;
+        document.getElementById('alert-msg').innerText = msg;
+        document.getElementById('custom-alert').classList.add('active');
+    }
+    function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
+
+    /* CARREGAR HISTÓRICO - LIMITADO AOS 5 ÚLTIMOS */
     async function loadHistory() {
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
             const data = await res.json();
             window.lastHistoryData = data; 
             const body = document.getElementById('historyBody');
-            body.innerHTML = [...data].reverse().slice(0, 10).map(log => {
+            body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
                 const isFinalized = log.user && log.user !== 'RESGATANDO...';
-                return `
-                <tr>
+                return `<tr>
                     <td>${log.user || 'AGUARDANDO...'}</td>
                     <td style="color:var(--primary)">${log.reward}</td>
-                    <td>${log.data}</td>
-                    <td style="color:${isFinalized ? '#25d366' : '#ffcc00'}">
-                        ${isFinalized ? `<i class="fas fa-check-circle"></i> ID: ${log.id}` : '<i class="fas fa-lock"></i> BLOQUEADO'}
+                    <td>${log.data || '--/--/--'}</td>
+                    <td style="color:${isFinalized ? '#2ecc71' : '#f39c12'}">
+                        ${isFinalized ? 'ID: '+log.id : 'PROCESSANDO...'}
                     </td>
-                </tr>
-            `}).join('');
+                </tr>`}).join('');
         } catch(e) {}
     }
 
@@ -281,77 +300,46 @@
         const btn = document.getElementById('btnVerify');
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE UM CÓDIGO.");
-        
-        btn.innerText = "BLOQUEANDO..."; btn.disabled = true;
-        
+        btn.disabled = true;
         try {
-            const res = await fetch(`${API_URL}/api/validate`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ code })
-            });
+            const res = await fetch(`${API_URL}/api/validate`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code }) });
             const data = await res.json();
-            
             if(data.success) {
-                await fetch(`${API_URL}/api/register`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "---" })
-                });
-
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                codeGlobal = code; 
-                itemGlobal = data.reward;
-                
-                showAlert("CONSEGUIU!", `Bloqueado para você! Finalize os dados.`);
+                await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "---" }) });
+                confetti();
+                codeGlobal = code; itemGlobal = data.reward;
                 document.getElementById('step-1').style.display = 'none';
                 document.getElementById('step-2').style.display = 'block';
                 document.getElementById('rewardTxt').innerText = itemGlobal;
                 loadHistory(); 
-            } else { 
-                let ganhador = "Alguém";
-                if(window.lastHistoryData) {
-                    const registro = window.lastHistoryData.find(log => log.code === code);
-                    if(registro && registro.user && registro.user !== "RESGATANDO...") ganhador = registro.user;
-                }
-                showAlert("TARDE DEMAIS", `${ganhador} já resgatou esse código!`); 
-                btn.innerText = "RESGATAR"; btn.disabled = false; 
-            }
-        } catch(e) { 
-            showAlert("ERRO", "CONEXÃO FALHOU."); 
-            btn.innerText = "RESGATAR"; btn.disabled = false; 
-        }
+            } else { showAlert("ERRO", "Código inválido ou já usado!"); btn.disabled = false; }
+        } catch(e) { showAlert("ERRO", "FALHA DE CONEXÃO."); btn.disabled = false; }
     }
 
     async function finalizar() {
         const n = document.getElementById('uNick').value.trim();
         const i = document.getElementById('uID').value.trim();
-        if(!n || !i) return showAlert("DADOS", "PREENCHA NICK E ID.");
+        const agora = new Date();
+        const dataS = agora.toLocaleDateString();
+        const horaS = agora.toLocaleTimeString();
 
-        // TRAVA DE ID ÚNICO: Verifica se o ID já existe no histórico
+        if(!n || !i) return showAlert("DADOS", "PREENCHA TUDO.");
         const jaResgatou = window.lastHistoryData.some(log => log.id === i);
-        if(jaResgatou) {
-            return showAlert("BLOQUEADO", "Este ID já consta no histórico. Apenas um resgate permitido por pessoa para não bagunçar!");
-        }
-        
+        if(jaResgatou) return showAlert("BLOQUEADO", "Este ID já resgatou anteriormente!");
+
         try {
-            await fetch(`${API_URL}/api/register`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ code: codeGlobal, name: n, id: i })
-            });
+            await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: codeGlobal, name: n, id: i }) });
             
-            const text = `🎁 *RESGATE* 🎁\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}`;
-            window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(text)}`);
+            /* ENVIO COMPLETO PARA WHATSAPP SOLICITADO */
+            const msg = `🎁 *NOVO RESGATE CONFIRMADO* 🎁\n\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n⏰ *HORA:* ${horaS}\n📅 *DATA:* ${dataS}\n🎫 *CÓDIGO:* ${codeGlobal}`;
+            window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(msg)}`);
             
-            loadHistory();
-            showAlert("SUCESSO!", "Seu resgate foi registado!");
-            setTimeout(() => { location.reload(); }, 3000);
+            setTimeout(() => { location.reload(); }, 2000);
         } catch(e) { showAlert("ERRO", "FALHA AO SALVAR."); }
     }
 
     loadHistory();
-    setInterval(loadHistory, 15000); 
+    setInterval(loadHistory, 10000); 
 </script>
 </body>
 </html>
