@@ -184,7 +184,7 @@
         <div style="overflow-x: auto;">
             <table class="history-table">
                 <thead>
-                    <tr><th>PLAYER</th><th>ITEM</th><th>DATA/HORA</th><th>STATUS / ID</th></tr>
+                    <tr><th>PLAYER</th><th>ITEM</th><th>DATA/HORA</th><th>ID DO JOGADOR</th></tr>
                 </thead>
                 <tbody id="historyBody"></tbody>
             </table>
@@ -192,7 +192,7 @@
     </section>
 
     <section class="creators-section" data-aos="fade-up">
-        <span class="creators-title">EQUIPE DE PARCEIROS</span>
+        <span class="creators-title">PARCEIROS DO PROJETO</span>
         <div class="creators-container">
             <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
@@ -204,7 +204,7 @@
             </a>
             <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="creator-card">
                 <i class="fas fa-handshake" style="font-size:2rem; color:var(--gold); margin-left:15px"></i>
-                <div class="creator-info"><h4>PARCERIA</h4><span style="font-size:0.7rem; color:var(--gold)">CHAME NO INSTA</span></div>
+                <div class="creator-info"><h4>SEJA UM PARCEIRO</h4><span style="font-size:0.7rem; color:var(--gold)">CHAME NO INSTA</span></div>
             </a>
         </div>
     </section>
@@ -266,20 +266,21 @@
     }
     function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
 
+    /* CARREGA O HISTÓRICO - AGORA MOSTRANDO O ID PREENCHIDO */
     async function loadHistory() {
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
             const data = await res.json();
-            window.lastHistoryData = data; 
             const body = document.getElementById('historyBody');
+            
             body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
-                const isFinalized = log.user && log.user !== 'RESGATANDO...';
+                const processando = log.user === 'RESGATANDO...';
                 return `<tr>
-                    <td>${log.user || 'AGUARDANDO...'}</td>
+                    <td>${processando ? '---' : log.user}</td>
                     <td style="color:var(--primary)">${log.reward}</td>
                     <td>${log.data || '--/--/--'}</td>
-                    <td style="color:${isFinalized ? '#2ecc71' : '#f39c12'}">
-                        ${isFinalized ? 'ID: ' + log.id : 'PROCESSANDO...'}
+                    <td style="color:${processando ? '#f39c12' : '#2ecc71'}; font-weight: bold;">
+                        ${processando ? '⚡ PROCESSANDO...' : log.id}
                     </td>
                 </tr>`}).join('');
         } catch(e) {}
@@ -298,7 +299,9 @@
             const data = await res.json();
 
             if(data.success) {
+                // Registro temporário
                 await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "AGUARDE" }) });
+                
                 confetti();
                 codeGlobal = code; 
                 itemGlobal = data.reward;
@@ -307,15 +310,18 @@
                 document.getElementById('rewardTxt').innerText = itemGlobal;
                 loadHistory(); 
             } else {
-                // VERIFICA SE ALGUÉM JÁ PEGOU E EXIBE O NOME
                 const historyRes = await fetch(`${API_URL}/api/public/history`);
                 const historyData = await historyRes.json();
                 const ganhador = historyData.find(log => log.code === code);
 
                 if(ganhador) {
-                    showAlert("TARDE DEMAIS!", `${ganhador.user} chegou mais rápido e já resgatou esse código! kkkkk`);
+                    if(ganhador.user === "RESGATANDO...") {
+                        showAlert("MUITO LENTO!", "Opa! Outra pessoa já está resgatando este código agora! Seja mais rápido!");
+                    } else {
+                        showAlert("TARDE DEMAIS!", `${ganhador.user} chegou mais rápido e já resgatou esse código! kkkkk`);
+                    }
                 } else {
-                    showAlert("ERRO", "Código inválido ou expirado!");
+                    showAlert("ERRO", "Código inválido ou já usado!");
                 }
                 btn.disabled = false;
                 btn.innerText = "RESGATAR";
@@ -337,6 +343,7 @@
         if(!n || !i) return showAlert("DADOS", "PREENCHA TUDO.");
 
         try {
+            // Aqui enviamos o ID real que o usuário digitou no formulário
             await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: codeGlobal, name: n, id: i }) });
             
             const msg = `🎁 *NOVO RESGATE CONFIRMADO* 🎁\n\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n⏰ *HORA:* ${horaS}\n📅 *DATA:* ${dataS}\n🎫 *CÓDIGO:* ${codeGlobal}`;
@@ -352,7 +359,7 @@
     }
 
     loadHistory();
-    setInterval(loadHistory, 7000); 
+    setInterval(loadHistory, 5000); 
 </script>
 </body>
 </html>
