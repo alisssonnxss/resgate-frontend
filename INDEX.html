@@ -237,7 +237,7 @@
 
     function loadMusic(idx) {
         audio.src = playlist[idx].src;
-        mDisplay.innerText = playlist[idx].name + " - " + playlist[idx].name;
+        mDisplay.innerText = playlist[idx].name; // Corrigido para não repetir o nome
     }
     loadMusic(0);
 
@@ -266,7 +266,7 @@
     }
     function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
 
-    /* CARREGA O HISTÓRICO - AGORA APENAS CONCLUÍDOS */
+    /* CARREGA O HISTÓRICO - COM DATA E HORA DETALHADA */
     async function loadHistory() {
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
@@ -274,16 +274,18 @@
             historyDataGlobal = data;
             const body = document.getElementById('historyBody');
             
-            // Filtra para remover o status temporário do histórico visual
             const concluidos = data.filter(log => log.user !== 'RESGATANDO...');
 
-            body.innerHTML = [...concluidos].reverse().slice(0, 5).map(log => `
+            body.innerHTML = [...concluidos].reverse().slice(0, 5).map(log => {
+                const horaFormatada = log.hora ? log.hora.split(' ')[1] : '--:--';
+                return `
                 <tr>
                     <td>${log.user}</td>
                     <td style="color:var(--primary)">${log.reward}</td>
-                    <td>${log.data || '--/--/--'}</td>
+                    <td>${log.data || '--/--/--'} às ${horaFormatada}</td>
                     <td style="color:#2ecc71; font-weight: bold;">${log.id}</td>
-                </tr>`).join('');
+                </tr>`;
+            }).join('');
         } catch(e) {}
     }
 
@@ -300,7 +302,7 @@
             const data = await res.json();
 
             if(data.success) {
-                // Registro temporário (silencioso no histórico)
+                // Registra estado temporário para evitar que outros peguem enquanto o usuário preenche o form
                 await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "AGUARDE" }) });
                 
                 confetti();
@@ -311,25 +313,25 @@
                 document.getElementById('rewardTxt').innerText = itemGlobal;
                 loadHistory(); 
             } else {
-                // BUSCA QUEM RESGATOU OU SE ESTÃO NO FORMULÁRIO
+                /* BUSCA NO HISTÓRICO QUEM FOI O "ESPERTINHO" */
                 const historyRes = await fetch(`${API_URL}/api/public/history`);
                 const historyData = await historyRes.json();
                 const registro = historyData.find(log => log.code === code);
 
                 if(registro) {
                     if(registro.user === "RESGATANDO...") {
-                        showAlert("OCUPADO", "Opa! Alguém já está no formulário resgatando este código! Seja mais rápido!");
+                        showAlert("OCUPADO", "Opa! Alguém já está resgatando este código neste exato momento!");
                     } else {
-                        showAlert("TARDE DEMAIS!", `${registro.user} chegou mais rápido e já resgatou esse código! kkkkk`);
+                        showAlert("TARDE DEMAIS!", `${registro.user} chegou mais rápido e já levou esse prêmio!`);
                     }
                 } else {
-                    showAlert("ERRO", "Código inválido ou já usado!");
+                    showAlert("ERRO", "Código inválido ou inexistente!");
                 }
                 btn.disabled = false;
                 btn.innerText = "RESGATAR";
             }
         } catch(e) { 
-            showAlert("ERRO", "FALHA DE CONEXÃO."); 
+            showAlert("ERRO", "FALHA DE CONEXÃO COM O SERVIDOR."); 
             btn.disabled = false;
             btn.innerText = "RESGATAR";
         }
@@ -338,33 +340,37 @@
     async function finalizar() {
         const n = document.getElementById('uNick').value.trim();
         const i = document.getElementById('uID').value.trim();
-        const hoje = new Date().toLocaleDateString();
+        const agora = new Date();
+        const hoje = agora.toLocaleDateString('pt-BR');
+        const horaAtual = agora.toLocaleTimeString('pt-BR');
         
-        if(!n || !i) return showAlert("DADOS", "PREENCHA TUDO.");
+        if(!n || !i) return showAlert("DADOS", "POR FAVOR, PREENCHA SEU NICK E ID.");
 
-        // TRAVA: 1 RESGATE POR ID POR DIA
+        // Trava de 1 resgate por ID por dia
         const jaResgatouHoje = historyDataGlobal.some(log => log.id === i && log.data === hoje && log.user !== 'RESGATANDO...');
         if(jaResgatouHoje) {
-            return showAlert("LIMITE DIÁRIO", "Este ID já resgatou um prêmio hoje! Tente novamente amanhã.");
+            return showAlert("LIMITE DIÁRIO", "Você já resgatou um prêmio hoje com este ID! Volte amanhã.");
         }
 
         try {
             await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: codeGlobal, name: n, id: i }) });
             
-            const msg = `🎁 *NOVO RESGATE CONFIRMADO* 🎁\n\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n🎫 *CÓDIGO:* ${codeGlobal}`;
-            showAlert("SUCESSO!", "Resgate concluído! Abrindo WhatsApp...");
+            /* MENSAGEM DETALHADA PARA O WHATSAPP */
+            const msg = `🎁 *RESGATE CONFIRMADO* 🎁\n\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n✨ *PREMIAÇÃO:* ${itemGlobal}\n🎫 *CÓDIGO:* ${codeGlobal}\n📅 *DATA:* ${hoje}\n⏰ *HORA:* ${horaAtual}`;
+            
+            showAlert("SUCESSO!", "Parabéns! Redirecionando para validação no WhatsApp...");
             
             setTimeout(() => { 
-                window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(msg)}`);
+                window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(msg)}`, '_blank');
                 location.reload(); 
             }, 2000);
         } catch(e) { 
-            showAlert("ERRO", "FALHA AO SALVAR."); 
+            showAlert("ERRO", "FALHA AO SALVAR SEUS DADOS."); 
         }
     }
 
     loadHistory();
-    setInterval(loadHistory, 5000); 
+    setInterval(loadHistory, 5000); // Atualiza o histórico a cada 5 segundos
 </script>
 </body>
 </html>
