@@ -32,7 +32,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* BANNER DE SOM */
         #unmute-banner {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             background: var(--accent); color: white; padding: 12px 30px;
@@ -44,7 +43,6 @@
 
         @keyframes pulseBanner { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.1); } }
 
-        /* HEADER */
         .hero-section {
             text-align: center; padding: 40px 20px; background: var(--glass);
             border: 1px solid var(--border); border-radius: 30px;
@@ -52,24 +50,26 @@
         }
 
         .profile-img {
-            width: 140px; height: 140px; border-radius: 50%;
+            width: 120px; height: 120px; border-radius: 50%;
             border: 4px solid var(--primary); padding: 5px;
             box-shadow: 0 0 20px var(--primary); margin-bottom: 15px;
         }
 
+        /* AJUSTE RESPONSIVO DO NOME @ALISSONNXSS */
         .tag-alisson {
-            font-family: 'Syncopate', sans-serif; font-size: 2.2rem;
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.2rem, 8vw, 2.2rem); /* Diminui no celular, aumenta no PC */
             background: linear-gradient(90deg, #00f2ff, #bc13fe);
             -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; display: inline-block;
+            -webkit-text-fill-color: transparent; 
+            display: inline-block;
+            white-space: nowrap; /* Impede que o nome quebre em duas linhas */
         }
 
-        /* REDES SOCIAIS TOPO */
         .top-socials { display: flex; justify-content: center; gap: 20px; margin-top: 15px; }
         .top-socials a { color: #fff; font-size: 1.5rem; transition: 0.3s; opacity: 0.7; }
         .top-socials a:hover { color: var(--primary); opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px var(--primary); }
 
-        /* JANELA DE RESGATE */
         .redeem-window {
             background: var(--glass); border: 2px solid var(--primary);
             border-radius: 25px; padding: 40px 20px; text-align: center;
@@ -80,42 +80,51 @@
             width: 100%; max-width: 500px; padding: 18px; background: rgba(0,0,0,0.8);
             border: 2px solid var(--border); border-radius: 12px;
             color: var(--primary); font-family: 'Share Tech Mono';
-            font-size: 1.2rem; text-align: center; margin-bottom: 15px;
+            font-size: 1.1rem; text-align: center; margin-bottom: 15px;
         }
 
         .btn-action {
             width: 100%; max-width: 500px; padding: 18px; border: none; border-radius: 12px;
             background: linear-gradient(45deg, var(--secondary), var(--primary));
-            color: #fff; font-family: 'Syncopate'; font-size: 0.9rem; cursor: pointer;
+            color: #fff; font-family: 'Syncopate'; font-size: 0.8rem; cursor: pointer;
             transition: 0.4s;
         }
         .btn-action:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--primary); }
 
-        /* AMIGOS */
+        .history-section {
+            margin-top: 50px; background: var(--glass);
+            border: 1px solid var(--border); border-radius: 25px;
+            padding: 25px 15px; text-align: center;
+        }
+        .history-table {
+            width: 100%; border-collapse: collapse; margin-top: 20px;
+            font-family: 'Share Tech Mono'; color: #fff; font-size: 0.8rem;
+        }
+        .history-table th { color: var(--primary); padding: 10px; border-bottom: 2px solid var(--border); }
+        .history-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
         .creators-section {
             text-align: center; margin-top: 50px; padding: 30px;
             background: rgba(255, 255, 255, 0.02); border-radius: 30px;
         }
-        .creators-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 20px; }
+        .creators-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
         .creator-card {
-            background: var(--glass); border: 1px solid var(--border); padding: 10px;
-            border-radius: 50px 15px 15px 50px; display: flex; align-items: center; gap: 15px;
+            background: var(--glass); border: 1px solid var(--border); padding: 8px;
+            border-radius: 50px 15px 15px 50px; display: flex; align-items: center; gap: 10px;
             text-decoration: none; color: white; transition: 0.3s;
         }
-        .creator-card:hover { transform: translateX(10px); background: rgba(0, 242, 255, 0.1); }
-        .creator-img { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
+        .creator-img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
 
-        /* WIDGET MUSICA */
         .music-widget {
-            position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.9);
-            border: 1px solid var(--primary); padding: 10px 15px; border-radius: 50px;
-            display: flex; align-items: center; gap: 12px; z-index: 1000;
+            position: fixed; top: 15px; right: 15px; background: rgba(0,0,0,0.9);
+            border: 1px solid var(--primary); padding: 8px 12px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px; z-index: 1000;
         }
 
         footer {
             text-align: center; padding: 40px; color: var(--primary);
-            font-family: 'Share Tech Mono'; font-size: 0.9rem;
-            letter-spacing: 2px; text-shadow: 0 0 5px var(--primary);
+            font-family: 'Share Tech Mono'; font-size: 0.7rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -125,23 +134,20 @@
 
 <div class="music-widget">
     <i class="fas fa-compact-disc fa-spin" style="color:var(--primary)"></i>
-    <div class="playing-info">
-        <span class="m-title" style="font-size: 0.7rem; font-family: 'Share Tech Mono';">SÓ CAPA EM PEAK</span>
-    </div>
-    <button onclick="toggleM(event)" style="background:none; border:none; color:white; cursor:pointer; font-size: 1.2rem;">
+    <button onclick="toggleM(event)" style="background:none; border:none; color:white; cursor:pointer; font-size: 1rem;">
         <i class="fas fa-pause" id="m-icon"></i>
     </button>
 </div>
 
 <div class="container" data-aos="fade-up">
+    
     <header class="hero-section">
         <img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg" class="profile-img" data-aos="zoom-in">
         <br>
-        <h1 class="tag-alisson">@ALISSONNXSS</h1>
-        <p style="margin-top:10px; letter-spacing: 2px; color: #888; font-family: 'Share Tech Mono';">SITE OFICIAL DE RESGATE PARA SEGUIDORES</p>
+        <h1 class="tag-alisson">@ALISSONNXSS</h1> <p style="margin-top:10px; font-size: 0.8rem; color: #888; font-family: 'Share Tech Mono';">SITE OFICIAL DE RESGATE</p>
         
         <div class="top-socials">
-            <a href="https://www.instagram.com/alissonnxss/?__pwa=1" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/alissonnxss/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tiktok.com/@alissonnxss" target="_blank"><i class="fab fa-tiktok"></i></a>
             <a href="https://www.youtube.com/@alissonnxss" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://discord.gg/JntCCCQK" target="_blank"><i class="fab fa-discord"></i></a>
@@ -156,30 +162,48 @@
         </div>
 
         <div id="step-2" style="display:none;">
-            <h2 style="color: var(--primary); font-family: 'Syncopate';">SUCESSO! 🎉</h2>
-            <h3 id="rewardTxt" style="font-size: 1.5rem; margin: 15px 0; color: var(--primary);"></h3>
+            <h2 style="color: var(--primary); font-family: 'Syncopate'; font-size: 1.2rem;">SUCESSO! 🎉</h2>
+            <h3 id="rewardTxt" style="font-size: 1.3rem; margin: 15px 0; color: var(--primary);"></h3>
             <input type="text" id="uNick" class="input-hacker" placeholder="SEU NICK">
             <input type="text" id="uID" class="input-hacker" placeholder="SEU ID">
             <button class="btn-action" style="background:#25d366" onclick="finalizar()">WHATSAPP</button>
         </div>
     </section>
 
+    <section class="history-section" data-aos="fade-up">
+        <h2 style="font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary);">📜 ÚLTIMOS RESGATES</h2>
+        <div style="overflow-x: auto;">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>JOGADOR</th>
+                        <th>ITEM</th>
+                        <th>DATA</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+    </section>
+
     <section class="creators-section" data-aos="fade-up">
-        <h2 style="font-family: 'Syncopate'; font-size: 1rem; color: var(--primary);">AMIGOS & PARCEIROS</h2>
+        <h2 style="font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary);">PARCEIROS DO PROJETO</h2>
         <div class="creators-grid">
             <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
-                <span style="font-size: 0.8rem; font-family: 'Syncopate';">ITTALOFF7</span>
+                <span style="font-size: 0.7rem; font-family: 'Syncopate';">ITTALOFF7</span>
             </a>
             <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
-                <span style="font-size: 0.8rem; font-family: 'Syncopate';">EDUZINSSFF</span>
+                <span style="font-size: 0.7rem; font-family: 'Syncopate';">EDUZINSSFF</span>
             </a>
         </div>
     </section>
+
 </div>
 
-<footer>DESENVOLVIDO E PROGRAMADO POR @ALISSONNXSS</footer>
+<footer>@ALISSONNXSS</footer>
 
 <audio id="bgAudio" src="FOTOS MEMES/Só Capa em Peak (1).mp3" loop muted></audio>
 
@@ -196,10 +220,8 @@
 
     function handleFirstInteraction() {
         if(audio.muted) { 
-            audio.muted = false; 
-            audio.play().catch(e => console.log("Erro no audio:", e)); 
-            mIcon.className = "fas fa-pause"; 
-            banner.style.display = 'none'; 
+            audio.muted = false; audio.play().catch(e => console.log(e)); 
+            mIcon.className = "fas fa-pause"; banner.style.display = 'none'; 
         }
     }
 
@@ -209,15 +231,27 @@
         else { audio.pause(); mIcon.className = "fas fa-play"; }
     }
 
+    async function loadHistory() {
+        try {
+            const res = await fetch(`${API_URL}/api/public/history`);
+            const data = await res.json();
+            const body = document.getElementById('historyBody');
+            body.innerHTML = data.map(log => `
+                <tr>
+                    <td>${log.user}</td>
+                    <td>${log.reward}</td>
+                    <td>${log.data.split(',')[0]}</td>
+                    <td style="color:#25d366">OK ✅</td>
+                </tr>
+            `).join('');
+        } catch(e) {}
+    }
+
     async function validar() {
         const btn = document.getElementById('btnVerify');
-        const codeInput = document.getElementById('codeInput');
-        const code = codeInput.value.trim().toUpperCase();
-        
-        if(!code) return alert("Por favor, digite um código!");
-
-        btn.innerText = "PROCESSANDO...";
-        btn.disabled = true;
+        const code = document.getElementById('codeInput').value.trim().toUpperCase();
+        if(!code) return alert("Digite o código!");
+        btn.innerText = "VALIDANDO..."; btn.disabled = true;
         
         try {
             const res = await fetch(`${API_URL}/api/validate`, {
@@ -225,48 +259,35 @@
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ code })
             });
-
             const data = await res.json();
-            
             if(data.success) {
-                confetti({ particleCount: 150, spread: 70, colors: ['#00f2ff', '#bc13fe'] });
-                codeGlobal = code; 
-                itemGlobal = data.reward;
+                confetti({ particleCount: 100 });
+                codeGlobal = code; itemGlobal = data.reward;
                 document.getElementById('step-1').style.display = 'none';
                 document.getElementById('step-2').style.display = 'block';
                 document.getElementById('rewardTxt').innerText = itemGlobal;
-            } else { 
-                alert(data.message || "CÓDIGO INVÁLIDO OU JÁ RESGATADO!"); 
-                btn.innerText = "RESGATAR";
-                btn.disabled = false;
-            }
-        } catch(e) { 
-            console.error(e);
-            alert("ERRO: O SERVIDOR ESTÁ ACORDANDO. TENTE NOVAMENTE EM ALGUNS SEGUNDOS!"); 
-            btn.innerText = "RESGATAR";
-            btn.disabled = false;
-        }
+            } else { alert(data.message); btn.innerText = "RESGATAR"; btn.disabled = false; }
+        } catch(e) { alert("SERVIDOR ACORDANDO... TENTE NOVAMENTE!"); btn.innerText = "RESGATAR"; btn.disabled = false; }
     }
 
     async function finalizar() {
         const n = document.getElementById('uNick').value.trim();
         const i = document.getElementById('uID').value.trim();
-        if(!n || !i) return alert("Preencha Nick e ID!");
-
+        if(!n || !i) return alert("Preencha os dados!");
         try {
             await fetch(`${API_URL}/api/register`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ code: codeGlobal, name: n, id: i })
             });
-
-            const text = `🔥 *RESGATE CONCLUÍDO* 🔥\n\n🎁 *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n🎫 *CODE:* ${codeGlobal}`;
+            const text = `🔥 *RESGATE* 🔥\n🎁 *ITEM:* ${itemGlobal}\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n🎫 *CODE:* ${codeGlobal}`;
             window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(text)}`);
-        } catch(e) {
-            alert("Erro ao registrar resgate, mas você pode avisar no WhatsApp!");
-            window.open(`https://wa.me/5538999021700?text=ERRO NO REGISTRO - CODE: ${codeGlobal}`);
-        }
+            loadHistory();
+        } catch(e) { alert("Erro ao registrar!"); }
     }
+
+    loadHistory();
+    setInterval(loadHistory, 30000);
 </script>
 </body>
 </html>
