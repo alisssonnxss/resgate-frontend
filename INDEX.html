@@ -197,7 +197,7 @@
                         <th>PLAYER</th>
                         <th>PRÊMIO</th>
                         <th>DATA/HORA</th>
-                        <th>STATUS</th>
+                        <th>STATUS / ID</th>
                     </tr>
                 </thead>
                 <tbody id="historyBody"></tbody>
@@ -260,15 +260,20 @@
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
             const data = await res.json();
+            window.lastHistoryData = data; 
             const body = document.getElementById('historyBody');
-            body.innerHTML = [...data].reverse().slice(0, 10).map(log => `
+            body.innerHTML = [...data].reverse().slice(0, 10).map(log => {
+                const isFinalized = log.user && log.user !== 'RESGATANDO...';
+                return `
                 <tr>
                     <td>${log.user || 'AGUARDANDO...'}</td>
                     <td style="color:var(--primary)">${log.reward}</td>
                     <td>${log.data}</td>
-                    <td style="color:${log.user ? '#25d366' : '#ffcc00'}">${log.user ? 'ENTREGUE ✅' : 'BLOQUEADO 🔒'}</td>
+                    <td style="color:${isFinalized ? '#25d366' : '#ffcc00'}">
+                        ${isFinalized ? `<i class="fas fa-check-circle"></i> ID: ${log.id}` : '<i class="fas fa-lock"></i> BLOQUEADO'}
+                    </td>
                 </tr>
-            `).join('');
+            `}).join('');
         } catch(e) {}
     }
 
@@ -277,10 +282,9 @@
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE UM CÓDIGO.");
         
-        btn.innerText = "BLOQUEANDO CÓDIGO..."; btn.disabled = true;
+        btn.innerText = "BLOQUEANDO..."; btn.disabled = true;
         
         try {
-            // BLOQUEIO INSTANTÂNEO: O servidor já valida e "queima" o código na hora
             const res = await fetch(`${API_URL}/api/validate`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -289,7 +293,6 @@
             const data = await res.json();
             
             if(data.success) {
-                // Registro temporário para que o código já apareça como "USADO" no histórico
                 await fetch(`${API_URL}/api/register`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -300,17 +303,22 @@
                 codeGlobal = code; 
                 itemGlobal = data.reward;
                 
-                showAlert("CONSEGUIU!", `O código foi bloqueado para você! Finalize os dados.`);
+                showAlert("CONSEGUIU!", `Bloqueado para você! Finalize os dados.`);
                 document.getElementById('step-1').style.display = 'none';
                 document.getElementById('step-2').style.display = 'block';
                 document.getElementById('rewardTxt').innerText = itemGlobal;
                 loadHistory(); 
             } else { 
-                showAlert("TARDE DEMAIS", "Alguém foi mais rápido e já levou esse!"); 
+                let ganhador = "Alguém";
+                if(window.lastHistoryData) {
+                    const registro = window.lastHistoryData.find(log => log.code === code);
+                    if(registro && registro.user && registro.user !== "RESGATANDO...") ganhador = registro.user;
+                }
+                showAlert("TARDE DEMAIS", `${ganhador} já resgatou esse código!`); 
                 btn.innerText = "RESGATAR"; btn.disabled = false; 
             }
         } catch(e) { 
-            showAlert("ERRO", "CONEXÃO FALHOU. TENTE NOVAMENTE."); 
+            showAlert("ERRO", "CONEXÃO FALHOU."); 
             btn.innerText = "RESGATAR"; btn.disabled = false; 
         }
     }
@@ -319,24 +327,31 @@
         const n = document.getElementById('uNick').value.trim();
         const i = document.getElementById('uID').value.trim();
         if(!n || !i) return showAlert("DADOS", "PREENCHA NICK E ID.");
+
+        // TRAVA DE ID ÚNICO: Verifica se o ID já existe no histórico
+        const jaResgatou = window.lastHistoryData.some(log => log.id === i);
+        if(jaResgatou) {
+            return showAlert("BLOQUEADO", "Este ID já consta no histórico. Apenas um resgate permitido por pessoa para não bagunçar!");
+        }
         
         try {
-            // Sobrescreve o registro temporário com os seus dados reais
             await fetch(`${API_URL}/api/register`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ code: codeGlobal, name: n, id: i })
             });
             
-            const text = `🎁 *RESGATE SEGUIDOR* 🎁\n\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n🎫 *CÓDIGO:* ${codeGlobal}\n✨ *ITEM:* ${itemGlobal}`;
+            const text = `🎁 *RESGATE* 🎁\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n✨ *ITEM:* ${itemGlobal}`;
             window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(text)}`);
+            
             loadHistory();
-            showAlert("SALVO!", "Dados enviados ao histórico!");
-        } catch(e) { showAlert("ERRO", "FALHA AO SALVAR DADOS."); }
+            showAlert("SUCESSO!", "Seu resgate foi registado!");
+            setTimeout(() => { location.reload(); }, 3000);
+        } catch(e) { showAlert("ERRO", "FALHA AO SALVAR."); }
     }
 
     loadHistory();
-    setInterval(loadHistory, 30000);
+    setInterval(loadHistory, 15000); 
 </script>
 </body>
 </html>
