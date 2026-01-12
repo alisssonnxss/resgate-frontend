@@ -45,7 +45,7 @@
         #custom-alert h2 { font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 15px; color: var(--primary); }
         .close-alert { background: var(--primary); color: #000; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Syncopate'; font-size: 0.6rem; }
 
-        /* MÚSICA RODANDO */
+        /* MÚSICA */
         .music-widget {
             position: fixed; top: 15px; right: 15px; background: rgba(0,0,0,0.9);
             border: 1px solid var(--primary); padding: 8px 12px; border-radius: 50px;
@@ -111,58 +111,29 @@
         }
         .btn-action:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--primary); }
 
-        /* SEÇÃO PARCEIROS ULTRA ESTILIZADA */
+        /* TABELA DE HISTÓRICO VOLTOU! */
+        .history-section {
+            margin-top: 40px; background: var(--glass); border: 1px solid var(--border);
+            border-radius: 25px; padding: 25px 15px; text-align: center;
+        }
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Share Tech Mono'; font-size: 0.8rem; }
+        .history-table th { color: var(--primary); padding: 10px; border-bottom: 2px solid var(--border); }
+        .history-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* PARCEIROS */
         .creators-section {
-            margin-top: 60px; padding: 40px 20px;
+            margin-top: 40px; padding: 40px 20px;
             background: rgba(0,0,0,0.3); border-radius: 40px; border: 1px solid var(--border);
             text-align: center;
         }
-        .creators-title {
-            font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary);
-            margin-bottom: 30px; display: block; letter-spacing: 3px;
-        }
-        .creators-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px; justify-items: center;
-        }
-        .creator-card {
-            width: 100%; max-width: 320px; background: var(--glass);
-            border: 1px solid var(--border); border-radius: 20px;
-            padding: 20px; display: flex; align-items: center; gap: 15px;
-            text-decoration: none; color: #fff; transition: 0.5s;
-            position: relative; overflow: hidden;
-        }
-        .creator-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: 0.5s;
-        }
-        .creator-card:hover::before { left: 100%; }
-        .creator-card:hover {
-            transform: translateY(-10px); border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2);
-            background: rgba(255,255,255,0.08);
-        }
-        .creator-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 10px var(--primary); }
-        .creator-info h4 { font-family: 'Syncopate'; font-size: 0.7rem; margin-bottom: 5px; color: #fff; }
-        .creator-info span { font-family: 'Share Tech Mono'; font-size: 0.7rem; color: var(--primary); }
-
-        /* CARD SEJA UM PARCEIRO */
-        .be-partner {
-            border: 2px dashed var(--gold) !important;
-            background: rgba(255, 204, 0, 0.05) !important;
-        }
-        .be-partner:hover {
-            border-style: solid !important;
-            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.2) !important;
-            background: rgba(255, 204, 0, 0.1) !important;
-        }
-        .be-partner i {
-            width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; color: var(--gold); border: 2px solid var(--gold); border-radius: 50%;
-        }
-        .be-partner .creator-info h4 { color: var(--gold); }
-        .be-partner .creator-info span { color: #fff; }
+        .creators-title { font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary); margin-bottom: 30px; display: block; }
+        .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-items: center; }
+        .creator-card { width: 100%; max-width: 320px; background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff; transition: 0.5s; position: relative; overflow: hidden; }
+        .creator-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2); }
+        .creator-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--primary); }
+        
+        .be-partner { border: 2px dashed var(--gold) !important; background: rgba(255, 204, 0, 0.05) !important; }
+        .be-partner i { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--gold); border: 2px solid var(--gold); border-radius: 50%; }
 
         footer { text-align: center; padding: 50px; color: var(--primary); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
     </style>
@@ -194,18 +165,10 @@
         <div class="sub-title">Sistema de Resgate para Seguidores</div>
         
         <div class="social-grid">
-            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link insta">
-                <i class="fab fa-instagram"></i> INSTAGRAM
-            </a>
-            <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link tt">
-                <i class="fab fa-tiktok"></i> TIKTOK
-            </a>
-            <a href="https://www.youtube.com/@alissonnxss" target="_blank" class="social-link yt">
-                <i class="fab fa-youtube"></i> YOUTUBE
-            </a>
-            <a href="https://discord.gg/JntCCCQK" target="_blank" class="social-link dc">
-                <i class="fab fa-discord"></i> DISCORD
-            </a>
+            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link insta"><i class="fab fa-instagram"></i> INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link tt"><i class="fab fa-tiktok"></i> TIKTOK</a>
+            <a href="https://www.youtube.com/@alissonnxss" target="_blank" class="social-link yt"><i class="fab fa-youtube"></i> YOUTUBE</a>
+            <a href="https://discord.gg/JntCCCQK" target="_blank" class="social-link dc"><i class="fab fa-discord"></i> DISCORD</a>
         </div>
     </header>
 
@@ -224,31 +187,37 @@
         </div>
     </section>
 
+    <section class="history-section" data-aos="fade-up">
+        <h2 style="font-family: 'Syncopate'; font-size: 0.8rem; color: var(--primary);">📜 ÚLTIMOS PREMIADOS</h2>
+        <div style="overflow-x: auto;">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>PLAYER</th>
+                        <th>PRÊMIO</th>
+                        <th>DATA/HORA</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+    </section>
+
     <section class="creators-section" data-aos="fade-up">
-        <span class="creators-title">PARCEIROS DO PROJETO</span>
+        <span class="creators-title">EQUIPE DE PARCEIROS</span>
         <div class="creators-container">
             <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
-                <div class="creator-info">
-                    <h4>ITTALOFF7</h4>
-                    <span>VER PERFIL</span>
-                </div>
+                <div class="creator-info"><h4>ITTALOFF7</h4><span>VER PERFIL OFICIAL</span></div>
             </a>
-
             <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
                 <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
-                <div class="creator-info">
-                    <h4>EDUZINSSFF</h4>
-                    <span>VER PERFIL</span>
-                </div>
+                <div class="creator-info"><h4>EDUZINSSFF</h4><span>VER PERFIL OFICIAL</span></div>
             </a>
-
             <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="creator-card be-partner">
                 <i class="fas fa-handshake"></i>
-                <div class="creator-info">
-                    <h4>SEJA UM PARCEIRO</h4>
-                    <span>CHAME NO INSTAGRAM</span>
-                </div>
+                <div class="creator-info"><h4>SEJA UM PARCEIRO</h4><span style="color:var(--gold)">CHAME NO INSTA</span></div>
             </a>
         </div>
     </section>
@@ -277,10 +246,7 @@
     function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
 
     function handleFirstInteraction() {
-        if(audio.muted) { 
-            audio.muted = false; audio.play().catch(e => {}); 
-            mIcon.className = "fas fa-pause"; 
-        }
+        if(audio.muted) { audio.muted = false; audio.play().catch(e => {}); mIcon.className = "fas fa-pause"; }
     }
 
     function toggleM(e) {
@@ -289,12 +255,27 @@
         else { audio.pause(); mIcon.className = "fas fa-play"; }
     }
 
+    async function loadHistory() {
+        try {
+            const res = await fetch(`${API_URL}/api/public/history`);
+            const data = await res.json();
+            const body = document.getElementById('historyBody');
+            body.innerHTML = [...data].reverse().slice(0, 10).map(log => `
+                <tr>
+                    <td>${log.user}</td>
+                    <td style="color:var(--primary)">${log.reward}</td>
+                    <td>${log.data}</td>
+                    <td style="color:#25d366">ENTREGUE ✅</td>
+                </tr>
+            `).join('');
+        } catch(e) {}
+    }
+
     async function validar() {
         const btn = document.getElementById('btnVerify');
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE UM CÓDIGO.");
         btn.innerText = "VALIDANDO..."; btn.disabled = true;
-        
         try {
             const res = await fetch(`${API_URL}/api/validate`, {
                 method: 'POST',
@@ -304,8 +285,7 @@
             const data = await res.json();
             if(data.success) {
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                codeGlobal = code; 
-                itemGlobal = data.reward;
+                codeGlobal = code; itemGlobal = data.reward;
                 showAlert("PARABÉNS!", `VOCÊ RESGATOU: ${itemGlobal}`);
                 document.getElementById('step-1').style.display = 'none';
                 document.getElementById('step-2').style.display = 'block';
@@ -314,10 +294,7 @@
                 showAlert("CÓDIGO JÁ USADO", data.message); 
                 btn.innerText = "RESGATAR"; btn.disabled = false; 
             }
-        } catch(e) { 
-            showAlert("ERRO", "SERVIDOR REINICIANDO..."); 
-            btn.innerText = "RESGATAR"; btn.disabled = false; 
-        }
+        } catch(e) { showAlert("ERRO", "SERVIDOR REINICIANDO..."); btn.innerText = "RESGATAR"; btn.disabled = false; }
     }
 
     async function finalizar() {
@@ -332,8 +309,12 @@
             });
             const text = `🎁 *RESGATE SEGUIDOR* 🎁\n\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n🎫 *CÓDIGO:* ${codeGlobal}\n✨ *ITEM:* ${itemGlobal}`;
             window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(text)}`);
+            loadHistory();
         } catch(e) { showAlert("ERRO", "FALHA NO REGISTRO."); }
     }
+
+    loadHistory();
+    setInterval(loadHistory, 30000);
 </script>
 </body>
 </html>
