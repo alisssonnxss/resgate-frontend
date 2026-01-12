@@ -111,7 +111,7 @@
         }
         .btn-action:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--primary); }
 
-        /* TABELA DE HISTÓRICO VOLTOU! */
+        /* TABELA DE HISTÓRICO */
         .history-section {
             margin-top: 40px; background: var(--glass); border: 1px solid var(--border);
             border-radius: 25px; padding: 25px 15px; text-align: center;
@@ -179,11 +179,12 @@
         </div>
 
         <div id="step-2" style="display:none;">
-            <h2 style="color: var(--primary); font-family: 'Syncopate';">RESGATE DISPONÍVEL!</h2>
+            <h2 style="color: var(--primary); font-family: 'Syncopate';">CÓDIGO BLOQUEADO PARA VOCÊ!</h2>
+            <p style="margin-bottom:15px; font-family:'Share Tech Mono'; color:var(--gold)">Agora finalize seus dados para o histórico.</p>
             <h3 id="rewardTxt" style="font-size: 1.5rem; margin: 15px 0; color: #fff;"></h3>
             <input type="text" id="uNick" class="input-hacker" placeholder="SEU NICK">
             <input type="text" id="uID" class="input-hacker" placeholder="SEU ID">
-            <button class="btn-action" style="background:#25d366" onclick="finalizar()">RECEBER PREMIAÇÃO</button>
+            <button class="btn-action" style="background:#25d366" onclick="finalizar()">SALVAR NO HISTÓRICO</button>
         </div>
     </section>
 
@@ -262,10 +263,10 @@
             const body = document.getElementById('historyBody');
             body.innerHTML = [...data].reverse().slice(0, 10).map(log => `
                 <tr>
-                    <td>${log.user}</td>
+                    <td>${log.user || 'AGUARDANDO...'}</td>
                     <td style="color:var(--primary)">${log.reward}</td>
                     <td>${log.data}</td>
-                    <td style="color:#25d366">ENTREGUE ✅</td>
+                    <td style="color:${log.user ? '#25d366' : '#ffcc00'}">${log.user ? 'ENTREGUE ✅' : 'BLOQUEADO 🔒'}</td>
                 </tr>
             `).join('');
         } catch(e) {}
@@ -275,42 +276,63 @@
         const btn = document.getElementById('btnVerify');
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE UM CÓDIGO.");
-        btn.innerText = "VALIDANDO..."; btn.disabled = true;
+        
+        btn.innerText = "BLOQUEANDO CÓDIGO..."; btn.disabled = true;
+        
         try {
+            // BLOQUEIO INSTANTÂNEO: O servidor já valida e "queima" o código na hora
             const res = await fetch(`${API_URL}/api/validate`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ code })
             });
             const data = await res.json();
+            
             if(data.success) {
+                // Registro temporário para que o código já apareça como "USADO" no histórico
+                await fetch(`${API_URL}/api/register`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "---" })
+                });
+
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                codeGlobal = code; itemGlobal = data.reward;
-                showAlert("PARABÉNS!", `VOCÊ RESGATOU: ${itemGlobal}`);
+                codeGlobal = code; 
+                itemGlobal = data.reward;
+                
+                showAlert("CONSEGUIU!", `O código foi bloqueado para você! Finalize os dados.`);
                 document.getElementById('step-1').style.display = 'none';
                 document.getElementById('step-2').style.display = 'block';
                 document.getElementById('rewardTxt').innerText = itemGlobal;
+                loadHistory(); 
             } else { 
-                showAlert("CÓDIGO JÁ USADO", data.message); 
+                showAlert("TARDE DEMAIS", "Alguém foi mais rápido e já levou esse!"); 
                 btn.innerText = "RESGATAR"; btn.disabled = false; 
             }
-        } catch(e) { showAlert("ERRO", "SERVIDOR REINICIANDO..."); btn.innerText = "RESGATAR"; btn.disabled = false; }
+        } catch(e) { 
+            showAlert("ERRO", "CONEXÃO FALHOU. TENTE NOVAMENTE."); 
+            btn.innerText = "RESGATAR"; btn.disabled = false; 
+        }
     }
 
     async function finalizar() {
         const n = document.getElementById('uNick').value.trim();
         const i = document.getElementById('uID').value.trim();
         if(!n || !i) return showAlert("DADOS", "PREENCHA NICK E ID.");
+        
         try {
+            // Sobrescreve o registro temporário com os seus dados reais
             await fetch(`${API_URL}/api/register`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ code: codeGlobal, name: n, id: i })
             });
+            
             const text = `🎁 *RESGATE SEGUIDOR* 🎁\n\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n🎫 *CÓDIGO:* ${codeGlobal}\n✨ *ITEM:* ${itemGlobal}`;
             window.open(`https://wa.me/5538999021700?text=${encodeURIComponent(text)}`);
             loadHistory();
-        } catch(e) { showAlert("ERRO", "FALHA NO REGISTRO."); }
+            showAlert("SALVO!", "Dados enviados ao histórico!");
+        } catch(e) { showAlert("ERRO", "FALHA AO SALVAR DADOS."); }
     }
 
     loadHistory();
