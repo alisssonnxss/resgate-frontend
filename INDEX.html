@@ -72,7 +72,6 @@
         .tag-alisson { font-family: 'Syncopate', sans-serif; font-size: clamp(1.2rem, 8vw, 2.2rem); background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
         .sub-title { margin-top: 10px; font-size: 0.9rem; color: var(--text); opacity: 0.7; font-family: 'Share Tech Mono'; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Frase Carnaval */
         .carnaval-text { margin-top: 8px; font-family: 'Syncopate'; font-size: 0.65rem; color: var(--accent); font-weight: bold; }
 
         .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
@@ -96,7 +95,6 @@
         }
         .btn-action:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        /* Login Footer */
         .login-footer-container { display: flex; justify-content: flex-end; max-width: 500px; margin: 10px auto; }
         .btn-login-small { background: var(--text); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-family: 'Syncopate'; font-size: 0.55rem; cursor: pointer; opacity: 0.7; }
 
@@ -107,6 +105,16 @@
         .creator-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
         .creator-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--primary); }
         .creator-img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); }
+        
+        /* Texto Ver Perfil */
+        .ver-perfil-txt { 
+            font-size: 0.7rem; 
+            color: var(--primary); 
+            font-family: 'Syncopate'; 
+            display: block; 
+            margin-top: 3px;
+            font-weight: bold;
+        }
 
         footer { text-align: center; padding: 50px; color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
     </style>
@@ -175,16 +183,40 @@
 
     <div class="creators-container">
         <a href="https://www.tiktok.com/@yellowtv01" target="_blank" class="creator-card">
-            <img src="AMARELADO.jpeg" class="creator-img"><div><h4>yellowtv01</h4></div>
+            <img src="AMARELADO.jpeg" class="creator-img">
+            <div>
+                <h4>yellowtv01</h4>
+                <span class="ver-perfil-txt">VER PERFIL</span>
+            </div>
         </a>
         <a href="https://www.tiktok.com/@titanffofc" target="_blank" class="creator-card">
-            <img src="FOTOS MEMES/titan.jpeg" class="creator-img"><div><h4>titanffofc</h4></div>
+            <img src="FOTOS MEMES/titan.jpeg" class="creator-img">
+            <div>
+                <h4>titanffofc</h4>
+                <span class="ver-perfil-txt">VER PERFIL</span>
+            </div>
         </a>
         <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
-            <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img"><div><h4>ITTALOFF7</h4></div>
+            <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
+            <div>
+                <h4>ITTALOFF7</h4>
+                <span class="ver-perfil-txt">VER PERFIL</span>
+            </div>
         </a>
         <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
-            <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img"><div><h4>EDUZINSSFF</h4></div>
+            <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
+            <div>
+                <h4>EDUZINSSFF</h4>
+                <span class="ver-perfil-txt">VER PERFIL</span>
+            </div>
+        </a>
+
+        <a href="mailto:contatoalissonnxss@gmail.com" class="creator-card">
+            <i class="fas fa-handshake" style="font-size:2.5rem; color:var(--gold); margin-left:10px"></i>
+            <div>
+                <h4 style="color:var(--gold)">SEJA UM PARCEIRO</h4>
+                <span class="ver-perfil-txt" style="color:var(--gold)">ENVIAR E-MAIL</span>
+            </div>
         </a>
     </div>
 </div>
@@ -270,7 +302,6 @@
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE O CÓDIGO.");
 
-        // VERIFICA SE O CÓDIGO JÁ FOI USADO (NOVIDADE)
         const usadoPor = historyDataGlobal.find(log => log.code === code);
         if(usadoPor) {
             return showAlert("JÁ RESGATADO", `ESSE CÓDIGO JÁ FOI USADO POR: ${usadoPor.user.toUpperCase()}`);
@@ -297,7 +328,6 @@
                 const hora = new Date().toLocaleTimeString('pt-BR');
                 const msg = `🎁 *RESGATE CARNAVAL* 🎁\n\n👤 *NICK:* ${userLogged.nick}\n🆔 *ID:* ${userLogged.id}\n✨ *ITEM:* ${data.reward}\n🎫 *CÓDIGO:* ${code}\n📅 *DATA:* ${hoje}\n⏰ *HORA:* ${hora}`;
                 
-                // MENSAGEM CLARA DE REDIRECIONAMENTO (NOVIDADE)
                 showAlert("PARABÉNS!", "Código válido! Você será redirecionado ao WhatsApp agora para receber seu prêmio.");
                 
                 setTimeout(() => {
