@@ -68,68 +68,50 @@
             border: 1px solid var(--border); border-radius: 30px; backdrop-filter: blur(10px); 
             margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
-        .profile-img {
-            width: 120px; height: 120px; border-radius: 50%; border: 4px solid white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px;
-        }
-        .tag-alisson {
-            font-family: 'Syncopate', sans-serif; font-size: clamp(1.2rem, 8vw, 2.2rem);
-            background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text;
-            background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;
-        }
-        .sub-title {
-            margin-top: 10px; font-size: 0.9rem; color: var(--text); opacity: 0.7;
-            font-family: 'Share Tech Mono'; letter-spacing: 2px; text-transform: uppercase;
-        }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .tag-alisson { font-family: 'Syncopate', sans-serif; font-size: clamp(1.2rem, 8vw, 2.2rem); background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+        .sub-title { margin-top: 10px; font-size: 0.9rem; color: var(--text); opacity: 0.7; font-family: 'Share Tech Mono'; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Frase Carnaval */
+        .carnaval-text { margin-top: 8px; font-family: 'Syncopate'; font-size: 0.65rem; color: var(--accent); font-weight: bold; }
 
         .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
-        .social-link {
-            display: flex; align-items: center; gap: 8px; padding: 10px 18px;
-            background: white; border: 1px solid var(--border);
-            border-radius: 50px; color: var(--text); text-decoration: none;
-            font-family: 'Rajdhani'; font-weight: bold; font-size: 0.8rem; transition: 0.4s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
+        .social-link { display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: white; border: 1px solid var(--border); border-radius: 50px; color: var(--text); text-decoration: none; font-family: 'Rajdhani'; font-weight: bold; font-size: 0.8rem; transition: 0.4s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .social-link:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--primary); }
 
         .redeem-window {
             background: white; border: 1px solid var(--border); border-radius: 25px;
             padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            position: relative;
         }
         .input-hacker {
-            width: 100%; max-width: 500px; padding: 18px; background: #f8f9fa;
+            width: 100%; max-width: 500px; padding: 15px; background: #f8f9fa;
             border: 1px solid var(--border); border-radius: 12px; color: var(--primary);
-            font-family: 'Share Tech Mono'; font-size: 1.1rem; text-align: center; margin-bottom: 15px; outline: none;
+            font-family: 'Share Tech Mono'; font-size: 1.1rem; text-align: center; margin-bottom: 10px; outline: none;
         }
         .btn-action {
             width: 100%; max-width: 500px; padding: 18px; border: none; border-radius: 12px;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: #fff; font-family: 'Syncopate'; font-size: 0.8rem; cursor: pointer; transition: 0.4s;
         }
-        .btn-action:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .btn-action:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        .history-section {
-            margin-top: 40px; background: white; border: 1px solid var(--border);
-            border-radius: 25px; padding: 25px 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
+        /* Login Footer */
+        .login-footer-container { display: flex; justify-content: flex-end; max-width: 500px; margin: 10px auto; }
+        .btn-login-small { background: var(--text); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-family: 'Syncopate'; font-size: 0.55rem; cursor: pointer; opacity: 0.7; }
+
         .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Share Tech Mono'; font-size: 0.8rem; }
-        .history-table th { color: var(--primary); padding: 12px; border-bottom: 2px solid var(--bg); }
-        .history-table td { padding: 12px; border-bottom: 1px solid #f1f1f1; color: var(--text); }
-
-        .creators-section {
-            margin-top: 40px; padding: 40px 20px; background: rgba(255,255,255,0.5); 
-            border-radius: 40px; border: 1px solid var(--border); text-align: center;
-        }
-        .creators-title { font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary); margin-bottom: 30px; display: block; letter-spacing: 2px; }
-        .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; justify-items: center; }
-        .creator-card { width: 100%; max-width: 320px; background: white; border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--text); transition: 0.3s; }
-        .creator-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .history-table td { padding: 12px; border-bottom: 1px solid #f1f1f1; }
+        
+        .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .creator-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
+        .creator-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: var(--primary); }
         .creator-img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); }
 
         footer { text-align: center; padding: 50px; color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
     </style>
 </head>
-<body onclick="handleFirstInteraction()">
+<body>
 
 <div id="custom-alert">
     <h2 id="alert-title">SISTEMA</h2>
@@ -139,89 +121,77 @@
 
 <div class="music-widget">
     <i class="fas fa-compact-disc fa-spin" style="color:var(--primary)"></i>
-    <div class="music-scroll">
-        <span id="music-display">CARREGANDO PLAYLIST...</span>
-    </div>
+    <div class="music-scroll"><span id="music-display">O CARNAVAL COMEÇOU! APERTE O PLAY</span></div>
     <div class="music-controls">
-        <button class="music-btn" onclick="toggleM(event)"><i class="fas fa-pause" id="m-icon"></i></button>
+        <button class="music-btn" onclick="toggleM(event)"><i class="fas fa-play" id="m-icon"></i></button>
         <button class="music-btn" onclick="nextM(event)"><i class="fas fa-forward"></i></button>
     </div>
 </div>
 
 <div class="container" data-aos="fade-up">
-    
     <header class="hero-section">
         <img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg.png" class="profile-img">
-        <br>
-        <h1 class="tag-alisson">@ALISSONNXSS</h1> 
-        <div class="sub-title">Central de Resgate para Seguidores</div>
+        <br><h1 class="tag-alisson">@ALISSONNXSS</h1>
+        <p style="font-family:'Share Tech Mono'; font-size: 0.9rem; color: var(--text); opacity: 0.7; letter-spacing: 2px; text-transform: uppercase;">Central de Resgate para Seguidores</p>
+        <div class="carnaval-text">🎊 O CARNAVAL DO RESGATE CHEGOU! 🎊</div>
         
         <div class="social-grid">
             <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link"><i class="fab fa-instagram" style="color:#E1306C"></i> INSTAGRAM</a>
             <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-tiktok"></i> TIKTOK</a>
             <a href="https://www.youtube.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-youtube" style="color:#FF0000"></i> YOUTUBE</a>
-            <a href="https://discord.gg/DajSCMEa" target="_blank" class="social-link"><i class="fab fa-discord" style="color:#5865F2"></i> DISCORD</a>
+            <a href="https://discord.gg/J8GWtnafub" target="_blank" class="social-link"><i class="fab fa-discord" style="color:#5865F2"></i> DISCORD</a>
         </div>
     </header>
 
-    <section class="redeem-window" data-aos="fade-up">
-        <div id="step-1">
+    <section class="redeem-window">
+        <div id="redeem-area" style="display:none;">
+            <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary); margin-bottom: 15px;">ÁREA DE RESGATE</h2>
             <input type="text" id="codeInput" class="input-hacker" placeholder="DIGITE O CÓDIGO AQUI">
-            <button class="btn-action" id="btnVerify" onclick="validar()">RESGATAR</button>
+            <button class="btn-action" id="btnVerify" onclick="validar()">RESGATAR AGORA</button>
+            <p id="userStatus" style="margin-top:15px; font-family:'Share Tech Mono'; font-size:0.8rem; color:#2ecc71; font-weight:bold;"></p>
+            <button onclick="logout()" style="background:none; border:none; color:red; cursor:pointer; font-family:'Syncopate'; font-size:0.5rem; margin-top:10px;">SAIR DA CONTA</button>
         </div>
 
-        <div id="step-2" style="display:none;">
-            <h2 style="color: var(--primary); font-family: 'Syncopate';">CÓDIGO RESERVADO!</h2>
-            <h3 id="rewardTxt" style="font-size: 1.5rem; margin: 15px 0; color: var(--secondary);"></h3>
-            <input type="text" id="uNick" class="input-hacker" placeholder="SEU NICK">
-            <input type="text" id="uID" class="input-hacker" placeholder="SEU ID">
-            <button class="btn-action" style="background:#2ecc71" onclick="finalizar()">CONCLUIR RESGATE</button>
+        <div id="lock-screen">
+            <i class="fas fa-lock" style="font-size: 2rem; opacity: 0.1; margin-bottom: 10px;"></i>
+            <p style="font-family: 'Share Tech Mono'; opacity: 0.5;">FAÇA LOGIN PARA LIBERAR O RESGATE</p>
         </div>
-    </section>
 
-    <section class="history-section" data-aos="fade-up">
-        <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary);">📜 ÚLTIMOS 5 PREMIADOS</h2>
-        <div style="overflow-x: auto;">
-            <table class="history-table">
-                <thead>
-                    <tr><th>PLAYER</th><th>ITEM</th><th>DATA/HORA</th><th>ID DO JOGADOR</th></tr>
-                </thead>
-                <tbody id="historyBody"></tbody>
-            </table>
+        <div class="login-footer-container" id="login-trigger-box">
+            <button class="btn-login-small" onclick="mostrarLogin()">LOGIN</button>
+        </div>
+
+        <div id="login-form" style="display:none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
+            <input type="text" id="loginNick" class="input-hacker" placeholder="SEU NICK">
+            <input type="text" id="loginID" class="input-hacker" placeholder="SEU ID">
+            <button class="btn-action" style="background: var(--text);" onclick="salvarLogin()">ENTRAR NO SISTEMA</button>
         </div>
     </section>
 
-    <section class="creators-section" data-aos="fade-up">
-        <span class="creators-title">AMIGOS E PARCEIROS</span>
-        <div class="creators-container">
-            <a href="https://www.tiktok.com/@yellowtv01?is_from_webapp=1&sender_device=pc" target="_blank" class="creator-card">
-                <img src="AMARELADO.jpeg" class="creator-img">
-                <div class="creator-info"><h4>yellowtv01</h4><span style="font-size:0.7rem; opacity:0.6">VER PERFIL</span></div>
-            </a>
-            <a href="https://www.tiktok.com/@titanffofc?is_from_webapp=1&sender_device=pc" target="_blank" class="creator-card">
-                <img src="FOTOS MEMES/titan.jpeg" class="creator-img">
-                <div class="creator-info"><h4>titanffofc</h4><span style="font-size:0.7rem; opacity:0.6">VER PERFIL</span></div>
-            </a>
-            <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
-                <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
-                <div class="creator-info"><h4>ITTALOFF7</h4><span style="font-size:0.7rem; opacity:0.6">VER PERFIL</span></div>
-            </a>
-            <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
-                <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
-                <div class="creator-info"><h4>EDUZINSSFF</h4><span style="font-size:0.7rem; opacity:0.6">VER PERFIL</span></div>
-            </a>
-            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="creator-card">
-                <i class="fas fa-handshake" style="font-size:2rem; color:var(--gold); margin-left:15px"></i>
-                <div class="creator-info"><h4>SEJA UM PARCEIRO</h4><span style="font-size:0.7rem; color:var(--gold)">CHAME NO INSTA</span></div>
-            </a>
-        </div>
+    <section class="hero-section" style="margin-top: 30px;">
+        <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary);">📜 ÚLTIMOS PREMIADOS</h2>
+        <table class="history-table"><tbody id="historyBody"></tbody></table>
     </section>
 
+    <div class="creators-container">
+        <a href="https://www.tiktok.com/@yellowtv01" target="_blank" class="creator-card">
+            <img src="AMARELADO.jpeg" class="creator-img"><div><h4>yellowtv01</h4></div>
+        </a>
+        <a href="https://www.tiktok.com/@titanffofc" target="_blank" class="creator-card">
+            <img src="FOTOS MEMES/titan.jpeg" class="creator-img"><div><h4>titanffofc</h4></div>
+        </a>
+        <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
+            <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img"><div><h4>ITTALOFF7</h4></div>
+        </a>
+        <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
+            <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img"><div><h4>EDUZINSSFF</h4></div>
+        </a>
+    </div>
 </div>
 
 <footer>Desenvolvido por @alissonnxss</footer>
 
-<audio id="bgAudio" src="" loop muted></audio>
+<audio id="bgAudio"></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -229,161 +199,133 @@
 <script>
     AOS.init();
     const audio = document.getElementById('bgAudio');
-    const mIcon = document.getElementById('m-icon');
-    const mDisplay = document.getElementById('music-display');
     const API_URL = "https://resgate-api-node.onrender.com"; 
+    
+    let userLogged = JSON.parse(localStorage.getItem('user_data')) || null;
+    let historyDataGlobal = [];
 
     const playlist = [
         { name: "SÓ CAPA EM PEAK - @ALISSONNXSS", src: "FOTOS MEMES/Só Capa em Peak (1).mp3" },
-        { name: "Banda djavu-rubiA", src: "FOTOS MEMES/Banda djavu-rubi(MP3_160K).mp3" },
-        { name: "Banda Magníficos - Verdadeiro Amo", src: "FOTOS MEMES/Banda Magníficos - Verdadeiro Amor(MP3_160K).mp3" },
-        { name: "NATANZINHO LIMA REPERTÓRIO NOVO 2025", src: "FOTOS MEMES/NATANZINHO LIMA REPERTÓRIO NOVO 2025 - CD COMPLETO JUNHO - NATANZINHO LIMA ATUALIZADO(MP3_160K).mp3" },
         { name: "BARBIE - Mc Tuto", src: "FOTOS MEMES/BARBIE - Mc Tuto.mp3" }
     ];
     let currentM = 0;
-    let codeGlobal = "", itemGlobal = "", historyDataGlobal = [];
+
+    window.onload = () => {
+        if(userLogged) liberar();
+        loadHistory();
+        setInterval(() => {
+            confetti({ particleCount: 35, spread: 70, origin: { y: 0.7 }, colors: ['#0984e3', '#6c5ce7', '#e84393'] });
+        }, 7000);
+    };
+
+    function mostrarLogin() {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('login-trigger-box').style.display = 'none';
+    }
+
+    function salvarLogin() {
+        const n = document.getElementById('loginNick').value.trim();
+        const i = document.getElementById('loginID').value.trim();
+        if(!n || !i) return showAlert("AVISO", "PREENCHA NICK E ID.");
+        userLogged = { nick: n, id: i };
+        localStorage.setItem('user_data', JSON.stringify(userLogged));
+        liberar();
+    }
+
+    function liberar() {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('login-trigger-box').style.display = 'none';
+        document.getElementById('redeem-area').style.display = 'block';
+        document.getElementById('userStatus').innerText = `CONECTADO: ${userLogged.nick}`;
+    }
+
+    function logout() { localStorage.removeItem('user_data'); location.reload(); }
 
     function loadMusic(idx) {
         audio.src = playlist[idx].src;
-        mDisplay.innerText = playlist[idx].name; // Corrigido para não repetir o nome
+        document.getElementById('music-display').innerText = playlist[idx].name;
     }
     loadMusic(0);
 
-    function nextM(e) {
-        if(e) e.stopPropagation();
-        currentM = (currentM + 1) % playlist.length;
-        loadMusic(currentM);
-        audio.play();
-        mIcon.className = "fas fa-pause";
-    }
-
     function toggleM(e) {
-        e.stopPropagation(); 
-        if(audio.paused) { audio.play(); mIcon.className = "fas fa-pause"; }
-        else { audio.pause(); mIcon.className = "fas fa-play"; }
+        if(audio.paused) { audio.play(); document.getElementById('m-icon').className = "fas fa-pause"; }
+        else { audio.pause(); document.getElementById('m-icon').className = "fas fa-play"; }
     }
 
-    function handleFirstInteraction() {
-        if(audio.muted) { audio.muted = false; audio.play().catch(e => {}); mIcon.className = "fas fa-pause"; }
+    function nextM() {
+        currentM = (currentM + 1) % playlist.length;
+        loadMusic(currentM); audio.play();
     }
 
-    function showAlert(title, msg) {
-        document.getElementById('alert-title').innerText = title;
-        document.getElementById('alert-msg').innerText = msg;
+    function showAlert(t, m) {
+        document.getElementById('alert-title').innerText = t;
+        document.getElementById('alert-msg').innerText = m;
         document.getElementById('custom-alert').classList.add('active');
     }
     function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
 
-    /* CARREGA O HISTÓRICO - COM DATA E HORA DETALHADA */
-    async function loadHistory() {
-        try {
-            const res = await fetch(`${API_URL}/api/public/history`);
-            const data = await res.json();
-            historyDataGlobal = data;
-            const body = document.getElementById('historyBody');
-            
-            const concluidos = data.filter(log => log.user !== 'RESGATANDO...');
-
-            body.innerHTML = [...concluidos].reverse().slice(0, 5).map(log => {
-                const horaFormatada = log.hora ? log.hora.split(' ')[1] : '--:--';
-                return `
-                <tr>
-                    <td>${log.user}</td>
-                    <td style="color:var(--primary)">${log.reward}</td>
-                    <td>${log.data || '--/--/--'} às ${horaFormatada}</td>
-                    <td style="color:#2ecc71; font-weight: bold;">${log.id}</td>
-                </tr>`;
-            }).join('');
-        } catch(e) {}
-    }
-
     async function validar() {
-        const btn = document.getElementById('btnVerify');
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
-        if(!code) return showAlert("AVISO", "DIGITE UM CÓDIGO.");
+        if(!code) return showAlert("AVISO", "DIGITE O CÓDIGO.");
+
+        // VERIFICA SE O CÓDIGO JÁ FOI USADO (NOVIDADE)
+        const usadoPor = historyDataGlobal.find(log => log.code === code);
+        if(usadoPor) {
+            return showAlert("JÁ RESGATADO", `ESSE CÓDIGO JÁ FOI USADO POR: ${usadoPor.user.toUpperCase()}`);
+        }
         
-        btn.disabled = true;
-        btn.innerText = "VERIFICANDO...";
+        const btn = document.getElementById('btnVerify');
+        btn.disabled = true; btn.innerText = "VERIFICANDO...";
+
+        const hoje = new Date().toLocaleDateString('pt-BR');
+        const jaResgatouHoje = historyDataGlobal.some(log => log.id === userLogged.id && log.data === hoje);
+        if(jaResgatouHoje) {
+            btn.disabled = false; btn.innerText = "RESGATAR AGORA";
+            return showAlert("LIMITE DIÁRIO", "Você já resgatou hoje!");
+        }
 
         try {
             const res = await fetch(`${API_URL}/api/validate`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code }) });
             const data = await res.json();
 
             if(data.success) {
-                // Registra estado temporário para evitar que outros peguem enquanto o usuário preenche o form
-                await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: code, name: "RESGATANDO...", id: "AGUARDE" }) });
+                await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code, name: userLogged.nick, id: userLogged.id }) });
+                confetti({ particleCount: 150, spread: 100 });
                 
-                confetti();
-                codeGlobal = code; 
-                itemGlobal = data.reward;
-                document.getElementById('step-1').style.display = 'none';
-                document.getElementById('step-2').style.display = 'block';
-                document.getElementById('rewardTxt').innerText = itemGlobal;
-                loadHistory(); 
+                const hora = new Date().toLocaleTimeString('pt-BR');
+                const msg = `🎁 *RESGATE CARNAVAL* 🎁\n\n👤 *NICK:* ${userLogged.nick}\n🆔 *ID:* ${userLogged.id}\n✨ *ITEM:* ${data.reward}\n🎫 *CÓDIGO:* ${code}\n📅 *DATA:* ${hoje}\n⏰ *HORA:* ${hora}`;
+                
+                // MENSAGEM CLARA DE REDIRECIONAMENTO (NOVIDADE)
+                showAlert("PARABÉNS!", "Código válido! Você será redirecionado ao WhatsApp agora para receber seu prêmio.");
+                
+                setTimeout(() => {
+                    window.open(`https://wa.me/553898455679?text=${encodeURIComponent(msg)}`, '_blank');
+                    location.reload();
+                }, 3000);
             } else {
-                /* BUSCA NO HISTÓRICO QUEM FOI O "ESPERTINHO" */
-                const historyRes = await fetch(`${API_URL}/api/public/history`);
-                const historyData = await historyRes.json();
-                const registro = historyData.find(log => log.code === code);
-
-                if(registro) {
-                    if(registro.user === "RESGATANDO...") {
-                        showAlert("OCUPADO", "Opa! Alguém já está resgatando este código neste exato momento!");
-                    } else {
-                        showAlert("TARDE DEMAIS!", `${registro.user} chegou mais rápido e já levou esse prêmio!`);
-                    }
-                } else {
-                    showAlert("ERRO", "Código inválido ou inexistente!");
-                }
-                btn.disabled = false;
-                btn.innerText = "RESGATAR";
+                showAlert("ERRO", "Código inválido!");
+                btn.disabled = false; btn.innerText = "RESGATAR AGORA";
             }
-        } catch(e) { 
-            showAlert("ERRO", "FALHA DE CONEXÃO COM O SERVIDOR."); 
-            btn.disabled = false;
-            btn.innerText = "RESGATAR";
-        }
+        } catch(e) { btn.disabled = false; }
     }
 
-    async function finalizar() {
-        const n = document.getElementById('uNick').value.trim();
-        const i = document.getElementById('uID').value.trim();
-        const agora = new Date();
-        const hoje = agora.toLocaleDateString('pt-BR');
-        const horaAtual = agora.toLocaleTimeString('pt-BR');
-        
-        if(!n || !i) return showAlert("DADOS", "POR FAVOR, PREENCHA SEU NICK E ID.");
-
-        // Trava de 1 resgate por ID por dia
-        const jaResgatouHoje = historyDataGlobal.some(log => log.id === i && log.data === hoje && log.user !== 'RESGATANDO...');
-        if(jaResgatouHoje) {
-            return showAlert("LIMITE DIÁRIO", "Você já resgatou um prêmio hoje com este ID! Volte amanhã.");
-        }
-
+    async function loadHistory() {
         try {
-            await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code: codeGlobal, name: n, id: i }) });
-            
-            /* MENSAGEM DETALHADA PARA O WHATSAPP */
-            const msg = `🎁 *RESGATE CONFIRMADO* 🎁\n\n👤 *NICK:* ${n}\n🆔 *ID:* ${i}\n✨ *PREMIAÇÃO:* ${itemGlobal}\n🎫 *CÓDIGO:* ${codeGlobal}\n📅 *DATA:* ${hoje}\n⏰ *HORA:* ${horaAtual}`;
-            
-            showAlert("SUCESSO!", "Parabéns! Redirecionando para validação no WhatsApp...");
-            
-            setTimeout(() => { 
-                window.open(`https://wa.me/553898455679?text=${encodeURIComponent(msg)}`, '_blank');
-                location.reload(); 
-            }, 2000);
-        } catch(e) { 
-            showAlert("ERRO", "FALHA AO SALVAR SEUS DADOS."); 
-        }
+            const res = await fetch(`${API_URL}/api/public/history`);
+            const data = await res.json();
+            historyDataGlobal = data;
+            const body = document.getElementById('historyBody');
+            body.innerHTML = data.reverse().slice(0, 5).map(log => `
+                <tr>
+                    <td style="font-weight:bold">${log.user}</td>
+                    <td style="color:var(--primary)">${log.reward}</td>
+                    <td style="font-size:0.7rem; opacity:0.6">ID: ${log.id}</td>
+                </tr>`).join('');
+        } catch(e) {}
     }
-
-    loadHistory();
-    setInterval(loadHistory, 5000); // Atualiza o histórico a cada 5 segundos
+    setInterval(loadHistory, 8000);
 </script>
 </body>
-
 </html>
-
-
-
-
