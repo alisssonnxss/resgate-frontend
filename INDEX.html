@@ -11,12 +11,11 @@
 
     <style>
         :root {
-            /* Nova Paleta de Cores Premium */
             --primary: #00d2ff;
             --secondary: #3a47d5;
-            --accent: #f1c40f; /* Dourado */
+            --accent: #f1c40f;
             --gold: #f1c40f;
-            --bg: #0f172a; /* Fundo Escuro */
+            --bg: #0f172a;
             --text: #f8fafc;
             --card-bg: #1e293b;
             --glass: rgba(30, 41, 59, 0.8);
@@ -36,19 +35,19 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Alertas Customizados */
+        /* ALERTAS CUSTOMIZADOS */
         #custom-alert {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
             background: var(--card-bg); border: 2px solid var(--primary);
             padding: 30px; border-radius: 20px; z-index: 10000; text-align: center;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: none;
-            width: 90%; max-width: 400px; transition: 0.3s;
-            color: white;
+            width: 90%; max-width: 400px; transition: 0.3s; color: white;
         }
         #custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
         #custom-alert h2 { font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 15px; color: var(--primary); }
         .close-alert { background: var(--primary); color: #000; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Syncopate'; font-size: 0.6rem; }
 
+        /* MUSIC WIDGET */
         .music-widget {
             position: fixed; top: 15px; right: 15px; background: var(--card-bg);
             border: 1px solid var(--border); padding: 8px 12px; border-radius: 50px;
@@ -62,30 +61,33 @@
             animation: marquee 10s linear infinite;
         }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-        
         .music-controls { display: flex; gap: 10px; align-items: center; }
         .music-btn { background: none; border: none; color: var(--text); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
-        .music-btn:hover { color: var(--primary); }
 
         .hero-section {
             text-align: center; padding: 40px 20px; background: var(--glass);
             border: 1px solid var(--border); border-radius: 30px; backdrop-filter: blur(10px); 
-            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
         }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 20px var(--primary); margin-bottom: 15px; }
         .tag-alisson { font-family: 'Syncopate', sans-serif; font-size: clamp(1.2rem, 8vw, 2.2rem); background: linear-gradient(90deg, var(--primary), #fff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
-        
-        /* Ajuste do Título Removendo Carnaval */
-        .premium-text { margin-top: 8px; font-family: 'Syncopate'; font-size: 0.65rem; color: var(--gold); font-weight: bold; letter-spacing: 2px; }
 
         .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
         .social-link { display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50px; color: var(--text); text-decoration: none; font-family: 'Rajdhani'; font-weight: bold; font-size: 0.8rem; transition: 0.4s; }
-        .social-link:hover { transform: translateY(-5px); box-shadow: 0 0 15px var(--primary); border-color: var(--primary); }
+        .social-link:hover { transform: translateY(-5px); box-shadow: 0 0 15px var(--primary); }
+
+        /* SEÇÃO DE FERRAMENTAS (SENSI E PACKS) */
+        .section-title { font-family: 'Syncopate'; font-size: 0.9rem; color: var(--primary); text-align: center; margin: 40px 0 20px; letter-spacing: 3px; text-transform: uppercase; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 25px; text-align: center; transition: 0.3s; }
+        .tool-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .tool-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; }
+        .tool-card h4 { font-family: 'Syncopate'; font-size: 0.6rem; color: white; margin-bottom: 8px; }
+        .badge-soon { background: var(--gold); color: black; font-family: 'Share Tech Mono'; font-size: 0.6rem; padding: 3px 10px; border-radius: 4px; font-weight: bold; }
 
         .redeem-window {
             background: var(--card-bg); border: 1px solid var(--border); border-radius: 25px;
-            padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            position: relative;
+            padding: 40px 20px; text-align: center; margin-bottom: 30px;
         }
         .input-hacker {
             width: 100%; max-width: 500px; padding: 15px; background: rgba(0,0,0,0.3);
@@ -95,36 +97,22 @@
         .btn-action {
             width: 100%; max-width: 500px; padding: 18px; border: none; border-radius: 12px;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: #fff; font-family: 'Syncopate'; font-size: 0.8rem; cursor: pointer; transition: 0.4s;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        .btn-action:hover { transform: scale(1.02); filter: brightness(1.2); }
-
-        .section-title {
-            font-family: 'Syncopate';
-            font-size: 0.9rem;
-            color: var(--primary);
-            text-align: center;
-            margin: 40px 0 20px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            color: #fff; font-family: 'Syncopate'; font-size: 0.8rem; cursor: pointer;
         }
 
+        /* HISTÓRICO */
         .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Share Tech Mono'; font-size: 0.8rem; color: white;}
         .history-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
-        .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 10px; }
+
+        /* PARCEIROS E AMIGOS (RESTAURADO COMPLETO) */
+        .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .creator-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
-        .creator-card:hover { transform: translateY(-5px); border-color: var(--primary); background: rgba(0, 210, 255, 0.05); }
-        .creator-img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); }
-        
+        .creator-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .creator-img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
         .ver-perfil-txt { font-size: 0.7rem; color: var(--primary); font-family: 'Syncopate'; display: block; margin-top: 3px; font-weight: bold; }
 
         footer { text-align: center; padding: 50px; color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
-        
-        /* Botões pequenos */
         .btn-login-small { background: var(--primary); color: black; border: none; padding: 8px 15px; border-radius: 5px; font-family: 'Syncopate'; font-size: 0.55rem; cursor: pointer; font-weight: bold; }
-        .login-footer-container { display: flex; justify-content: flex-end; max-width: 500px; margin: 10px auto; }
     </style>
 </head>
 <body>
@@ -148,9 +136,6 @@
     <header class="hero-section">
         <img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg.png" class="profile-img">
         <br><h1 class="tag-alisson">@ALISSONNXSS</h1>
-        <p style="font-family:'Share Tech Mono'; font-size: 0.9rem; color: var(--text); opacity: 0.7; letter-spacing: 2px; text-transform: uppercase;">Central de Resgate para Seguidores</p>
-        <div class="premium-text">💎 ACESSO EXCLUSIVO AOS MELHORES ITENS 💎</div>
-        
         <div class="social-grid">
             <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link"><i class="fab fa-instagram" style="color:#E1306C"></i> INSTAGRAM</a>
             <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-tiktok"></i> TIKTOK</a>
@@ -162,7 +147,7 @@
     <section class="redeem-window">
         <div id="redeem-area" style="display:none;">
             <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary); margin-bottom: 15px;">ÁREA DE RESGATE</h2>
-            <input type="text" id="codeInput" class="input-hacker" placeholder="DIGITE O CÓDIGO AQUI">
+            <input type="text" id="codeInput" class="input-hacker" placeholder="DIGITE O CÓDIGO">
             <button class="btn-action" id="btnVerify" onclick="validar()">RESGATAR AGORA</button>
             <p id="userStatus" style="margin-top:15px; font-family:'Share Tech Mono'; font-size:0.8rem; color:#2ecc71; font-weight:bold;"></p>
             <button onclick="logout()" style="background:none; border:none; color:red; cursor:pointer; font-family:'Syncopate'; font-size:0.5rem; margin-top:10px;">SAIR DA CONTA</button>
@@ -171,62 +156,68 @@
         <div id="lock-screen">
             <i class="fas fa-lock" style="font-size: 2rem; opacity: 0.1; margin-bottom: 10px; color: var(--primary);"></i>
             <p style="font-family: 'Share Tech Mono'; opacity: 0.5;">FAÇA LOGIN PARA LIBERAR O RESGATE</p>
+            <div style="margin-top:20px;">
+                <button class="btn-login-small" onclick="mostrarLogin()">FAZER LOGIN</button>
+            </div>
         </div>
 
-        <div class="login-footer-container" id="login-trigger-box">
-            <button class="btn-login-small" onclick="mostrarLogin()">LOGIN</button>
-        </div>
-
-        <div id="login-form" style="display:none; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
+        <div id="login-form" style="display:none; margin-top: 20px;">
             <input type="text" id="loginNick" class="input-hacker" placeholder="SEU NICK">
             <input type="text" id="loginID" class="input-hacker" placeholder="SEU ID">
-            <button class="btn-action" style="background: var(--primary); color:black;" onclick="salvarLogin()">ENTRAR NO SISTEMA</button>
+            <button class="btn-action" onclick="salvarLogin()">ENTRAR NO SISTEMA</button>
         </div>
     </section>
 
-    <section class="hero-section" style="margin-top: 30px;">
+    <h3 class="section-title">Otimização & Sensi</h3>
+    <div class="tools-grid">
+        <div class="tool-card">
+            <i class="fas fa-mobile-alt"></i>
+            <h4>PACK OTIMIZAÇÃO CELULAR</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+        <div class="tool-card">
+            <i class="fas fa-desktop"></i>
+            <h4>PACK OTIMIZAÇÃO PC ALISSONX</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+        <div class="tool-card">
+            <i class="fas fa-crosshairs"></i>
+            <h4>SENSI EMULADOR</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+        <div class="tool-card">
+            <i class="fab fa-android"></i>
+            <h4>SENSI ANDROID/IOS</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+    </div>
+
+    <section class="hero-section">
         <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary);">📜 ÚLTIMOS PREMIADOS</h2>
         <table class="history-table"><tbody id="historyBody"></tbody></table>
     </section>
 
     <h3 class="section-title">Parceiros e Amigos</h3>
-
     <div class="creators-container">
         <a href="https://www.tiktok.com/@yellowtv01" target="_blank" class="creator-card">
             <img src="AMARELADO.jpeg" class="creator-img">
-            <div>
-                <h4>yellowtv01</h4>
-                <span class="ver-perfil-txt">VER PERFIL</span>
-            </div>
+            <div><h4>yellowtv01</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
         </a>
         <a href="https://www.tiktok.com/@titanffofc" target="_blank" class="creator-card">
             <img src="FOTOS MEMES/titan.jpeg" class="creator-img">
-            <div>
-                <h4>titanffofc</h4>
-                <span class="ver-perfil-txt">VER PERFIL</span>
-            </div>
+            <div><h4>titanffofc</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
         </a>
         <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
             <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
-            <div>
-                <h4>ITTALOFF7</h4>
-                <span class="ver-perfil-txt">VER PERFIL</span>
-            </div>
+            <div><h4>ITTALOFF7</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
         </a>
         <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
             <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
-            <div>
-                <h4>EDUZINSSFF</h4>
-                <span class="ver-perfil-txt">VER PERFIL</span>
-            </div>
+            <div><h4>EDUZINSSFF</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
         </a>
-
         <a href="mailto:contatoalissonnxss@gmail.com" class="creator-card">
             <i class="fas fa-handshake" style="font-size:2.5rem; color:var(--gold); margin-left:10px"></i>
-            <div>
-                <h4 style="color:var(--gold)">SEJA UM PARCEIRO</h4>
-                <span class="ver-perfil-txt" style="color:var(--gold)">ENVIAR E-MAIL</span>
-            </div>
+            <div><h4 style="color:var(--gold)">SEJA UM PARCEIRO</h4><span class="ver-perfil-txt" style="color:var(--gold)">ENVIAR E-MAIL</span></div>
         </a>
     </div>
 </div>
@@ -234,7 +225,6 @@
 <footer>Desenvolvido por @alissonnxss</footer>
 
 <audio id="bgAudio"></audio>
-
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -242,7 +232,6 @@
     AOS.init();
     const audio = document.getElementById('bgAudio');
     const API_URL = "https://resgate-api-node.onrender.com"; 
-    
     let userLogged = JSON.parse(localStorage.getItem('user_data')) || null;
     let historyDataGlobal = [];
 
@@ -263,7 +252,6 @@
     function mostrarLogin() {
         document.getElementById('login-form').style.display = 'block';
         document.getElementById('lock-screen').style.display = 'none';
-        document.getElementById('login-trigger-box').style.display = 'none';
     }
 
     function salvarLogin() {
@@ -278,7 +266,6 @@
     function liberar() {
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('lock-screen').style.display = 'none';
-        document.getElementById('login-trigger-box').style.display = 'none';
         document.getElementById('redeem-area').style.display = 'block';
         document.getElementById('userStatus').innerText = `CONECTADO: ${userLogged.nick}`;
     }
@@ -311,21 +298,8 @@
     async function validar() {
         const code = document.getElementById('codeInput').value.trim().toUpperCase();
         if(!code) return showAlert("AVISO", "DIGITE O CÓDIGO.");
-
-        const usadoPor = historyDataGlobal.find(log => log.code === code);
-        if(usadoPor) {
-            return showAlert("JÁ RESGATADO", `ESSE CÓDIGO JÁ FOI USADO POR: ${usadoPor.user.toUpperCase()}`);
-        }
-        
         const btn = document.getElementById('btnVerify');
         btn.disabled = true; btn.innerText = "VERIFICANDO...";
-
-        const hoje = new Date().toLocaleDateString('pt-BR');
-        const jaResgatouHoje = historyDataGlobal.some(log => log.id === userLogged.id && log.data === hoje);
-        if(jaResgatouHoje) {
-            btn.disabled = false; btn.innerText = "RESGATAR AGORA";
-            return showAlert("LIMITE DIÁRIO", "Você já resgatou hoje!");
-        }
 
         try {
             const res = await fetch(`${API_URL}/api/validate`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code }) });
@@ -334,12 +308,8 @@
             if(data.success) {
                 await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code, name: userLogged.nick, id: userLogged.id }) });
                 confetti({ particleCount: 150, spread: 100 });
-                
-                const hora = new Date().toLocaleTimeString('pt-BR');
-                const msg = `🎁 *RESGATE PREMIUM* 🎁\n\n👤 *NICK:* ${userLogged.nick}\n🆔 *ID:* ${userLogged.id}\n✨ *ITEM:* ${data.reward}\n🎫 *CÓDIGO:* ${code}\n📅 *DATA:* ${hoje}\n⏰ *HORA:* ${hora}`;
-                
-                showAlert("PARABÉNS!", "Código válido! Você será redirecionado ao WhatsApp agora para receber seu prêmio.");
-                
+                const msg = `🎁 *RESGATE PREMIUM* 🎁\n👤 *NICK:* ${userLogged.nick}\n✨ *ITEM:* ${data.reward}\n🎫 *CÓD:* ${code}`;
+                showAlert("PARABÉNS!", "Código válido!");
                 setTimeout(() => {
                     window.open(`https://wa.me/553898455679?text=${encodeURIComponent(msg)}`, '_blank');
                     location.reload();
@@ -358,11 +328,8 @@
             historyDataGlobal = data;
             const body = document.getElementById('historyBody');
             body.innerHTML = data.reverse().slice(0, 5).map(log => `
-                <tr>
-                    <td style="font-weight:bold">${log.user}</td>
-                    <td style="color:var(--primary)">${log.reward}</td>
-                    <td style="font-size:0.7rem; opacity:0.6">ID: ${log.id}</td>
-                </tr>`).join('');
+                <tr><td style="font-weight:bold">${log.user}</td><td style="color:var(--primary)">${log.reward}</td><td>ID: ${log.id}</td></tr>
+            `).join('');
         } catch(e) {}
     }
     setInterval(loadHistory, 8000);
