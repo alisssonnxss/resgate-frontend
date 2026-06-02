@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resgate Premium | @ALISSONNXSS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a47d5;
+            --accent: #f1c40f;
+            --gold: #f1c40f;
+            --bg: #0f172a;
+            --text: #f8fafc;
+            --card-bg: #1e293b;
+            --glass: rgba(30, 41, 59, 0.8);
+            --border: rgba(0, 210, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        /* ALERTAS CUSTOMIZADOS */
+        #custom-alert {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+            background: var(--card-bg); border: 2px solid var(--primary);
+            padding: 30px; border-radius: 20px; z-index: 10000; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: none;
+            width: 90%; max-width: 400px; transition: 0.3s; color: white;
+        }
+        #custom-alert.active { display: block; transform: translate(-50%, -50%) scale(1); }
+        #custom-alert h2 { font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 15px; color: var(--primary); }
+        .close-alert { background: var(--primary); color: #000; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: 'Syncopate'; font-size: 0.6rem; }
+
+        /* MUSIC WIDGET */
+        .music-widget {
+            position: fixed; top: 15px; right: 15px; background: var(--card-bg);
+            border: 1px solid var(--border); padding: 8px 12px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px; z-index: 1000; width: 280px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .music-scroll { white-space: nowrap; overflow: hidden; flex: 1; }
+        .music-scroll span {
+            display: inline-block; padding-left: 100%;
+            font-family: 'Share Tech Mono'; font-size: 0.65rem; color: var(--primary);
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        .music-controls { display: flex; gap: 10px; align-items: center; }
+        .music-btn { background: none; border: none; color: var(--text); cursor: pointer; font-size: 0.9rem; transition: 0.3s; }
+
+        .hero-section {
+            text-align: center; padding: 40px 20px; background: var(--glass);
+            border: 1px solid var(--border); border-radius: 30px; backdrop-filter: blur(10px); 
+            margin-bottom: 30px;
+        }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary); box-shadow: 0 0 20px var(--primary); margin-bottom: 15px; }
+        .tag-alisson { font-family: 'Syncopate', sans-serif; font-size: clamp(1.2rem, 8vw, 2.2rem); background: linear-gradient(90deg, var(--primary), #fff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+
+        .social-grid { display: flex; justify-content: center; gap: 12px; margin-top: 25px; flex-wrap: wrap; }
+        .social-link { display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 50px; color: var(--text); text-decoration: none; font-family: 'Rajdhani'; font-weight: bold; font-size: 0.8rem; transition: 0.4s; }
+        .social-link:hover { transform: translateY(-5px); box-shadow: 0 0 15px var(--primary); }
+
+        /* SEÇÃO DE FERRAMENTAS (SENSI E PACKS) */
+        .section-title { font-family: 'Syncopate'; font-size: 0.9rem; color: var(--primary); text-align: center; margin: 40px 0 20px; letter-spacing: 3px; text-transform: uppercase; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 25px; text-align: center; transition: 0.3s; }
+        .tool-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .tool-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; }
+        .tool-card h4 { font-family: 'Syncopate'; font-size: 0.6rem; color: white; margin-bottom: 8px; }
+        .badge-soon { background: var(--gold); color: black; font-family: 'Share Tech Mono'; font-size: 0.6rem; padding: 3px 10px; border-radius: 4px; font-weight: bold; }
+
+        .redeem-window {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 25px;
+            padding: 40px 20px; text-align: center; margin-bottom: 30px;
+        }
+        .input-hacker {
+            width: 100%; max-width: 500px; padding: 15px; background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border); border-radius: 12px; color: var(--primary);
+            font-family: 'Share Tech Mono'; font-size: 1.1rem; text-align: center; margin-bottom: 10px; outline: none;
+        }
+        .btn-action {
+            width: 100%; max-width: 500px; padding: 18px; border: none; border-radius: 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #fff; font-family: 'Syncopate'; font-size: 0.8rem; cursor: pointer;
+        }
+
+        /* HISTÓRICO */
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Share Tech Mono'; font-size: 0.8rem; color: white;}
+        .history-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* PARCEIROS E AMIGOS (RESTAURADO COMPLETO) */
+        .creators-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .creator-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
+        .creator-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .creator-img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
+        .ver-perfil-txt { font-size: 0.7rem; color: var(--primary); font-family: 'Syncopate'; display: block; margin-top: 3px; font-weight: bold; }
+
+        footer { text-align: center; padding: 50px; color: var(--text); font-family: 'Share Tech Mono'; font-size: 0.7rem; opacity: 0.5; }
+        .btn-login-small { background: var(--primary); color: black; border: none; padding: 8px 15px; border-radius: 5px; font-family: 'Syncopate'; font-size: 0.55rem; cursor: pointer; font-weight: bold; }
+    
+/* BRASIL WORLD CUP MOBILE THEME */
+:root{
+ --primary:#00d859 !important;
+ --secondary:#006b3f !important;
+ --accent:#ffdf00 !important;
+ --gold:#ffdf00 !important;
+}
+body{
+ background:
+ radial-gradient(circle at top,#009c3b 0%,#002776 55%,#04111f 100%) !important;
+}
+.container{max-width:700px;}
+.hero-section,.redeem-window,.tool-card,.creator-card{
+ background:rgba(0,39,118,.55)!important;
+ border:1px solid rgba(255,223,0,.35)!important;
+ backdrop-filter:blur(16px);
+}
+.hero-section::before{
+ content:'VAIII  BRASIL';
+ display:block;
+ margin-bottom:12px;
+ color:#ffdf00;
+ font-weight:bold;
+ letter-spacing:2px;
+}
+.music-widget{
+ border:1px solid rgba(255,223,0,.4)!important;
+ background:rgba(0,39,118,.9)!important;
+}
+.btn-action{
+ background:linear-gradient(45deg,#009c3b,#ffdf00)!important;
+ color:#002776!important;
+ box-shadow:0 10px 25px rgba(255,223,0,.25);
+}
+.profile-img{
+ border-color:#ffdf00!important;
+ box-shadow:0 0 25px #ffdf00!important;
+}
+.tool-card:hover,.creator-card:hover{
+ box-shadow:0 0 25px rgba(255,223,0,.35);
+}
+@media(max-width:768px){
+ .container{padding:12px;}
+ .music-widget{
+  width:calc(100% - 20px);
+  left:10px;
+  right:10px;
+  top:10px;
+ }
+ .hero-section{
+  margin-top:80px;
+  border-radius:24px;
+ }
+ .tool-card,.creator-card{
+  border-radius:22px;
+ }
+ .btn-action,.input-hacker{
+  border-radius:18px;
+ }
+}
+
+</style>
+</head>
+<body><div style='position:fixed;bottom:15px;left:50%;transform:translateX(-50%);z-index:9999;background:linear-gradient(90deg,#009c3b,#ffdf00);color:#002776;padding:10px 18px;border-radius:999px;font-weight:bold;box-shadow:0 6px 20px rgba(0,0,0,.3)'> RUMO AO HEXA • VAIII BRASIL</div>
+
+<div id="custom-alert">
+    <h2 id="alert-title">SISTEMA</h2>
+    <p id="alert-msg" style="font-family: 'Share Tech Mono'; margin: 15px 0;"></p>
+    <button class="close-alert" onclick="closeAlert()">FECHAR</button>
+</div>
+
+<div class="music-widget">
+    <i class="fas fa-compact-disc fa-spin" style="color:var(--primary)"></i>
+    <div class="music-scroll"><span id="music-display">SISTEMA ATIVO - APERTE O PLAY</span></div>
+    <div class="music-controls">
+        <button class="music-btn" onclick="toggleM(event)"><i class="fas fa-play" id="m-icon"></i></button>
+        <button class="music-btn" onclick="nextM(event)"><i class="fas fa-forward"></i></button>
+    </div>
+</div>
+
+<div class="container" data-aos="fade-up">
+    <header class="hero-section">
+        <img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg.png" class="profile-img">
+        <br><h1 class="tag-alisson">@ALISSONNXSS</h1>
+        <div class="social-grid">
+            <a href="https://www.instagram.com/alissonnxss/" target="_blank" class="social-link"><i class="fab fa-instagram" style="color:#E1306C"></i> INSTAGRAM</a>
+            <a href="https://www.tiktok.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-tiktok"></i> TIKTOK</a>
+            <a href="https://www.youtube.com/@alissonnxss" target="_blank" class="social-link"><i class="fab fa-youtube" style="color:#FF0000"></i> YOUTUBE</a>
+            <a href="https://discord.gg/J8GWtnafub" target="_blank" class="social-link"><i class="fab fa-discord" style="color:#5865F2"></i> DISCORD</a>
+        </div>
+    </header>
+
+    <section class="redeem-window">
+        <div id="redeem-area" style="display:none;">
+            <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary); margin-bottom: 15px;">ÁREA DE RESGATE</h2>
+            <input type="text" id="codeInput" class="input-hacker" placeholder="DIGITE O CÓDIGO">
+            <button class="btn-action" id="btnVerify" onclick="validar()">RESGATAR AGORA</button>
+            <p id="userStatus" style="margin-top:15px; font-family:'Share Tech Mono'; font-size:0.8rem; color:#2ecc71; font-weight:bold;"></p>
+            <button onclick="logout()" style="background:none; border:none; color:red; cursor:pointer; font-family:'Syncopate'; font-size:0.5rem; margin-top:10px;">SAIR DA CONTA</button>
+        </div>
+
+        <div id="lock-screen">
+            <i class="fas fa-lock" style="font-size: 2rem; opacity: 0.1; margin-bottom: 10px; color: var(--primary);"></i>
+            <p style="font-family: 'Share Tech Mono'; opacity: 0.5;">FAÇA LOGIN PARA LIBERAR O RESGATE</p>
+            <div style="margin-top:20px;">
+                <button class="btn-login-small" onclick="mostrarLogin()">FAZER LOGIN</button>
+            </div>
+        </div>
+
+        <div id="login-form" style="display:none; margin-top: 20px;">
+            <input type="text" id="loginNick" class="input-hacker" placeholder="SEU NICK">
+            <input type="text" id="loginID" class="input-hacker" placeholder="SEU ID">
+            <button class="btn-action" onclick="salvarLogin()">ENTRAR NO SISTEMA</button>
+        </div>
+    </section>
+
+    <h3 class="section-title">Otimização & Sensi</h3>
+    <div class="tools-grid">
+        <div class="tool-card">
+            <i class="fas fa-mobile-alt"></i>
+            <h4>PACK OTIMIZAÇÃO CELULAR</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+        <div class="tool-card">
+            <i class="fas fa-desktop"></i>
+            <h4>PACK OTIMIZAÇÃO PC ALISSONX</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+        <div class="tool-card">
+            <i class="fas fa-crosshairs"></i>
+            <h4>SENSI EMULADOR</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+        <div class="tool-card">
+            <i class="fab fa-android"></i>
+            <h4>SENSI ANDROID/IOS</h4>
+            <span class="badge-soon">EM BREVE</span>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <h2 style="font-family: 'Syncopate'; font-size: 0.7rem; color: var(--primary);">📜 ÚLTIMOS PREMIADOS</h2>
+        <table class="history-table"><tbody id="historyBody"></tbody></table>
+    </section>
+
+    <h3 class="section-title">Parceiros e Amigos</h3>
+    <div class="creators-container">
+        <a href="https://www.tiktok.com/@yellowtv01" target="_blank" class="creator-card">
+            <img src="AMARELADO.jpeg" class="creator-img">
+            <div><h4>yellowtv01</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
+        </a>
+        <a href="https://www.tiktok.com/@titanffofc" target="_blank" class="creator-card">
+            <img src="FOTOS MEMES/titan.jpeg" class="creator-img">
+            <div><h4>titanffofc</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
+        </a>
+        <a href="https://www.tiktok.com/@ittaloff7" target="_blank" class="creator-card">
+            <img src="FOTOS MEMES/EMERSON.jpeg" class="creator-img">
+            <div><h4>ITTALOFF7</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
+        </a>
+        <a href="https://www.tiktok.com/@eduzinssff" target="_blank" class="creator-card">
+            <img src="FOTOS MEMES/EDUZIN.jpeg" class="creator-img">
+            <div><h4>EDUZINSSFF</h4><span class="ver-perfil-txt">VER PERFIL</span></div>
+        </a>
+        <a href="mailto:contatoalissonnxss@gmail.com" class="creator-card">
+            <i class="fas fa-handshake" style="font-size:2.5rem; color:var(--gold); margin-left:10px"></i>
+            <div><h4 style="color:var(--gold)">SEJA UM PARCEIRO</h4><span class="ver-perfil-txt" style="color:var(--gold)">ENVIAR E-MAIL</span></div>
+        </a>
+    </div>
+</div>
+
+<footer>Desenvolvido por @alissonnxss</footer>
+
+<audio id="bgAudio"></audio>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+    AOS.init();
+    const audio = document.getElementById('bgAudio');
+    const API_URL = "https://resgate-api-node.onrender.com"; 
+    let userLogged = JSON.parse(localStorage.getItem('user_data')) || null;
+    let historyDataGlobal = [];
+
+    const playlist = [
+        { name: "SÓ CAPA EM PEAK - @ALISSONNXSS", src: "FOTOS MEMES/Só Capa em Peak (1).mp3" },
+        { name: "BARBIE - Mc Tuto", src: "FOTOS MEMES/BARBIE - Mc Tuto.mp3" }
+    ];
+    let currentM = 0;
+
+    window.onload = () => {
+        if(userLogged) liberar();
+        loadHistory();
+        setInterval(() => {
+            confetti({ particleCount: 35, spread: 70, origin: { y: 0.7 }, colors: ['#00d2ff', '#3a47d5', '#f1c40f'] });
+        }, 7000);
+    };
+
+    function mostrarLogin() {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('lock-screen').style.display = 'none';
+    }
+
+    function salvarLogin() {
+        const n = document.getElementById('loginNick').value.trim();
+        const i = document.getElementById('loginID').value.trim();
+        if(!n || !i) return showAlert("AVISO", "PREENCHA NICK E ID.");
+        userLogged = { nick: n, id: i };
+        localStorage.setItem('user_data', JSON.stringify(userLogged));
+        liberar();
+    }
+
+    function liberar() {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('redeem-area').style.display = 'block';
+        document.getElementById('userStatus').innerText = `CONECTADO: ${userLogged.nick}`;
+    }
+
+    function logout() { localStorage.removeItem('user_data'); location.reload(); }
+
+    function loadMusic(idx) {
+        audio.src = playlist[idx].src;
+        document.getElementById('music-display').innerText = playlist[idx].name;
+    }
+    loadMusic(0);
+
+    function toggleM(e) {
+        if(audio.paused) { audio.play(); document.getElementById('m-icon').className = "fas fa-pause"; }
+        else { audio.pause(); document.getElementById('m-icon').className = "fas fa-play"; }
+    }
+
+    function nextM() {
+        currentM = (currentM + 1) % playlist.length;
+        loadMusic(currentM); audio.play();
+    }
+
+    function showAlert(t, m) {
+        document.getElementById('alert-title').innerText = t;
+        document.getElementById('alert-msg').innerText = m;
+        document.getElementById('custom-alert').classList.add('active');
+    }
+    function closeAlert() { document.getElementById('custom-alert').classList.remove('active'); }
+
+    async function validar() {
+        const code = document.getElementById('codeInput').value.trim().toUpperCase();
+        if(!code) return showAlert("AVISO", "DIGITE O CÓDIGO.");
+        const btn = document.getElementById('btnVerify');
+        btn.disabled = true; btn.innerText = "VERIFICANDO...";
+
+        try {
+            const res = await fetch(`${API_URL}/api/validate`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code }) });
+            const data = await res.json();
+
+            if(data.success) {
+                await fetch(`${API_URL}/api/register`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ code, name: userLogged.nick, id: userLogged.id }) });
+                confetti({ particleCount: 150, spread: 100 });
+                const msg = `🎁 *RESGATE PREMIUM* 🎁\n👤 *NICK:* ${userLogged.nick}\n✨ *ITEM:* ${data.reward}\n🎫 *CÓD:* ${code}`;
+                showAlert("PARABÉNS!", "Código válido!");
+                setTimeout(() => {
+                    window.open(`https://wa.me/553898455679?text=${encodeURIComponent(msg)}`, '_blank');
+                    location.reload();
+                }, 3000);
+            } else {
+                showAlert("ERRO", "Código inválido!");
+                btn.disabled = false; btn.innerText = "RESGATAR AGORA";
+            }
+        } catch(e) { btn.disabled = false; }
+    }
+
+    async function loadHistory() {
+        try {
+            const res = await fetch(`${API_URL}/api/public/history`);
+            const data = await res.json();
+            historyDataGlobal = data;
+            const body = document.getElementById('historyBody');
+            body.innerHTML = data.reverse().slice(0, 5).map(log => `
+                <tr><td style="font-weight:bold">${log.user}</td><td style="color:var(--primary)">${log.reward}</td><td>ID: ${log.id}</td></tr>
+            `).join('');
+        } catch(e) {}
+    }
+    setInterval(loadHistory, 8000);
+</script>
+</body>
+</html>
