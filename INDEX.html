@@ -522,9 +522,19 @@ footer{color:#f2dfb2!important}
     function showAlert(t, m, kind = "info", duration = 9000) {
         const host = document.getElementById('top-notifications');
         if (!host) return;
+        // Evita duplicar o mesmo aviso quando duas validações respondem juntas.
+        const title = String(t ?? 'AVISO');
+        const body = String(m ?? '');
+        const duplicate = [...host.querySelectorAll('.top-toast')].find(el =>
+            el.dataset.title === title && el.dataset.message === body
+        );
+        if (duplicate) return;
+
         const icon = kind === "success" ? "fa-circle-check" : kind === "error" ? "fa-circle-exclamation" : "fa-bell";
         const toast = document.createElement('div');
         toast.className = `top-toast ${kind}`;
+        toast.dataset.title = title;
+        toast.dataset.message = body;
         toast.setAttribute('role', kind === 'error' ? 'alert' : 'status');
         const iconBox = document.createElement('div');
         iconBox.className = 'top-toast-icon';
@@ -534,9 +544,9 @@ footer{color:#f2dfb2!important}
         const copy = document.createElement('div');
         copy.className = 'top-toast-copy';
         const heading = document.createElement('strong');
-        heading.textContent = t;
+        heading.textContent = title;
         const message = document.createElement('span');
-        message.textContent = m;
+        message.textContent = body;
         copy.append(heading, message);
         const close = document.createElement('button');
         close.className = 'top-toast-close';
@@ -546,7 +556,7 @@ footer{color:#f2dfb2!important}
         close.addEventListener('click', () => toast.remove());
         toast.append(iconBox, copy, close);
         host.appendChild(toast);
-        while (host.children.length > 3) host.firstElementChild.remove();
+        while (host.children.length > 2) host.firstElementChild.remove();
         const visibleDuration = kind === 'success' ? Math.max(duration, 9000) : duration;
         if (visibleDuration > 0) window.setTimeout(() => {
             if (!toast.isConnected) return;
@@ -1002,6 +1012,48 @@ document.getElementById('winnerCelebration')?.addEventListener('click',e=>{if(e.
   }
 })();
 </script>
+
+
+<style id="notification-position-final-override">
+/* Avisos compactos na lateral: nunca cobrem a tela nem aparecem no topo. */
+#top-notifications {
+  position: fixed !important;
+  inset: 50% 16px auto auto !important;
+  top: 50% !important; right: 16px !important; bottom: auto !important; left: auto !important;
+  width: min(360px, calc(100vw - 32px)) !important;
+  max-width: 360px !important; height: auto !important; max-height: 70vh !important;
+  margin: 0 !important; padding: 0 !important; transform: translateY(-50%) !important;
+  display: flex !important; flex-direction: column !important; align-items: stretch !important;
+  justify-content: center !important; gap: 10px !important; overflow: visible !important;
+  z-index: 2147483647 !important; pointer-events: none !important;
+  background: transparent !important; backdrop-filter: none !important;
+}
+#top-notifications:empty, #top-notifications:has(.top-toast) {
+  background: transparent !important; backdrop-filter: none !important; pointer-events: none !important;
+}
+#top-notifications .top-toast {
+  position: relative !important; inset: auto !important; width: 100% !important; max-width: 360px !important;
+  min-width: 0 !important; margin: 0 !important; padding: 13px 14px !important;
+  grid-template-columns: 34px minmax(0,1fr) 22px !important; gap: 10px !important;
+  border: 1px solid #f5d477 !important; border-radius: 14px !important;
+  background: rgba(12, 27, 19, .98) !important; box-shadow: 0 12px 32px #0009 !important;
+  transform: none !important; animation: toastIn .25s ease both !important;
+  pointer-events: auto !important; box-sizing: border-box !important;
+}
+#top-notifications .top-toast-copy { min-width: 0 !important; }
+#top-notifications .top-toast-copy span { overflow-wrap: anywhere !important; word-break: break-word !important; }
+#top-notifications .top-toast-close { pointer-events: auto !important; }
+@media (max-width: 650px) {
+  #top-notifications {
+    top: auto !important; right: 10px !important; bottom: calc(104px + env(safe-area-inset-bottom, 0px)) !important;
+    left: auto !important; width: min(340px, calc(100vw - 20px)) !important; max-width: 340px !important;
+    max-height: 42vh !important; transform: none !important; justify-content: flex-end !important;
+  }
+  #top-notifications .top-toast { max-width: 340px !important; padding: 11px 12px !important; }
+  #top-notifications .top-toast-copy strong { font-size: 10px !important; }
+  #top-notifications .top-toast-copy span { font-size: 13px !important; line-height: 1.25 !important; }
+}
+</style>
 
 </body>
 </html>
