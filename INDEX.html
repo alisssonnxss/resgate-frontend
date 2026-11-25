@@ -312,13 +312,15 @@ footer{color:#f2dfb2!important}
 
 </head>
 <body class="new-portfolio">
+<div class="holiday-ribbon">🎄 ESPECIAL DE NATAL ALISSONXSS <span>✦</span> BOAS FESTAS, FAMÍLIA! 🎅</div>
+<div id="holiday-snow" aria-hidden="true"></div>
 <div id="top-notifications" class="top-notifications" aria-live="assertive" aria-atomic="true"></div>
 <div id="scroll-progress" aria-hidden="true"></div>
 <div id="custom-alert"><h2 id="alert-title">SISTEMA</h2><p id="alert-msg" style="font-family:'Share Tech Mono';margin:15px 0"></p><button class="close-alert" onclick="closeAlert()">FECHAR</button></div>
 
 <header class="topbar"><a class="brand" href="#inicio"><span class="brand-mark"><img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg.png" alt="Foto de AlissonXSS" onerror="this.src='FOTOS MEMES/titan.jpeg'"></span><span>ALISSON<span class="brand-accent">XSS</span><small>CREATOR • FREE FIRE</small></span></a><nav class="site-nav" aria-label="Navegação principal"><a href="#inicio">INÍCIO</a><a href="#sobre">SOBRE</a><a href="#conteudos">CONTEÚDOS</a><a href="#resgate">RESGATES</a><a href="#parceiros">PARCEIROS</a></nav><a class="top-cta" href="https://www.youtube.com/@alissonnxss" target="_blank" rel="noopener">ACOMPANHAR <i class="fas fa-arrow-up-right-from-square"></i></a></header>
 
-<section class="live-hub" id="liveHub" aria-live="polite">
+<section class="live-hub" id="liveHub" aria-live="polite" style="display:none">
   <div class="live-status-row">
     <span class="live-status-indicator" id="liveIndicator"></span>
     <div class="live-status-copy">
@@ -519,7 +521,7 @@ footer{color:#f2dfb2!important}
                 confetti({ particleCount: 220, spread: 115, origin: { y: 0.25 } });
                 const reward = data.reward || regData.reward || "Recompensa";
                 const msg = `🎁 *RESGATE PREMIUM* 🎁\n👤 *NICK:* ${userLogged.nick}\n🆔 *ID:* ${userLogged.id}\n✨ *ITEM:* ${reward}\n🎫 *CÓD:* ${code}`;
-                showAlert("VOCÊ FOI RÁPIDO! 🎉", `Parabéns, ${userLogged.nick}! Seu resgate de ${reward} foi registrado com sucesso. Confira o histórico de premiados!`, "success", 8500);
+                showWinnerCelebration(userLogged.nick, userLogged.id, reward);
                 await loadHistory();
 
                 setTimeout(() => {
@@ -549,9 +551,14 @@ footer{color:#f2dfb2!important}
             const data = await res.json();
             historyDataGlobal = data;
             const body = document.getElementById('historyBody');
-            body.innerHTML = [...data].reverse().slice(0, 5).map(log => `
-                <tr><td style="font-weight:bold">${log.user}</td><td style="color:var(--primary)">${log.reward}</td><td>ID: ${log.id}</td></tr>
-            `).join('');
+            body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
+                const uid = String(log.id || '').replace(/\D/g, '');
+                const profile = uid ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(uid)}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+                const nick = escapeHtml(log.user || 'Jogador');
+                const reward = escapeHtml(log.reward || 'Recompensa');
+                const idText = escapeHtml(log.id || '—');
+                return `<tr class="winner-row" tabindex="0" role="link" aria-label="Abrir perfil de ${nick} no Free Fire Mania" onclick="openWinnerProfile('${uid}')"><td style="font-weight:bold">${nick}<small class="winner-hint">VER PERFIL ↗</small></td><td style="color:var(--primary)">${reward}</td><td>ID: ${idText}</td></tr>`;
+            }).join('');
         } catch(e) {}
     }
     setInterval(loadHistory, 8000);
@@ -587,6 +594,7 @@ footer{color:#f2dfb2!important}
   let currentVideoId = "";
 
   function offline(message) {
+    hub.style.display = "none";
     hub.classList.remove("is-live");
     title.textContent = "ALISSONXSS NÃO ESTÁ AO VIVO";
     subtitle.textContent = message || "Assim que a live começar, ela aparecerá aqui.";
@@ -597,6 +605,7 @@ footer{color:#f2dfb2!important}
   function live(video) {
     const videoId = video.id && (video.id.videoId || video.id);
     if (!videoId) return offline("Não foi possível carregar a transmissão agora.");
+    hub.style.display = "block";
     hub.classList.add("is-live");
     title.textContent = "ALISSONXSS ESTÁ AO VIVO!";
     subtitle.textContent = video.snippet?.title || "Assista à transmissão diretamente aqui pelo site!";
@@ -632,6 +641,114 @@ footer{color:#f2dfb2!important}
   checkLive();
   window.setInterval(checkLive, 60000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) checkLive(); });
+})();
+</script>
+
+
+<style id="alisson-christmas-final">
+:root{--primary:#53e69a!important;--secondary:#b91f3b!important;--accent:#f5d477!important;--gold:#f5d477!important;--bg:#07140e!important;--card-bg:#10251a!important;--border:rgba(245,212,119,.32)!important}
+body.new-portfolio{background:radial-gradient(ellipse at 50% -10%,#145c36 0,transparent 42%),radial-gradient(ellipse at 100% 30%,#64152655,transparent 35%),linear-gradient(180deg,#07140e,#0b1e14 55%,#07140e)!important}
+.topbar{background:rgba(5,24,14,.94)!important;border-bottom-color:#e6c76b55!important}
+.brand-mark{background:linear-gradient(135deg,#b51f3b,#f5d477)!important;color:#fff!important}
+.brand-accent,.eyebrow,.section-overline,.text-link,.hero-socials a:hover{color:#f5d477!important}
+.hero-new{background:radial-gradient(ellipse at 78% 45%,#176a3b55,transparent 42%),radial-gradient(ellipse at 8% 15%,#9f1d351c,transparent 35%),linear-gradient(125deg,#07140e,#10251a 55%,#1c1015)!important}
+.hero-new h1 span{ -webkit-text-stroke-color:#f5d477!important}
+.hero-photo-frame{background:linear-gradient(145deg,#f5d477,#1d9b57 48%,#b91f3b)!important}
+.hero-photo-frame,.floating-chip,.fact-card,.media-panel,.instagram-banner,.redeem-window,.tool-card,.creator-card,.history-shell{box-shadow:0 18px 48px #0007,0 0 0 1px #f5d47714!important}
+.floating-chip{border-color:#f5d47766!important;color:#fff3cf!important}
+.btn-primary,.btn-action,.instagram-banner>a{background:linear-gradient(100deg,#16864a,#53e69a)!important;color:#06170d!important}
+.btn-ghost,.top-cta{border-color:#f5d47777!important}
+.section-wrap,.social-strip,.site-footer{background-color:transparent!important}
+.social-strip{background:#0c2116!important;border-color:#f5d47733!important}
+.social-strip>a i,.fact-icon,.big-lock,.tool-card i{color:#f5d477!important}
+.section-heading h2 em,.about-grid h2 em,.redeem-intro h2 em{color:#53e69a!important}
+.fact-card,.media-panel,.tool-card,.creator-card,.history-shell{background:linear-gradient(145deg,#123321,#171b17)!important;border-color:#f5d47733!important}
+.redeem-section{background:radial-gradient(ellipse at 75% 50%,#176a3b38,transparent 38%),#09170f!important}
+.input-hacker{border-color:#53e69a66!important}
+.live-hub{background:linear-gradient(120deg,#103923,#25141a)!important;border-color:#f5d47777!important}
+.live-status-tag{color:#f5d477!important;border-color:#f5d47777!important}
+.live-hub.is-live .live-status-tag{color:#ff7c8e!important;border-color:#ff7c8e!important}
+.live-hub.is-live .live-status-indicator{background:#ff334f!important}
+.history-table td:nth-child(2){color:#f5d477!important}
+.winner-row{cursor:pointer;transition:background .2s}
+.winner-row:hover,.winner-row:focus{background:#f5d47712;outline:1px solid #f5d47755}
+.winner-hint{display:block;color:#53e69a;font:9px 'Share Tech Mono';margin-top:5px;letter-spacing:1px}
+.footer-brand span{color:#53e69a!important}
+.holiday-ribbon{position:relative;z-index:1301;text-align:center;padding:9px 12px;background:linear-gradient(90deg,#751629,#a91f37,#751629);border-bottom:1px solid #f5d47788;color:#fff4d7;font:700 10px 'Share Tech Mono';letter-spacing:2px}
+.holiday-ribbon span{color:#f5d477;padding:0 8px}
+#holiday-snow{position:fixed;inset:0;z-index:1250;pointer-events:none;overflow:hidden}
+.holiday-flake{position:absolute;top:-20px;color:#fff;opacity:.75;text-shadow:0 0 8px #fff;animation:holidayFall linear infinite}
+@keyframes holidayFall{to{transform:translate3d(var(--wind),110vh,0) rotate(360deg)}}
+
+/* Avisos e parabéns sempre no centro da tela, independente da rolagem */
+#top-notifications{position:fixed!important;inset:0!important;z-index:50000!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;padding:18px!important;pointer-events:none!important;background:transparent}
+#top-notifications:has(.top-toast){background:rgba(0,0,0,.48);backdrop-filter:blur(5px);pointer-events:auto}
+.top-toast{width:min(520px,100%)!important;grid-template-columns:46px 1fr auto!important;padding:22px!important;border-radius:20px!important;background:linear-gradient(145deg,#123b27,#24151b)!important;border:2px solid #f5d477!important;box-shadow:0 25px 90px #000c,0 0 40px #f5d47733!important;animation:centerToastIn .45s cubic-bezier(.2,.9,.2,1) both!important}
+.top-toast.success{border-color:#53e69a!important}
+.top-toast-icon{width:46px!important;height:46px!important;background:#f5d47722!important;color:#f5d477!important}
+.top-toast.success .top-toast-icon{background:#53e69a22!important;color:#53e69a!important}
+.top-toast-copy strong{font:700 13px 'Share Tech Mono'!important;color:#f5d477!important}
+.top-toast-copy span{font-size:17px!important;color:#fff!important}
+.top-toast-close{color:#fff!important}
+@keyframes centerToastIn{from{opacity:0;transform:translateY(22px) scale(.88)}to{opacity:1;transform:translateY(0) scale(1)}}
+.winner-celebration{position:fixed;inset:0;z-index:60000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(10px)}
+.winner-celebration.active{display:flex;animation:centerToastIn .35s ease both}
+.winner-card{position:relative;width:min(490px,100%);padding:30px 24px 24px;text-align:center;border:2px solid #f5d477;border-radius:24px;background:radial-gradient(circle at 50% 0,#1c6b3c,#10251a 52%,#24131a);box-shadow:0 30px 100px #000c,0 0 45px #f5d47733;overflow:hidden}
+.winner-card:before{content:'✦  🎄  ✦  🎁  ✦';display:block;color:#f5d477;font-size:22px;letter-spacing:8px;margin-bottom:14px}
+.winner-card .winner-kicker{color:#53e69a;font:11px 'Share Tech Mono';letter-spacing:2px}
+.winner-card h2{font:700 clamp(20px,5vw,28px) 'Syncopate';color:#fff;margin:12px 0}
+.winner-card .winner-name{font:700 21px 'Rajdhani';color:#f5d477}
+.winner-card .winner-reward{margin:17px 0;padding:16px;border-radius:14px;background:#0005;border:1px solid #f5d47755;color:#fff;font:700 19px 'Rajdhani';overflow-wrap:anywhere}
+.winner-card .winner-id{color:#c8d6cb;font:12px 'Share Tech Mono';margin-bottom:18px}
+.winner-profile-link{display:flex;justify-content:center;align-items:center;gap:9px;padding:14px;border-radius:10px;background:linear-gradient(100deg,#16864a,#53e69a);color:#06170d;text-decoration:none;font:700 11px 'Share Tech Mono';letter-spacing:.5px}
+.winner-close{margin-top:12px;border:1px solid #f5d47766;background:#fff1;color:#fff;padding:11px 22px;border-radius:9px;font:10px 'Share Tech Mono';cursor:pointer}
+@media(max-width:650px){.holiday-ribbon{font-size:8px;letter-spacing:1px;padding:8px 4px}.top-toast{padding:17px!important;grid-template-columns:38px 1fr auto!important}.top-toast-icon{width:38px!important;height:38px!important}.top-toast-copy span{font-size:15px!important}.winner-card{padding:25px 17px 18px}.winner-card .winner-reward{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.holiday-flake{display:none}.top-toast,.winner-celebration{animation:none!important}}
+</style>
+<div class="winner-celebration" id="winnerCelebration" role="dialog" aria-modal="true" aria-labelledby="winnerTitle">
+  <div class="winner-card">
+    <div class="winner-kicker">RESGATE CONFIRMADO • ESPECIAL DE NATAL</div>
+    <h2 id="winnerTitle">VOCÊ FOI RÁPIDO! 🎉</h2>
+    <div class="winner-name" id="winnerNick"></div>
+    <p style="color:#e5eadf;margin-top:8px">Parabéns! Você conseguiu garantir:</p>
+    <div class="winner-reward" id="winnerReward"></div>
+    <div class="winner-id" id="winnerUid"></div>
+    <a class="winner-profile-link" id="winnerProfileLink" href="https://www.freefiremania.com.br/perfil-free-fire-id.html" target="_blank" rel="noopener">
+      <i class="fas fa-gamepad"></i> VER PERFIL NO FREE FIRE MANIA
+    </a>
+    <button class="winner-close" type="button" onclick="closeWinnerCelebration()">CONTINUAR NO SITE</button>
+  </div>
+</div>
+<script>
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function openWinnerProfile(uid){
+  const clean = String(uid || '').replace(/\D/g,'');
+  const url = clean ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(clean)}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+  window.open(url,'_blank','noopener');
+}
+function showWinnerCelebration(nick, uid, reward){
+  const clean = String(uid || '').replace(/\D/g,'');
+  document.getElementById('winnerNick').textContent = nick || 'Jogador';
+  document.getElementById('winnerReward').textContent = reward || 'Recompensa';
+  document.getElementById('winnerUid').textContent = 'ID FREE FIRE: ' + (uid || 'não informado');
+  document.getElementById('winnerProfileLink').href = clean ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(clean)}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+  document.getElementById('winnerCelebration').classList.add('active');
+  if(typeof confetti === 'function') confetti({particleCount:260,spread:130,origin:{y:.5},colors:['#53e69a','#f5d477','#b91f3b','#ffffff']});
+}
+function closeWinnerCelebration(){document.getElementById('winnerCelebration').classList.remove('active');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeWinnerCelebration();closeAlert();}});
+document.getElementById('winnerCelebration')?.addEventListener('click',e=>{if(e.target.id==='winnerCelebration')closeWinnerCelebration();});
+(function christmasSnow(){
+  const host=document.getElementById('holiday-snow'); if(!host) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for(let i=0;i<34;i++){
+    const f=document.createElement('span'); f.className='holiday-flake'; f.textContent=Math.random()>.35?'❄':'•';
+    f.style.left=(Math.random()*100)+'%'; f.style.fontSize=(8+Math.random()*13)+'px';
+    f.style.animationDuration=(9+Math.random()*13)+'s'; f.style.animationDelay=(-Math.random()*18)+'s';
+    f.style.setProperty('--wind',(Math.random()*100-50)+'px'); host.appendChild(f);
+  }
 })();
 </script>
 
