@@ -553,7 +553,7 @@ footer{color:#f2dfb2!important}
             const body = document.getElementById('historyBody');
             body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
                 const uid = String(log.id || '').replace(/\D/g, '');
-                const profile = uid ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(uid)}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+                const profile = uid ? `https://www.freefiremania.com.br/jogador/${uid}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
                 const nick = escapeHtml(log.user || 'Jogador');
                 const reward = escapeHtml(log.reward || 'Recompensa');
                 const idText = escapeHtml(log.id || '—');
@@ -704,6 +704,64 @@ body.new-portfolio{background:radial-gradient(ellipse at 50% -10%,#145c36 0,tran
 .winner-close{margin-top:12px;border:1px solid #f5d47766;background:#fff1;color:#fff;padding:11px 22px;border-radius:9px;font:10px 'Share Tech Mono';cursor:pointer}
 @media(max-width:650px){.holiday-ribbon{font-size:8px;letter-spacing:1px;padding:8px 4px}.top-toast{padding:17px!important;grid-template-columns:38px 1fr auto!important}.top-toast-icon{width:38px!important;height:38px!important}.top-toast-copy span{font-size:15px!important}.winner-card{padding:25px 17px 18px}.winner-card .winner-reward{font-size:17px}}
 @media(prefers-reduced-motion:reduce){.holiday-flake{display:none}.top-toast,.winner-celebration{animation:none!important}}
+
+/* CORREÇÃO DEFINITIVA: notificações centralizadas sem deslocamento lateral */
+#top-notifications{
+  position:fixed!important;
+  inset:0!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  bottom:0!important;
+  width:100vw!important;
+  max-width:none!important;
+  height:100dvh!important;
+  margin:0!important;
+  transform:none!important;
+  box-sizing:border-box!important;
+  padding:18px max(18px, env(safe-area-inset-right)) 18px max(18px, env(safe-area-inset-left))!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+#top-notifications .top-toast{
+  display:grid!important;
+  width:100%!important;
+  max-width:520px!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+  grid-template-columns:46px minmax(0,1fr) auto!important;
+  margin:0 auto!important;
+  overflow-wrap:anywhere!important;
+}
+#top-notifications .top-toast-copy{
+  min-width:0!important;
+  overflow-wrap:anywhere!important;
+}
+#top-notifications .top-toast-copy span{
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+@media(max-width:600px){
+  #top-notifications{
+    padding:14px max(12px, env(safe-area-inset-right)) 14px max(12px, env(safe-area-inset-left))!important;
+  }
+  #top-notifications .top-toast{
+    width:100%!important;
+    max-width:520px!important;
+    grid-template-columns:36px minmax(0,1fr) 24px!important;
+    gap:10px!important;
+    padding:16px!important;
+  }
+  #top-notifications .top-toast-icon{
+    width:36px!important;
+    height:36px!important;
+  }
+}
+
 </style>
 <div class="winner-celebration" id="winnerCelebration" role="dialog" aria-modal="true" aria-labelledby="winnerTitle">
   <div class="winner-card">
@@ -725,7 +783,7 @@ function escapeHtml(value){
 }
 function openWinnerProfile(uid){
   const clean = String(uid || '').replace(/\D/g,'');
-  const url = clean ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(clean)}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+  const url = clean ? `https://www.freefiremania.com.br/jogador/${clean}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
   window.open(url,'_blank','noopener');
 }
 function showWinnerCelebration(nick, uid, reward){
@@ -733,7 +791,7 @@ function showWinnerCelebration(nick, uid, reward){
   document.getElementById('winnerNick').textContent = nick || 'Jogador';
   document.getElementById('winnerReward').textContent = reward || 'Recompensa';
   document.getElementById('winnerUid').textContent = 'ID FREE FIRE: ' + (uid || 'não informado');
-  document.getElementById('winnerProfileLink').href = clean ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(clean)}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+  document.getElementById('winnerProfileLink').href = clean ? `https://www.freefiremania.com.br/jogador/${clean}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
   document.getElementById('winnerCelebration').classList.add('active');
   if(typeof confetti === 'function') confetti({particleCount:260,spread:130,origin:{y:.5},colors:['#53e69a','#f5d477','#b91f3b','#ffffff']});
 }
