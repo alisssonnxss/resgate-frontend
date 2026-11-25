@@ -310,6 +310,52 @@ footer{color:#f2dfb2!important}
 @media(max-width:600px){.top-notifications{top:calc(env(safe-area-inset-top,0px) + 8px);width:calc(100% - 16px)}.top-toast{grid-template-columns:32px 1fr auto;padding:11px 12px;gap:9px}.top-toast-icon{width:32px;height:32px;font-size:15px}.top-toast-copy strong{font-size:10px}.top-toast-copy span{font-size:13px}}
 </style>
 
+
+<style id="alissonxss-final-notification-live">
+/* Notificações laterais fixas: acima do site, sem escurecer nem bloquear a tela */
+#top-notifications{
+  position:fixed!important;top:88px!important;right:18px!important;left:auto!important;bottom:auto!important;
+  width:min(410px,calc(100vw - 28px))!important;max-width:410px!important;height:auto!important;
+  max-height:calc(100vh - 115px)!important;display:flex!important;flex-direction:column!important;
+  align-items:stretch!important;justify-content:flex-start!important;gap:10px!important;
+  padding:0!important;margin:0!important;transform:none!important;overflow:visible!important;
+  z-index:2147483647!important;pointer-events:none!important;background:transparent!important;
+}
+#top-notifications:empty{visibility:hidden!important}
+#top-notifications .top-toast{
+  position:relative!important;width:100%!important;max-width:none!important;min-width:0!important;
+  margin:0!important;box-sizing:border-box!important;pointer-events:auto!important;
+  animation:toastIn .35s cubic-bezier(.2,.8,.2,1) both!important;
+  border-radius:14px!important;background:rgba(13,15,24,.98)!important;
+  backdrop-filter:blur(18px);box-shadow:0 18px 55px #000b,0 0 24px #a78bfa26!important;
+}
+#top-notifications .top-toast.success{
+  border:1px solid #53e69a!important;box-shadow:0 18px 55px #000b,0 0 30px #53e69a45!important;
+}
+#top-notifications .top-toast.error{border:1px solid #ff7188!important}
+#top-notifications .top-toast-copy span{overflow-wrap:anywhere}
+#top-notifications .top-toast-close{cursor:pointer!important}
+.live-hub{
+  width:100%!important;margin:0 0 16px!important;padding:15px!important;
+  border-radius:13px!important;background:linear-gradient(130deg,#171426,#10101b)!important;
+  border:1px solid #ff405b66!important;box-shadow:0 12px 30px #0005!important;
+}
+.live-hub.is-live{border-color:#ff405b!important;box-shadow:0 0 25px #ff405b22!important}
+.live-hub .live-status-tag{color:#ff7188!important;border-color:#ff405b77!important}
+.live-hub.is-live .live-status-tag{background:#ff344f20!important;color:#ff8798!important}
+.live-hub .live-player-ratio{border:1px solid #ff405b55!important}
+.live-hub .live-player-heading{color:#ff8798!important}
+.youtube-panel>.live-hub{display:block}
+@media(max-width:650px){
+  #top-notifications{top:72px!important;right:10px!important;left:auto!important;width:calc(100vw - 20px)!important;max-width:none!important;max-height:calc(100vh - 150px)!important}
+  #top-notifications .top-toast{padding:12px!important;grid-template-columns:34px minmax(0,1fr) 22px!important;gap:9px!important}
+  .live-hub{padding:12px!important;margin-bottom:12px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #top-notifications .top-toast{animation:none!important}
+}
+</style>
+
 </head>
 <body class="new-portfolio">
 <div class="holiday-ribbon">🎄 ESPECIAL DE NATAL ALISSONXSS <span>✦</span> BOAS FESTAS, FAMÍLIA! 🎅</div>
@@ -320,25 +366,6 @@ footer{color:#f2dfb2!important}
 
 <header class="topbar"><a class="brand" href="#inicio"><span class="brand-mark"><img src="FOTOS MEMES/f583f84d8b008b3f3bfb287a17ee198e~tplv-tiktokx-cropcenter_1080_1080.jpeg.png" alt="Foto de AlissonXSS" onerror="this.src='FOTOS MEMES/titan.jpeg'"></span><span>ALISSON<span class="brand-accent">XSS</span><small>CREATOR • FREE FIRE</small></span></a><nav class="site-nav" aria-label="Navegação principal"><a href="#inicio">INÍCIO</a><a href="#sobre">SOBRE</a><a href="#conteudos">CONTEÚDOS</a><a href="#resgate">RESGATES</a><a href="#parceiros">PARCEIROS</a></nav><a class="top-cta" href="https://www.youtube.com/@alissonnxss" target="_blank" rel="noopener">ACOMPANHAR <i class="fas fa-arrow-up-right-from-square"></i></a></header>
 
-<section class="live-hub" id="liveHub" aria-live="polite" style="display:none">
-  <div class="live-status-row">
-    <span class="live-status-indicator" id="liveIndicator"></span>
-    <div class="live-status-copy">
-      <strong id="liveTitle">VERIFICANDO TRANSMISSÃO</strong>
-      <small id="liveSubtitle">Conferindo se AlissonXSS está ao vivo no YouTube</small>
-    </div>
-    <span class="live-status-tag" id="liveTag">YOUTUBE</span>
-  </div>
-  <div class="live-player-wrap" id="livePlayerWrap" hidden>
-    <div class="live-player-heading"><span><i class="fas fa-satellite-dish"></i> TRANSMISSÃO AO VIVO</span><span class="live-now-pill">● AO VIVO</span></div>
-    <div class="live-player-ratio"><iframe id="livePlayer" title="Transmissão ao vivo de AlissonXSS" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-  </div>
-  <div class="live-offline" id="liveOffline">
-    <i class="fab fa-youtube"></i>
-    <span>Quando eu entrar ao vivo, a transmissão aparecerá aqui automaticamente.</span>
-    <a href="https://www.youtube.com/@alissonnxss/live" target="_blank" rel="noopener">ABRIR CANAL <i class="fas fa-arrow-up-right-from-square"></i></a>
-  </div>
-</section>
 <main>
 <section class="hero-new" id="inicio">
   <div class="hero-noise"></div><div class="hero-copy">
@@ -356,7 +383,25 @@ footer{color:#f2dfb2!important}
 
 <section class="social-strip"><div><strong>MINHAS REDES</strong><span>Me encontre também fora daqui</span></div><a href="https://www.instagram.com/alissonnxss/" target="_blank"><i class="fab fa-instagram"></i><span>Instagram</span><b>↗</b></a><a href="https://www.tiktok.com/@alissonnxss" target="_blank"><i class="fab fa-tiktok"></i><span>TikTok</span><b>↗</b></a><a href="https://www.youtube.com/@alissonnxss" target="_blank"><i class="fab fa-youtube"></i><span>YouTube</span><b>↗</b></a><a href="https://discord.gg/J8GWtnafub" target="_blank"><i class="fab fa-discord"></i><span>Discord</span><b>↗</b></a></section>
 
-<section class="content-section section-wrap" id="conteudos"><div class="section-heading"><div><div class="section-overline">02 — ACOMPANHE DE PERTO</div><h2>MEUS <em>CONTEÚDOS</em></h2></div><p>Vídeos, shorts e publicações direto das minhas plataformas.</p></div><div class="content-grid"><article class="media-panel youtube-panel"><div class="panel-heading"><span class="platform-icon yt"><i class="fab fa-youtube"></i></span><div><strong>YOUTUBE</strong><small>Vídeos e Shorts</small></div><a href="https://www.youtube.com/@alissonnxss" target="_blank" rel="noopener">VER CANAL ↗</a></div><iframe src="https://www.youtube.com/embed/videoseries?list=UULyqSQtrVhAUg78ie_Fg5fQ" title="Vídeos do canal Alissonxss" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></article><article class="media-panel tiktok-panel"><div class="panel-heading"><span class="platform-icon tt"><i class="fab fa-tiktok"></i></span><div><strong>TIKTOK</strong><small>Clipes e novidades</small></div><a href="https://www.tiktok.com/@alissonnxss" target="_blank" rel="noopener">VER PERFIL ↗</a></div><div class="tiktok-holder"><blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alissonnxss" data-unique-id="alissonnxss" data-embed-type="creator" style="max-width:780px;min-width:288px"><section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@alissonnxss">@alissonnxss</a></section></blockquote></div></article></div><div class="instagram-banner"><div class="insta-symbol"><i class="fab fa-instagram"></i></div><div><strong>O QUE ESTÁ ROLANDO NO INSTAGRAM?</strong><p>Reels, fotos, stories e atualizações. Acesse meu perfil e acompanhe tudo.</p></div><a href="https://www.instagram.com/alissonnxss/" target="_blank" rel="noopener">ABRIR INSTAGRAM <i class="fas fa-arrow-up-right-from-square"></i></a></div></section>
+<section class="content-section section-wrap" id="conteudos"><div class="section-heading"><div><div class="section-overline">02 — ACOMPANHE DE PERTO</div><h2>MEUS <em>CONTEÚDOS</em></h2></div><p>Vídeos, shorts e publicações direto das minhas plataformas.</p></div><div class="content-grid"><article class="media-panel youtube-panel"><div class="panel-heading"><span class="platform-icon yt"><i class="fab fa-youtube"></i></span><div><strong>YOUTUBE</strong><small>Vídeos e Shorts</small></div><a href="https://www.youtube.com/@alissonnxss" target="_blank" rel="noopener">VER CANAL ↗</a></div><section class="live-hub" id="liveHub" aria-live="polite" style="display:none">
+  <div class="live-status-row">
+    <span class="live-status-indicator" id="liveIndicator"></span>
+    <div class="live-status-copy">
+      <strong id="liveTitle">VERIFICANDO TRANSMISSÃO</strong>
+      <small id="liveSubtitle">Conferindo se AlissonXSS está ao vivo no YouTube</small>
+    </div>
+    <span class="live-status-tag" id="liveTag">YOUTUBE</span>
+  </div>
+  <div class="live-player-wrap" id="livePlayerWrap" hidden>
+    <div class="live-player-heading"><span><i class="fas fa-satellite-dish"></i> TRANSMISSÃO AO VIVO</span><span class="live-now-pill">● AO VIVO</span></div>
+    <div class="live-player-ratio"><iframe id="livePlayer" title="Transmissão ao vivo de AlissonXSS" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  </div>
+  <div class="live-offline" id="liveOffline">
+    <i class="fab fa-youtube"></i>
+    <span>Quando eu entrar ao vivo, a transmissão aparecerá aqui automaticamente.</span>
+    <a href="https://www.youtube.com/@alissonnxss/live" target="_blank" rel="noopener">ABRIR CANAL <i class="fas fa-arrow-up-right-from-square"></i></a>
+  </div>
+</section><iframe src="https://www.youtube.com/embed/videoseries?list=UULyqSQtrVhAUg78ie_Fg5fQ" title="Vídeos do canal Alissonxss" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></article><article class="media-panel tiktok-panel"><div class="panel-heading"><span class="platform-icon tt"><i class="fab fa-tiktok"></i></span><div><strong>TIKTOK</strong><small>Clipes e novidades</small></div><a href="https://www.tiktok.com/@alissonnxss" target="_blank" rel="noopener">VER PERFIL ↗</a></div><div class="tiktok-holder"><blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alissonnxss" data-unique-id="alissonnxss" data-embed-type="creator" style="max-width:780px;min-width:288px"><section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@alissonnxss">@alissonnxss</a></section></blockquote></div></article></div><div class="instagram-banner"><div class="insta-symbol"><i class="fab fa-instagram"></i></div><div><strong>O QUE ESTÁ ROLANDO NO INSTAGRAM?</strong><p>Reels, fotos, stories e atualizações. Acesse meu perfil e acompanhe tudo.</p></div><a href="https://www.instagram.com/alissonnxss/" target="_blank" rel="noopener">ABRIR INSTAGRAM <i class="fas fa-arrow-up-right-from-square"></i></a></div></section>
 
 <section class="redeem-section section-wrap" id="resgate"><div class="section-overline">03 — ÁREA EXCLUSIVA DA COMUNIDADE</div><div class="redeem-layout"><div class="redeem-intro"><span class="big-lock"><i class="fas fa-gift"></i></span><h2>RESGATE<br><em>SEU CÓDIGO</em></h2><p>Entre com seu nick e ID para acessar a área de resgate. Fique de olho nas novidades e aproveite as recompensas disponíveis.</p><div class="redeem-note"><i class="fas fa-circle-info"></i> O resgate depende da disponibilidade e validação do código.</div></div><div class="redeem-window"><div id="redeem-area" style="display:none"><h3>ÁREA DE RESGATE</h3><p class="form-caption">CONTA CONECTADA</p><input type="text" id="codeInput" class="input-hacker" placeholder="DIGITE O CÓDIGO"><button class="btn-action" id="btnVerify" onclick="validar()">RESGATAR AGORA <i class="fas fa-arrow-right"></i></button><p id="userStatus" class="user-status"></p><button onclick="logout()" class="logout-btn">SAIR DA CONTA</button></div><div id="lock-screen"><span class="lock-circle"><i class="fas fa-lock"></i></span><h3>ACESSO À CENTRAL</h3><p class="form-caption">FAÇA LOGIN PARA LIBERAR O RESGATE</p><button class="btn-action" onclick="mostrarLogin()">FAZER LOGIN <i class="fas fa-arrow-right"></i></button></div><div id="login-form" style="display:none;margin-top:20px"><h3>ENTRAR NA CENTRAL</h3><p class="form-caption">INFORME SEUS DADOS DO FREE FIRE</p><input type="text" id="loginNick" class="input-hacker" placeholder="SEU NICK"><input type="text" id="loginID" class="input-hacker" placeholder="SEU ID"><button class="btn-action" onclick="salvarLogin()">ENTRAR NO SISTEMA <i class="fas fa-arrow-right"></i></button></div></div></div></section>
 
@@ -431,34 +476,44 @@ footer{color:#f2dfb2!important}
         loadMusic(currentM); audio.play();
     }
 
-    function showAlert(t, m, kind = "info", duration = 5200) {
+    function showAlert(t, m, kind = "info", duration = 9000) {
         const host = document.getElementById('top-notifications');
         if (!host) return;
 
-        // O container cobre a janela inteira e alinha o aviso no centro.
-        const hostStyles = {
-            position: 'fixed', inset: '0', left: '0', top: '0', right: '0', bottom: '0',
-            width: '100vw', height: '100vh', maxWidth: 'none',
-            display: 'flex', flexDirection: 'column', alignItems: 'center',
-            justifyContent: 'center', gap: '12px', padding: '18px',
-            margin: '0', transform: 'none', boxSizing: 'border-box',
-            overflowY: 'auto', overflowX: 'hidden', zIndex: '2147483647',
-            background: 'rgba(0,0,0,.72)', pointerEvents: 'auto', visibility: 'visible'
-        };
-        Object.entries(hostStyles).forEach(([key, value]) =>
-            host.style.setProperty(key.replace(/[A-Z]/g, c => '-' + c.toLowerCase()), value, 'important')
-        );
+        // Toast lateral: permanece fixo na viewport, sem bloquear a página.
+        host.style.cssText = '';
+        host.style.setProperty('position', 'fixed', 'important');
+        host.style.setProperty('top', '88px', 'important');
+        host.style.setProperty('right', '18px', 'important');
+        host.style.setProperty('left', 'auto', 'important');
+        host.style.setProperty('bottom', 'auto', 'important');
+        host.style.setProperty('width', 'min(410px, calc(100vw - 28px))', 'important');
+        host.style.setProperty('max-width', '410px', 'important');
+        host.style.setProperty('height', 'auto', 'important');
+        host.style.setProperty('max-height', 'calc(100vh - 115px)', 'important');
+        host.style.setProperty('display', 'flex', 'important');
+        host.style.setProperty('flex-direction', 'column', 'important');
+        host.style.setProperty('align-items', 'stretch', 'important');
+        host.style.setProperty('justify-content', 'flex-start', 'important');
+        host.style.setProperty('gap', '10px', 'important');
+        host.style.setProperty('padding', '0', 'important');
+        host.style.setProperty('margin', '0', 'important');
+        host.style.setProperty('transform', 'none', 'important');
+        host.style.setProperty('overflow', 'visible', 'important');
+        host.style.setProperty('z-index', '2147483647', 'important');
+        host.style.setProperty('pointer-events', 'none', 'important');
+        host.style.setProperty('visibility', 'visible', 'important');
+        host.style.setProperty('background', 'transparent', 'important');
 
         const icon = kind === "success" ? "fa-circle-check" : kind === "error" ? "fa-circle-exclamation" : "fa-bell";
         const toast = document.createElement('div');
         toast.className = `top-toast ${kind}`;
-        toast.style.setProperty('width', 'min(520px, 100%)', 'important');
-        toast.style.setProperty('max-width', '520px', 'important');
-        toast.style.setProperty('min-width', '0', 'important');
-        toast.style.setProperty('margin', 'auto', 'important');
-        toast.style.setProperty('transform', 'none', 'important');
-        toast.style.setProperty('animation', 'none', 'important');
-        toast.style.setProperty('box-sizing', 'border-box', 'important');
+        toast.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+        toast.style.setProperty('pointer-events', 'auto', 'important');
+        toast.style.setProperty('width', '100%', 'important');
+        toast.style.setProperty('max-width', 'none', 'important');
+        toast.style.setProperty('margin', '0', 'important');
+        toast.style.setProperty('animation', 'toastIn .35s cubic-bezier(.2,.8,.2,1) both', 'important');
 
         const copy = document.createElement('div');
         copy.className = 'top-toast-copy';
@@ -479,37 +534,24 @@ footer{color:#f2dfb2!important}
         close.type = 'button';
         close.setAttribute('aria-label', 'Fechar notificação');
         close.innerHTML = '&times;';
-        close.addEventListener('click', () => {
-            toast.remove();
-            if (!host.children.length) {
-                host.style.setProperty('visibility', 'hidden', 'important');
-                host.style.setProperty('background', 'transparent', 'important');
-                host.style.setProperty('pointer-events', 'none', 'important');
-            }
-        });
+        close.addEventListener('click', () => toast.remove());
 
         toast.append(iconBox, copy, close);
         host.appendChild(toast);
-        while (host.children.length > 3) host.firstElementChild.remove();
+        while (host.children.length > 4) host.firstElementChild.remove();
 
-        window.setTimeout(() => {
-            if (!toast.isConnected) return;
-            toast.remove();
-            if (!host.children.length) {
-                host.style.setProperty('visibility', 'hidden', 'important');
-                host.style.setProperty('background', 'transparent', 'important');
-                host.style.setProperty('pointer-events', 'none', 'important');
-            }
-        }, duration);
+        const visibleDuration = kind === 'success' ? Math.max(duration, 18000) : duration;
+        if (visibleDuration > 0) {
+            window.setTimeout(() => {
+                if (!toast.isConnected) return;
+                toast.style.animation = 'toastOut .25s ease forwards';
+                window.setTimeout(() => toast.remove(), 260);
+            }, visibleDuration);
+        }
     }
+
     function closeAlert() {
         document.querySelectorAll('.top-toast').forEach(el => el.remove());
-        const host = document.getElementById('top-notifications');
-        if (host) {
-            host.style.setProperty('visibility', 'hidden', 'important');
-            host.style.setProperty('background', 'transparent', 'important');
-            host.style.setProperty('pointer-events', 'none', 'important');
-        }
     }
     function dailyRedeemKey(id) {
         const now = new Date();
@@ -564,6 +606,7 @@ footer{color:#f2dfb2!important}
                 localStorage.setItem(dailyKey, JSON.stringify({ code, nick: userLogged.nick, at: Date.now() }));
                 confetti({ particleCount: 220, spread: 115, origin: { y: 0.25 } });
                 const reward = data.reward || regData.reward || "Recompensa";
+                showAlert("RESGATE CONCLUÍDO!", `${userLogged.nick}, sua recompensa foi confirmada: ${reward}.`, "success", 22000);
                 showWinnerCelebration(userLogged.nick, userLogged.id, reward);
                 await loadHistory();
 
@@ -903,8 +946,29 @@ function openWinnerProfile(uid){
   const url = clean ? `https://www.freefiremania.com.br/jogador/${clean}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
   window.open(url,'_blank','noopener');
 }
+function playRedeemSuccessSound(){
+  try{
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if(!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+    [659.25, 783.99, 987.77, 1318.51].forEach((frequency, index) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, now + index * .105);
+      gain.gain.exponentialRampToValueAtTime(.13, now + index * .105 + .025);
+      gain.gain.exponentialRampToValueAtTime(.0001, now + index * .105 + .28);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(now + index * .105); osc.stop(now + index * .105 + .30);
+    });
+    window.setTimeout(() => ctx.close().catch(()=>{}), 1200);
+  }catch(error){ console.warn('Som de confirmação indisponível:', error); }
+}
 function showWinnerCelebration(nick, uid, reward){
   const clean = String(uid || '').replace(/\D/g,'');
+  playRedeemSuccessSound();
   document.getElementById('winnerNick').textContent = nick || 'Jogador';
   document.getElementById('winnerReward').textContent = reward || 'Recompensa';
   document.getElementById('winnerUid').textContent = 'ID FREE FIRE: ' + (uid || 'não informado');
