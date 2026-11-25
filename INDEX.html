@@ -399,6 +399,138 @@ footer{color:#f2dfb2!important}
 }
 </style>
 
+
+<style id="notifications-reliable-final">
+/* Container sem overlay: lateral no desktop e canto inferior no celular. */
+#top-notifications {
+  position: fixed !important;
+  top: 50% !important;
+  right: 14px !important;
+  left: auto !important;
+  bottom: auto !important;
+  inset: 50% 14px auto auto !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: min(360px, calc(100vw - 28px)) !important;
+  max-width: 360px !important;
+  height: auto !important;
+  max-height: 70vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  z-index: 2147483647 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+#top-notifications:empty { visibility: hidden !important; }
+#top-notifications .top-toast {
+  display: grid !important;
+  position: relative !important;
+  inset: auto !important;
+  grid-template-columns: 36px minmax(0, 1fr) 24px !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: 360px !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 13px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #f5d477 !important;
+  border-radius: 14px !important;
+  color: #fff !important;
+  background: rgba(12, 27, 19, .98) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,.55) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  animation: none !important;
+}
+#top-notifications .top-toast.error { border-color: #ff7188 !important; }
+#top-notifications .top-toast.success { border-color: #53e69a !important; }
+#top-notifications .top-toast-icon {
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  width: 36px !important; height: 36px !important; border-radius: 10px !important;
+  background: rgba(245,212,119,.13) !important; color: #f5d477 !important;
+}
+#top-notifications .top-toast-copy { min-width: 0 !important; display: block !important; }
+#top-notifications .top-toast-copy strong { display: block !important; color: #f5d477 !important; margin-bottom: 4px !important; }
+#top-notifications .top-toast-copy span { display: block !important; color: #fff !important; overflow-wrap: anywhere !important; word-break: break-word !important; }
+#top-notifications .top-toast-close {
+  display: block !important; pointer-events: auto !important; color: #fff !important;
+  background: transparent !important; border: 0 !important; font-size: 22px !important; cursor: pointer !important;
+}
+@media (max-width: 650px) {
+  #top-notifications {
+    top: auto !important;
+    right: 10px !important;
+    left: auto !important;
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+    inset: auto 10px calc(96px + env(safe-area-inset-bottom, 0px)) auto !important;
+    transform: none !important;
+    width: min(340px, calc(100vw - 20px)) !important;
+    max-width: 340px !important;
+    max-height: 45vh !important;
+  }
+  #top-notifications .top-toast { max-width: 340px !important; padding: 11px !important; }
+  #top-notifications .top-toast-copy span { font-size: 13px !important; line-height: 1.3 !important; }
+}
+</style>
+
+
+<style id="notifications-viewport-portal">
+html > #top-notifications {
+  position: fixed !important;
+  top: 50% !important;
+  right: 16px !important;
+  bottom: auto !important;
+  left: auto !important;
+  inset: 50% 16px auto auto !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(370px, calc(100vw - 32px)) !important;
+  max-width: 370px !important;
+  max-height: 75vh !important;
+  overflow: visible !important;
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  visibility: visible !important;
+}
+html > #top-notifications:empty { visibility: hidden !important; }
+html > #top-notifications .top-toast {
+  pointer-events: auto !important;
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  max-width: 370px !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 650px) {
+  html > #top-notifications {
+    top: 50% !important;
+    right: 10px !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset: 50% 10px auto auto !important;
+    transform: translateY(-50%) !important;
+    width: min(350px, calc(100vw - 20px)) !important;
+    max-width: 350px !important;
+    max-height: 70vh !important;
+  }
+}
+</style>
+
 </head>
 <body class="new-portfolio">
 <div class="holiday-ribbon">🎄 ESPECIAL DE NATAL ALISSONXSS <span>✦</span> BOAS FESTAS, FAMÍLIA! 🎅</div>
@@ -520,9 +652,28 @@ footer{color:#f2dfb2!important}
     }
 
     function showAlert(t, m, kind = "info", duration = 9000) {
-        const host = document.getElementById('top-notifications');
-        if (!host) return;
-        // Evita duplicar o mesmo aviso quando duas validações respondem juntas.
+        let host = document.getElementById('top-notifications');
+        if (!host) {
+            host = document.createElement('div');
+            host.id = 'top-notifications';
+            host.className = 'top-notifications';
+            host.setAttribute('aria-live', 'assertive');
+            host.setAttribute('aria-atomic', 'false');
+            document.body.appendChild(host);
+        }
+
+        // Portal no elemento raiz: evita que transform/filter no body ou em wrappers
+        // faça o position:fixed acompanhar o documento e sumir durante a rolagem.
+        if (host.parentElement !== document.documentElement) {
+            document.documentElement.appendChild(host);
+        }
+
+        // Garante que o container exista e não fique escondido por regras antigas do tema.
+        host.hidden = false;
+        host.style.setProperty('display', 'flex', 'important');
+        host.style.setProperty('visibility', 'visible', 'important');
+        host.style.setProperty('opacity', '1', 'important');
+
         const title = String(t ?? 'AVISO');
         const body = String(m ?? '');
         const duplicate = [...host.querySelectorAll('.top-toast')].find(el =>
@@ -536,11 +687,13 @@ footer{color:#f2dfb2!important}
         toast.dataset.title = title;
         toast.dataset.message = body;
         toast.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+
         const iconBox = document.createElement('div');
         iconBox.className = 'top-toast-icon';
         const iconEl = document.createElement('i');
         iconEl.className = `fas ${icon}`;
         iconBox.appendChild(iconEl);
+
         const copy = document.createElement('div');
         copy.className = 'top-toast-copy';
         const heading = document.createElement('strong');
@@ -548,21 +701,28 @@ footer{color:#f2dfb2!important}
         const message = document.createElement('span');
         message.textContent = body;
         copy.append(heading, message);
+
         const close = document.createElement('button');
         close.className = 'top-toast-close';
         close.type = 'button';
         close.setAttribute('aria-label', 'Fechar notificação');
         close.textContent = '×';
         close.addEventListener('click', () => toast.remove());
+
         toast.append(iconBox, copy, close);
         host.appendChild(toast);
-        while (host.children.length > 2) host.firstElementChild.remove();
+        while (host.querySelectorAll('.top-toast').length > 3) {
+            host.querySelector('.top-toast')?.remove();
+        }
+
         const visibleDuration = kind === 'success' ? Math.max(duration, 9000) : duration;
-        if (visibleDuration > 0) window.setTimeout(() => {
-            if (!toast.isConnected) return;
-            toast.classList.add('toast-leaving');
-            window.setTimeout(() => toast.remove(), 250);
-        }, visibleDuration);
+        if (visibleDuration > 0) {
+            window.setTimeout(() => {
+                if (!toast.isConnected) return;
+                toast.classList.add('toast-leaving');
+                window.setTimeout(() => toast.remove(), 250);
+            }, visibleDuration);
+        }
     }
 
     function closeAlert() {
@@ -647,45 +807,79 @@ footer{color:#f2dfb2!important}
 
     function getFreeFirePlayerId(log) {
         if (!log || typeof log !== 'object') return '';
+
+        // O /api/register recebe { id: userLogged.id, name: userLogged.nick }.
+        // Por isso, além das variações explícitas de UID, também lemos `id`
+        // como último fallback (formato usado pelo histórico original do site).
         const candidates = [
             log.freeFireId, log.free_fire_id, log.freeFireID,
-            log.playerId, log.player_id, log.playerID, log.uid,
-            log.userId, log.user_id, log.gameId, log.game_id,
-            log.accountId, log.account_id,
+            log.playerId, log.player_id, log.playerID, log.uid, log.UID,
+            log.gameUid, log.game_uid, log.ffId, log.ff_id,
+            log.userId, log.user_id, log.accountId, log.account_id,
             log.player?.id, log.player?.uid, log.user?.freeFireId,
-            log.user?.playerId, log.account?.id
+            log.user?.playerId, log.account?.id,
+            log.id
         ];
+
         for (const candidate of candidates) {
-            const digits = String(candidate ?? '').trim().replace(/\D/g, '');
-            // A Free Fire UID is numeric; avoid opening a generic profile when the API
-            // only returns its own database record ID.
+            if (candidate === null || candidate === undefined) continue;
+            const raw = String(candidate).trim();
+            const digits = raw.replace(/\D/g, '');
             if (/^\d{6,15}$/.test(digits)) return digits;
         }
         return '';
     }
 
+    function getHistoryRows(payload) {
+        if (Array.isArray(payload)) return payload;
+        if (!payload || typeof payload !== 'object') return [];
+        const possibleLists = [
+            payload.history, payload.data, payload.results,
+            payload.records, payload.logs, payload.resgates,
+            payload.items
+        ];
+        return possibleLists.find(Array.isArray) || [];
+    }
+
     async function loadHistory() {
+        const body = document.getElementById('historyBody');
+        if (!body) return;
+
         try {
-            const res = await fetch(`${API_URL}/api/public/history`);
-            const data = await res.json();
-            historyDataGlobal = data;
-            const body = document.getElementById('historyBody');
-            body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
+            const res = await fetch(`${API_URL}/api/public/history`, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`Histórico indisponível (${res.status})`);
+
+            const payload = await res.json();
+            const rows = getHistoryRows(payload);
+            historyDataGlobal = rows;
+
+            if (!rows.length) {
+                body.innerHTML = '<tr><td colspan="3">Nenhum resgate encontrado.</td></tr>';
+                return;
+            }
+
+            body.innerHTML = [...rows].reverse().slice(0, 5).map(log => {
                 const uid = getFreeFirePlayerId(log);
-                const profile = uid ? `https://www.freefiremania.com.br/jogador/${uid}.html` : '';
-                const nick = escapeHtml(log.user || log.name || log.nick || log.nickname || 'Jogador');
-                const reward = escapeHtml(log.reward || log.recompensa || 'Recompensa');
-                const idText = escapeHtml(uid || '—');
-                const nickContent = uid
+                const profile = uid
+                    ? `https://www.freefiremania.com.br/jogador/${encodeURIComponent(uid)}.html`
+                    : '';
+                const nick = escapeHtml(log.user || log.name || log.nick || log.nickname || log.playerName || log.player_name || 'Jogador');
+                const reward = escapeHtml(log.reward || log.recompensa || log.prize || 'Recompensa');
+                const idText = escapeHtml(uid || 'Não informado');
+                const nickContent = profile
                     ? `<a class="winner-direct-link" href="${profile}" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil de ${nick}">${nick}</a>`
-                    : `<span class="winner-direct-link winner-no-profile" title="ID do Free Fire não informado pela API">${nick}</span>`;
+                    : `<span class="winner-direct-link winner-no-profile">${nick}</span>`;
+
                 return `<tr class="winner-row" tabindex="0">
                     <td style="font-weight:bold">${nickContent}</td>
                     <td style="color:var(--primary)">${reward}</td>
                     <td>ID: ${idText}</td>
                 </tr>`;
             }).join('');
-        } catch(e) {}
+        } catch (error) {
+            console.error('Erro ao carregar histórico de resgates:', error);
+            body.innerHTML = '<tr><td colspan="3">Não foi possível carregar os resgates agora.</td></tr>';
+        }
     }
     // Atualiza os últimos premiados periodicamente e mantém a API ativa
     // enquanto houver visitantes com o site aberto.
