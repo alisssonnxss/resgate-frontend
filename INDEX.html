@@ -434,9 +434,32 @@ footer{color:#f2dfb2!important}
     function showAlert(t, m, kind = "info", duration = 5200) {
         const host = document.getElementById('top-notifications');
         if (!host) return;
+
+        // O container cobre a janela inteira e alinha o aviso no centro.
+        const hostStyles = {
+            position: 'fixed', inset: '0', left: '0', top: '0', right: '0', bottom: '0',
+            width: '100vw', height: '100vh', maxWidth: 'none',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            justifyContent: 'center', gap: '12px', padding: '18px',
+            margin: '0', transform: 'none', boxSizing: 'border-box',
+            overflowY: 'auto', overflowX: 'hidden', zIndex: '2147483647',
+            background: 'rgba(0,0,0,.72)', pointerEvents: 'auto', visibility: 'visible'
+        };
+        Object.entries(hostStyles).forEach(([key, value]) =>
+            host.style.setProperty(key.replace(/[A-Z]/g, c => '-' + c.toLowerCase()), value, 'important')
+        );
+
         const icon = kind === "success" ? "fa-circle-check" : kind === "error" ? "fa-circle-exclamation" : "fa-bell";
         const toast = document.createElement('div');
         toast.className = `top-toast ${kind}`;
+        toast.style.setProperty('width', 'min(520px, 100%)', 'important');
+        toast.style.setProperty('max-width', '520px', 'important');
+        toast.style.setProperty('min-width', '0', 'important');
+        toast.style.setProperty('margin', 'auto', 'important');
+        toast.style.setProperty('transform', 'none', 'important');
+        toast.style.setProperty('animation', 'none', 'important');
+        toast.style.setProperty('box-sizing', 'border-box', 'important');
+
         const copy = document.createElement('div');
         copy.className = 'top-toast-copy';
         const heading = document.createElement('strong');
@@ -444,28 +467,49 @@ footer{color:#f2dfb2!important}
         const message = document.createElement('span');
         message.textContent = m;
         copy.append(heading, message);
+
         const iconBox = document.createElement('div');
         iconBox.className = 'top-toast-icon';
         const iconEl = document.createElement('i');
         iconEl.className = `fas ${icon}`;
         iconBox.appendChild(iconEl);
+
         const close = document.createElement('button');
         close.className = 'top-toast-close';
         close.type = 'button';
         close.setAttribute('aria-label', 'Fechar notificação');
         close.innerHTML = '&times;';
-        close.addEventListener('click', () => toast.remove());
+        close.addEventListener('click', () => {
+            toast.remove();
+            if (!host.children.length) {
+                host.style.setProperty('visibility', 'hidden', 'important');
+                host.style.setProperty('background', 'transparent', 'important');
+                host.style.setProperty('pointer-events', 'none', 'important');
+            }
+        });
+
         toast.append(iconBox, copy, close);
         host.appendChild(toast);
         while (host.children.length > 3) host.firstElementChild.remove();
+
         window.setTimeout(() => {
             if (!toast.isConnected) return;
-            toast.style.animation = 'toastOut .25s ease forwards';
-            window.setTimeout(() => toast.remove(), 260);
+            toast.remove();
+            if (!host.children.length) {
+                host.style.setProperty('visibility', 'hidden', 'important');
+                host.style.setProperty('background', 'transparent', 'important');
+                host.style.setProperty('pointer-events', 'none', 'important');
+            }
         }, duration);
     }
     function closeAlert() {
         document.querySelectorAll('.top-toast').forEach(el => el.remove());
+        const host = document.getElementById('top-notifications');
+        if (host) {
+            host.style.setProperty('visibility', 'hidden', 'important');
+            host.style.setProperty('background', 'transparent', 'important');
+            host.style.setProperty('pointer-events', 'none', 'important');
+        }
     }
     function dailyRedeemKey(id) {
         const now = new Date();
@@ -520,15 +564,13 @@ footer{color:#f2dfb2!important}
                 localStorage.setItem(dailyKey, JSON.stringify({ code, nick: userLogged.nick, at: Date.now() }));
                 confetti({ particleCount: 220, spread: 115, origin: { y: 0.25 } });
                 const reward = data.reward || regData.reward || "Recompensa";
-                const msg = `🎁 *RESGATE PREMIUM* 🎁\n👤 *NICK:* ${userLogged.nick}\n🆔 *ID:* ${userLogged.id}\n✨ *ITEM:* ${reward}\n🎫 *CÓD:* ${code}`;
                 showWinnerCelebration(userLogged.nick, userLogged.id, reward);
                 await loadHistory();
 
-                setTimeout(() => {
-                    window.open(`https://wa.me/553898455679?text=${encodeURIComponent(msg)}`, '_blank');
-                    btn.disabled = false;
-                    btn.innerText = "RESGATAR AGORA";
-                }, 1800);
+                // Finaliza o resgate no próprio site, sem abrir WhatsApp.
+                btn.disabled = false;
+                btn.innerText = "RESGATAR AGORA";
+
             } else {
                 const quemResgatou = data.redeemedBy || data.usedBy || data.rescuedBy || data.resgatadoPor;
                 const mensagemFalha = quemResgatou
@@ -545,6 +587,18 @@ footer{color:#f2dfb2!important}
         }
     }
 
+    function getFreeFirePlayerId(log) {
+        const candidates = [
+            log?.freeFireId, log?.free_fire_id, log?.playerId, log?.player_id,
+            log?.uid, log?.userId, log?.user_id, log?.id
+        ];
+        for (const candidate of candidates) {
+            const digits = String(candidate ?? '').replace(/\D/g, '');
+            if (digits) return digits;
+        }
+        return '';
+    }
+
     async function loadHistory() {
         try {
             const res = await fetch(`${API_URL}/api/public/history`);
@@ -552,16 +606,49 @@ footer{color:#f2dfb2!important}
             historyDataGlobal = data;
             const body = document.getElementById('historyBody');
             body.innerHTML = [...data].reverse().slice(0, 5).map(log => {
-                const uid = String(log.id || '').replace(/\D/g, '');
-                const profile = uid ? `https://www.freefiremania.com.br/jogador/${uid}.html` : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
-                const nick = escapeHtml(log.user || 'Jogador');
+                const uid = getFreeFirePlayerId(log);
+                const profile = uid
+                    ? `https://www.freefiremania.com.br/jogador/${uid}.html`
+                    : 'https://www.freefiremania.com.br/perfil-free-fire-id.html';
+                const nick = escapeHtml(log.user || log.name || 'Jogador');
                 const reward = escapeHtml(log.reward || 'Recompensa');
-                const idText = escapeHtml(log.id || '—');
-                return `<tr class="winner-row" tabindex="0" role="link" aria-label="Abrir perfil de ${nick} no Free Fire Mania" onclick="openWinnerProfile('${uid}')"><td style="font-weight:bold">${nick}<small class="winner-hint">VER PERFIL ↗</small></td><td style="color:var(--primary)">${reward}</td><td>ID: ${idText}</td></tr>`;
+                const idText = escapeHtml(uid || '—');
+                return `<tr class="winner-row" tabindex="0">
+                    <td style="font-weight:bold">
+                        <a class="winner-direct-link" href="${profile}" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil de ${nick} no Free Fire Mania">
+                            ${nick}<small class="winner-hint">ABRIR PERFIL NO FF MANIA ↗</small>
+                        </a>
+                    </td>
+                    <td style="color:var(--primary)">${reward}</td>
+                    <td>ID: ${idText}</td>
+                </tr>`;
             }).join('');
         } catch(e) {}
     }
-    setInterval(loadHistory, 8000);
+    // Atualiza os últimos premiados periodicamente e mantém a API ativa
+    // enquanto houver visitantes com o site aberto.
+    let historyRefreshBusy = false;
+    async function refreshWinnersAndKeepApiAwake() {
+        if (historyRefreshBusy || document.hidden) return;
+        historyRefreshBusy = true;
+        try {
+            await loadHistory();
+        } finally {
+            historyRefreshBusy = false;
+        }
+    }
+
+    // Atualiza o quadro de premiados a cada minuto.
+    window.setInterval(refreshWinnersAndKeepApiAwake, 60 * 1000);
+
+    // Consulta a API a cada 5 minutos para reduzir a chance de repouso do serviço.
+    window.setInterval(refreshWinnersAndKeepApiAwake, 5 * 60 * 1000);
+
+    // Atualiza assim que a pessoa retorna à aba ou a conexão volta.
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) refreshWinnersAndKeepApiAwake();
+    });
+    window.addEventListener('online', refreshWinnersAndKeepApiAwake);
 </script>
 
 <script>
@@ -759,6 +846,36 @@ body.new-portfolio{background:radial-gradient(ellipse at 50% -10%,#145c36 0,tran
   #top-notifications .top-toast-icon{
     width:36px!important;
     height:36px!important;
+  }
+}
+
+
+/* AVISOS EM MODAL: centro real da janela, sem depender da posição de rolagem */
+#top-notifications{
+  position:fixed!important; inset:0!important; top:0!important; left:0!important;
+  right:0!important; bottom:0!important; width:100vw!important; height:100vh!important;
+  max-width:none!important; margin:0!important; padding:18px!important;
+  transform:none!important; display:flex!important; flex-direction:column!important;
+  align-items:center!important; justify-content:center!important; gap:12px!important;
+  box-sizing:border-box!important; z-index:2147483647!important;
+  overflow-x:hidden!important; overflow-y:auto!important;
+}
+#top-notifications:empty{visibility:hidden!important;pointer-events:none!important;background:transparent!important}
+#top-notifications .top-toast{
+  position:relative!important; inset:auto!important; left:auto!important; top:auto!important;
+  width:min(520px,100%)!important; max-width:520px!important; min-width:0!important;
+  margin:auto!important; transform:none!important; animation:none!important;
+  box-sizing:border-box!important; flex:0 0 auto!important;
+}
+.winner-direct-link{display:block;color:inherit;text-decoration:none;cursor:pointer}
+.winner-direct-link:hover{color:var(--primary)}
+.winner-direct-link .winner-hint{display:block}
+@media(max-width:600px){
+  #top-notifications{padding:14px!important}
+  #top-notifications .top-toast{
+    width:100%!important; max-width:520px!important;
+    grid-template-columns:36px minmax(0,1fr) 24px!important;
+    gap:10px!important; padding:16px!important;
   }
 }
 
